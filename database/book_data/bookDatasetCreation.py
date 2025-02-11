@@ -17,10 +17,6 @@ print("Books in the dataset after removing books with Rating = 0: ", len(allBook
 allBooks = allBooks.dropna(subset=['Name', 'Description', 'Id', 'Language', 'ISBN'])
 print("Books in the dataset after removing books with missing attributes: ", len(allBooks))
 
-# Remove any title that has a '#' in it
-allBooks = allBooks[~allBooks['Name'].str.contains('#')]
-print("Books in the dataset after removing books with '#' in the title: ", len(allBooks))
-
 # Remove any entries that language != 'eng'
 allBooks = allBooks[allBooks['Language'] == 'eng']
 print("Books in the dataset after removing books that are not in English: ", len(allBooks))
