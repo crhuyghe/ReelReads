@@ -9,6 +9,15 @@
   --primary-color: #ff6600;
 }
 
+html,
+body {
+  @apply min-h-screen;
+}
+
+#root {
+  @apply min-h-screen;
+}
+
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
