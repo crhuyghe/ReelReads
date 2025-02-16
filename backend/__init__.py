@@ -1,1 +1,2 @@
 from .RecommendationManager import RecommendationManager
+from .HistoryManager import HistoryManager
