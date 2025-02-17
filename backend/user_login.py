@@ -1,7 +1,7 @@
 import mysql.connector
 import argon2
 from argon2 import PasswordHasher
-from backend.database import get_connection
+from database import get_connection
 
 # Database Connection
 conn = get_connection()

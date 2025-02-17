@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import CreateAccount from "./CreateAccount";
+import axios from "axios";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [currentComponent, setCurrentComponent] = useState("login");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const togglePassword = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -12,6 +15,25 @@ const Login = () => {
 
   const handleClick = (component: string) => {
     setCurrentComponent(component);
+  };
+
+  const handleLoginSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post("http://localhost:5000/api/login", {
+        username,
+        password,
+      });
+
+      if (response.data.success) {
+        console.log("Login successful!", response.data);
+      } else {
+        console.log("Login failed", response.data.message);
+      }
+    } catch (error) {
+      console.error("An error occurred during login:", error);
+    }
   };
 
   return (
@@ -31,14 +53,15 @@ const Login = () => {
             </p>
           </div>
           {currentComponent === "login" ? (
-            <form>
+            <form onSubmit={handleLoginSubmit}>
               <div className="flex flex-col mb-3 gap-1">
                 <label className="text-sm">USERNAME</label>
                 <input
                   type="text"
                   id="username"
                   name="username"
-                  defaultValue="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   className="ring ring-1 ring-grey-200 rounded-sm py-1 px-2 text-sm"
                   placeholder="Enter your username"
                 />
@@ -50,7 +73,8 @@ const Login = () => {
                     type={showPassword ? "text" : "password"}
                     id="password"
                     name="password"
-                    defaultValue="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     className="ring ring-1 ring-grey-200 rounded-sm py-1 px-2 text-sm w-full"
                     placeholder="********"
                   />
