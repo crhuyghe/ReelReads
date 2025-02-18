@@ -110,14 +110,5 @@ def validate_user_login(username, password):
     
     cursor.close()
     conn.close()
+ 
         
-
-# FUNCTIONS BELOW WERE FOR TESTING IN THE TERMINAL
-#create_new_user("User1", "Password123")
-#print("Testing login with correct credentials:")
-#validate_user_login("BcOp10", "Password12345")  
-
-
-# Close the connection
-#cursor.close()
-#conn.close()
