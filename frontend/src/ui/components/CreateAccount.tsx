@@ -1,23 +1,45 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const CreateAccount = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const togglePassword = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     setShowPassword(!showPassword);
   };
 
+  const handleRegsiterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post("http://localhost:5000/register", {
+        username,
+        password,
+      });
+
+      if (response.data.success) {
+        console.log("account creation successful!", response.data);
+      } else {
+        console.log("account creation failed", response.data.message);
+      }
+    } catch (error) {
+      console.error("An error occurred during login:", error);
+    }
+  };
   return (
     <div>
-      <form>
+      <form onSubmit={handleRegsiterSubmit}>
         <div className="flex flex-col mb-3 gap-1 min-h-100vh">
           <label className="text-sm">USERNAME</label>
           <input
             type="text"
             id="username"
             name="username"
-            defaultValue="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             className="ring ring-1 ring-grey-200 rounded-sm py-1 px-2 text-sm"
             placeholder="Enter your username"
           />
@@ -29,7 +51,8 @@ const CreateAccount = () => {
               type={showPassword ? "text" : "password"}
               id="password"
               name="password"
-              defaultValue="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="ring ring-1 ring-grey-200 rounded-sm py-1 px-2 text-sm w-full"
               placeholder="********"
             />
