@@ -5,6 +5,9 @@ const CreateAccount = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessages, setErrorMessages] = useState<string[]>([]);
+  const [showError, setShowError] = useState(false);
+  const [usernameError, setUsernameError] = useState("");
 
   const togglePassword = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -22,11 +25,56 @@ const CreateAccount = () => {
 
       if (response.data.success) {
         console.log("account creation successful!", response.data);
+        setShowError(false);
+        setErrorMessages([]);
+        setUsernameError("");
+        //TODO: go to welcome page
       } else {
         console.log("account creation failed", response.data.message);
+
+        const messages: string[] = [];
+        let usernameErr = "";
+
+        response.data.error_codes.forEach((code: string) => {
+          switch (code) {
+            case "length":
+              messages.push("Password must be at least 10 characters long!");
+              break;
+            case "lowercase":
+              messages.push(
+                "Password must include at least one lowercase letter!"
+              );
+              break;
+            case "uppercase":
+              messages.push(
+                "Password must include at least one uppercase letter!"
+              );
+              break;
+            case "number":
+              messages.push("Password must include at least one digit.");
+              break;
+            case "symbol":
+              messages.push(
+                "Password must include at least one special symbol!"
+              );
+              break;
+            case "username_exists":
+              usernameErr = `The username '${username}' already exists.`;
+              break;
+            default:
+              messages.push("An unexpected error occurred. Please try again");
+              break;
+          }
+        });
+
+        setErrorMessages(messages); // Set multiple error messages
+        setUsernameError(usernameErr);
+        setShowError(true); // Show error message div
       }
     } catch (error) {
       console.error("An error occurred during login:", error);
+      setErrorMessages(["An unexpected error occurred. Please try again."]); // Fallback error message
+      setShowError(true); // Show error message div
     }
   };
   return (
@@ -44,6 +92,13 @@ const CreateAccount = () => {
             placeholder="Enter your username"
           />
         </div>
+        {/* Username error message div */}
+        {usernameError && (
+          <div className="text-red-600 text-xs mb-2">
+            <p>{usernameError}</p>
+          </div>
+        )}
+
         <div className="flex flex-col mb-3 gap-1">
           <label className="text-sm">PASSWORD</label>
           <div className="relative">
@@ -101,6 +156,14 @@ const CreateAccount = () => {
             </button>
           </div>
         </div>
+        {/* Error message div */}
+        {showError && (
+          <div className="text-red-600 text-xs mb-2">
+            {errorMessages.map((msg, index) => (
+              <p key={index}>{msg}</p> // Render each error message
+            ))}
+          </div>
+        )}
         <input
           type="submit"
           value="Sign Up"

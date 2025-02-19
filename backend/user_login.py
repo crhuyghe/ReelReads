@@ -17,25 +17,29 @@ def create_new_user(username, password):
     try:
         conn = get_connection()
         cursor = conn.cursor()
+        errors = []
         passwd_check = check_password_minumum(password)
 
         if passwd_check == "1":
             print("Password must be at least 10 characters long!")
-            return {"success": False, "error_code": "length"}
+            errors.append("length")
         if passwd_check == "2":
             print("Password must include at least one lowercase letter!")
-            return {"success": False, "error_code": "lowercase"}
+            errors.append("lowercase")
         if passwd_check == "3":
             print("Password must include at least one uppercase letter!")
-            return {"success": False, "error_code": "uppercase"}
+            errors.append("uppercase")
         if passwd_check == "4":
-            print("Password must include at least one digit.")
-            return {"success": False, "error_code": "number"}
+            print("Password must include at least one digit!")
+            errors.append("number")
         if passwd_check == "5":
             print("Password must include at least one special symbol!")
-            return {"success": False, "error_code": "symbol"}
+            errors.append("symbol")
         if passwd_check == "6":
             print("Valid Password!")
+
+        if errors:
+            return {"success": False, "error_codes": errors}
 
 
         hashed_passwd = ph.hash(password)

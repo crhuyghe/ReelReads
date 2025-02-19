@@ -58,6 +58,8 @@ const Login = () => {
                 : "Let's get you started! Please create an account to start using ReelReads"}
             </p>
           </div>
+
+          {/* switching between login, signup, and welcome*/}
           {currentComponent === "login" ? (
             <form onSubmit={handleLoginSubmit}>
               <div className="flex flex-col mb-3 gap-1">
@@ -160,9 +162,12 @@ const Login = () => {
                 className="rounded-sm bg-blue-600 w-full py-1 text-white mb-3 hover:cursor-pointer hover:bg-blue-500"
               />
             </form>
-          ) : (
+          ) : currentComponent === "signup" ? (
             <CreateAccount />
+          ) : (
+            <Welcome />
           )}
+
           <div className="flex gap-1 justify-center text-sm">
             <p>
               {currentComponent === "login"
