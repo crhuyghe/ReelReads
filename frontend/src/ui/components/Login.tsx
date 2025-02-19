@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import CreateAccount from "./CreateAccount";
+import Welcome from "./Welcome";
 import axios from "axios";
 
 const Login = () => {
@@ -7,6 +8,7 @@ const Login = () => {
   const [currentComponent, setCurrentComponent] = useState("login");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loginFailed, setLoginFailed] = useState(false);
 
   const togglePassword = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -28,11 +30,15 @@ const Login = () => {
 
       if (response.data.success) {
         console.log("Login successful!", response.data);
+        setLoginFailed(false);
+        setCurrentComponent("welcome");
       } else {
         console.log("Login failed", response.data.message);
+        setLoginFailed(true);
       }
     } catch (error) {
       console.error("An error occurred during login:", error);
+      setLoginFailed(true);
     }
   };
 
@@ -123,10 +129,35 @@ const Login = () => {
                   </button>
                 </div>
               </div>
+              <div
+                className="flex items-center gap-1 mb-2"
+                style={{ display: loginFailed ? "flex" : "none" }}
+              >
+                <div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="size-4 text-red-600"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                    />
+                  </svg>
+                </div>
+                <p className="text-xs text-red-600">
+                  Your username or password is incorrect. Please enter valid
+                  credentials.
+                </p>
+              </div>
               <input
                 type="submit"
                 value="Sign In"
-                className="rounded-sm bg-blue-600 w-full py-1 text-white mb-3"
+                className="rounded-sm bg-blue-600 w-full py-1 text-white mb-3 hover:cursor-pointer hover:bg-blue-500"
               />
             </form>
           ) : (
