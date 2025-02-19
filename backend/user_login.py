@@ -21,19 +21,19 @@ def create_new_user(username, password):
 
         if passwd_check == "1":
             print("Password must be at least 10 characters long!")
-            return
+            return {"success": False, "error_code": "length"}
         if passwd_check == "2":
             print("Password must include at least one lowercase letter!")
-            return
+            return {"success": False, "error_code": "lowercase"}
         if passwd_check == "3":
             print("Password must include at least one uppercase letter!")
-            return
+            return {"success": False, "error_code": "uppercase"}
         if passwd_check == "4":
             print("Password must include at least one digit.")
-            return
+            return {"success": False, "error_code": "number"}
         if passwd_check == "5":
             print("Password must include at least one special symbol!")
-            return
+            return {"success": False, "error_code": "symbol"}
         if passwd_check == "6":
             print("Valid Password!")
 
@@ -46,11 +46,13 @@ def create_new_user(username, password):
         cursor.execute(login_query, values)
         conn.commit()
         print("Successfully created account!")
+        return {"success": True, "message": "Successfully created account!"}
 
     # This will catch integrity errors such as duplicate usernames 
     except mysql.connector.IntegrityError:
         conn.rollback() 
         print(f"Error: the username '{username}' already exists!")
+        return {"success": False, "error_code": "username_exists"} 
     
     cursor.close()
     conn.close()
