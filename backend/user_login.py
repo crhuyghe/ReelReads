@@ -56,7 +56,7 @@ def create_new_user(username, password):
     except mysql.connector.IntegrityError:
         conn.rollback() 
         print(f"Error: the username '{username}' already exists!")
-        return {"success": False, "error_code": "username_exists"} 
+        return {"success": False, "error_codes": "[username_exists]"} 
     
     cursor.close()
     conn.close()

@@ -22,7 +22,7 @@ const CreateAccount = () => {
         username,
         password,
       });
-
+      console.log("Response from backend:", response.data);
       if (response.data.success) {
         console.log("account creation successful!", response.data);
         setShowError(false);
@@ -35,10 +35,15 @@ const CreateAccount = () => {
         const messages: string[] = [];
         let usernameErr = "";
 
-        response.data.error_codes.forEach((code: string) => {
+        const errorCodes = Array.isArray(response.data.error_codes)
+        ? response.data.error_codes
+        : [response.data.error_codes]; // Convert to array if it's a single code
+
+      errorCodes.forEach((code: string) => {
           switch (code) {
             case "length":
               messages.push("Password must be at least 10 characters long!");
+              console.log("you made it in the switch case");
               break;
             case "lowercase":
               messages.push(
