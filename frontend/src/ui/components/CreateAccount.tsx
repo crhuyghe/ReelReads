@@ -9,6 +9,13 @@ const CreateAccount = () => {
   const [showError, setShowError] = useState(false);
   const [usernameError, setUsernameError] = useState("");
 
+  const [showPasswordRequirements, setShowPasswordRequirements] =
+    useState(false);
+
+  const togglePasswordRequirements = () => {
+    setShowPasswordRequirements(!showPasswordRequirements);
+  };
+
   const togglePassword = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     setShowPassword(!showPassword);
@@ -24,57 +31,18 @@ const CreateAccount = () => {
       });
       console.log("Response from backend:", response.data);
       if (response.data.success) {
-        console.log("account creation successful!", response.data);
+        console.log("account creation successful!");
+        //TODO: go to welcome page
         setShowError(false);
         setErrorMessages([]);
-        setUsernameError("");
-        //TODO: go to welcome page
       } else {
         console.log("account creation failed", response.data.message);
-
-        const messages: string[] = [];
-        let usernameErr = "";
-
-        const errorCodes = Array.isArray(response.data.error_codes)
-        ? response.data.error_codes
-        : [response.data.error_codes]; // Convert to array if it's a single code
-
-      errorCodes.forEach((code: string) => {
-          switch (code) {
-            case "length":
-              messages.push("Password must be at least 10 characters long!");
-              console.log("you made it in the switch case");
-              break;
-            case "lowercase":
-              messages.push(
-                "Password must include at least one lowercase letter!"
-              );
-              break;
-            case "uppercase":
-              messages.push(
-                "Password must include at least one uppercase letter!"
-              );
-              break;
-            case "number":
-              messages.push("Password must include at least one digit.");
-              break;
-            case "symbol":
-              messages.push(
-                "Password must include at least one special symbol!"
-              );
-              break;
-            case "username_exists":
-              usernameErr = `The username '${username}' already exists.`;
-              break;
-            default:
-              messages.push("An unexpected error occurred. Please try again");
-              break;
-          }
-        });
-
-        setErrorMessages(messages); // Set multiple error messages
-        setUsernameError(usernameErr);
-        setShowError(true); // Show error message div
+        if (response.data.error_codes === "[username_exists]") {
+          setUsernameError(response.data.message);
+        } else {
+          setErrorMessages(["Password is invalid. Please try again!"]);
+        }
+        setShowError(true);
       }
     } catch (error) {
       console.error("An error occurred during login:", error);
@@ -105,7 +73,41 @@ const CreateAccount = () => {
         )}
 
         <div className="flex flex-col mb-3 gap-1">
-          <label className="text-sm">PASSWORD</label>
+          <div className="flex items-center gap-1">
+            <label className="text-sm">PASSWORD</label>
+            <button type="button" onClick={togglePasswordRequirements}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-5 text-red-600"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"
+                />
+              </svg>
+            </button>
+          </div>
+
+          {/* Tooltip with password requirements */}
+          {showPasswordRequirements && (
+            <div className="-mt-1 mb-1 text-xs text-gray-500">
+              <ul>
+                {" "}
+                Password must:
+                <li className="ml-4">Contain at least 10 characters</li>
+                <li className="ml-4">
+                  Contain both lower and uppercase letter
+                </li>
+                <li className="ml-4">Contain at least one number</li>
+                <li className="ml-4">Contain at least one symbol</li>
+              </ul>
+            </div>
+          )}
           <div className="relative">
             <input
               type={showPassword ? "text" : "password"}
@@ -169,6 +171,7 @@ const CreateAccount = () => {
             ))}
           </div>
         )}
+
         <input
           type="submit"
           value="Sign Up"

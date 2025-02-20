@@ -22,24 +22,21 @@ def create_new_user(username, password):
 
         if passwd_check == "1":
             print("Password must be at least 10 characters long!")
-            errors.append("length")
+            return
         if passwd_check == "2":
             print("Password must include at least one lowercase letter!")
-            errors.append("lowercase")
+            return
         if passwd_check == "3":
             print("Password must include at least one uppercase letter!")
-            errors.append("uppercase")
+            return
         if passwd_check == "4":
-            print("Password must include at least one digit!")
-            errors.append("number")
+            print("Password must include at least one digit.")
+            return
         if passwd_check == "5":
             print("Password must include at least one special symbol!")
-            errors.append("symbol")
+            return
         if passwd_check == "6":
             print("Valid Password!")
-
-        if errors:
-            return {"success": False, "error_codes": errors}
 
 
         hashed_passwd = ph.hash(password)
@@ -50,13 +47,13 @@ def create_new_user(username, password):
         cursor.execute(login_query, values)
         conn.commit()
         print("Successfully created account!")
-        return {"success": True, "message": "Successfully created account!"}
+        return {"success": True}
 
     # This will catch integrity errors such as duplicate usernames 
     except mysql.connector.IntegrityError:
         conn.rollback() 
         print(f"Error: the username '{username}' already exists!")
-        return {"success": False, "error_codes": "[username_exists]"} 
+        return {"success": False, "error_codes": "[username_exists]", "message": "The username you have chosen is already in use. Please pick a different username."} 
     
     cursor.close()
     conn.close()
