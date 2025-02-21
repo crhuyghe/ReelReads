@@ -24,30 +24,38 @@ const CreateAccount = () => {
   const handleRegsiterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Reset errors before making the request
+    setUsernameError(""); // Clear username error when submitting new request
+    setErrorMessages([]); // Clear general error messages
+
     try {
       const response = await axios.post("http://localhost:5000/register", {
         username,
         password,
       });
       console.log("Response from backend:", response.data);
+
       if (response.data.success) {
         console.log("account creation successful!");
         //TODO: go to welcome page
         setShowError(false);
-        setErrorMessages([]);
       } else {
         console.log("account creation failed", response.data.message);
+
         if (response.data.error_codes === "[username_exists]") {
-          setUsernameError(response.data.message);
+          setUsernameError(
+            "The username you have chosen already exists. Please try another."
+          );
         } else {
           setErrorMessages(["Password is invalid. Please try again!"]);
+          setShowError(true);
         }
-        setShowError(true);
       }
     } catch (error) {
       console.error("An error occurred during login:", error);
       setErrorMessages(["An unexpected error occurred. Please try again."]); // Fallback error message
       setShowError(true); // Show error message div
+      setUsernameError("");
     }
   };
   return (
