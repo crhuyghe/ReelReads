@@ -28,7 +28,7 @@ const Login = () => {
         password,
       });
 
-      if (response.data.success) {
+      if (response.data.message === "Login successful") {
         console.log("Login successful!", response.data);
         setLoginFailed(false);
         setCurrentComponent("welcome");
