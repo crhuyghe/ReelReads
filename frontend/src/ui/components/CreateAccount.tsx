@@ -46,16 +46,17 @@ const CreateAccount = () => {
           setUsernameError(
             "The username you have chosen already exists. Please try another."
           );
+          setShowError(false);
         } else {
           setErrorMessages(["Password is invalid. Please try again!"]);
           setShowError(true);
         }
       }
     } catch (error) {
-      console.error("An error occurred during login:", error);
+      /*console.error("An error occurred during login:", error);
       setErrorMessages(["An unexpected error occurred. Please try again."]); // Fallback error message
       setShowError(true); // Show error message div
-      setUsernameError("");
+      setUsernameError("");*/
     }
   };
   return (

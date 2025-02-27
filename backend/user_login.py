@@ -2,6 +2,7 @@ import mysql.connector
 import argon2
 from argon2 import PasswordHasher
 from connection_database import get_connection
+from flask import jsonify
 
 #cursor.execute()
 ph = argon2.PasswordHasher(
@@ -47,13 +48,13 @@ def create_new_user(username, password):
         cursor.execute(login_query, values)
         conn.commit()
         print("Successfully created account!")
-        return {"success": True}
+        return jsonify ({"success": True}), 201
 
     # This will catch integrity errors such as duplicate usernames 
     except mysql.connector.IntegrityError:
         conn.rollback() 
         print(f"Error: the username '{username}' already exists!")
-        return {"success": False, "error_codes": "[username_exists]"} 
+        return jsonify({"success": False, "error_codes": "[username_exists]"}), 400
     
     cursor.close()
     conn.close()
