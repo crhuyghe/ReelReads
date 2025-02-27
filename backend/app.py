@@ -26,9 +26,10 @@ def register():
     password = data.get('password')
 
     result = create_new_user(username, password)
-
+    print(result)
     if isinstance(result, dict) and not result.get("success"):
-        return jsonify(result), 400
+        print(f"you got in the if")
+        return jsonify(result), 201
 
     return jsonify({"message": "Account successfully created!"}), 201
 

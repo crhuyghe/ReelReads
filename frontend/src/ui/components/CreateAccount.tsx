@@ -53,10 +53,10 @@ const CreateAccount = () => {
         }
       }
     } catch (error) {
-      /*console.error("An error occurred during login:", error);
+      console.error("An error occurred during login:", error);
       setErrorMessages(["An unexpected error occurred. Please try again."]); // Fallback error message
       setShowError(true); // Show error message div
-      setUsernameError("");*/
+      setUsernameError("");
     }
   };
   return (
