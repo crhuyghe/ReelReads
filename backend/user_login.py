@@ -23,19 +23,19 @@ def create_new_user(username, password):
 
         if passwd_check == "1":
             print("Password must be at least 10 characters long!")
-            return
+            return({"success": False})
         if passwd_check == "2":
             print("Password must include at least one lowercase letter!")
-            return
+            return({"success": False})
         if passwd_check == "3":
             print("Password must include at least one uppercase letter!")
-            return
+            return({"success": False})
         if passwd_check == "4":
             print("Password must include at least one digit.")
-            return
+            return({"success": False})
         if passwd_check == "5":
             print("Password must include at least one special symbol!")
-            return
+            return({"success": False})
         if passwd_check == "6":
             print("Valid Password!")
 
