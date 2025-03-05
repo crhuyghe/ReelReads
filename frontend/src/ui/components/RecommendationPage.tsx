@@ -131,9 +131,10 @@ const RecommendationPage: React.FC = () => {
           </div>
         )}
 
+        {/* POP UP CODE */}
         {showPopup && selectedTile && (
           <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white p-6 rounded-lg w-80 max-w-lg relative">
+            <div className="bg-white p-6 rounded-lg w-[60%] relative">
               <button
                 onClick={handleClosePopup}
                 className="absolute top-2 right-2 text-lg font-bold"
