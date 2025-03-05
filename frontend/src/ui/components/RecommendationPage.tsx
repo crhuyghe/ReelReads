@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SearchRec from "./SearchRec";
 import RecTile from "./RecTile";
+import { Link } from "react-router-dom";
 
 interface Tile {
   id: number;
@@ -98,6 +99,22 @@ const RecommendationPage: React.FC = () => {
   return (
     <>
       <div className="">
+        {/* NAVIGATION FOR NOW, DELETE LATER */}
+        <div className="flex flex-col items-center font-semibold mb-3">
+          <h1>NAVIGATION FOR TESTING NOW, DELETE LATER</h1>
+          <Link
+            to="/"
+            className="text-blue-600 hover:underline underline-offset-2"
+          >
+            Back to Login
+          </Link>
+          <Link
+            to="/welcome"
+            className="text-blue-600 hover:underline underline-offset-2"
+          >
+            Back to Welcome
+          </Link>
+        </div>
         <SearchRec onSearch={handleSearch} />
         <div className="flex justify-center mt-[2rem]">
           {/*TODO: this would call the code for the recommender*/}
