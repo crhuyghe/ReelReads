@@ -3,13 +3,13 @@ import reactLogo from "./assets/react.svg";
 import "./App.css";
 import "./index.css";
 import RecommendationPage from "./components/RecommendationPage";
+import Login from "./components/Login";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
       <RecommendationPage />
+      {/* <Login /> */}
     </>
   );
 }
