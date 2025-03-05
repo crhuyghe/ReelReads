@@ -5,6 +5,7 @@ ratings = pd.read_csv(file_path)
 
 user_item_matrix = ratings.pivot_table(index='userId', columns='bookId', values='rating')
 user_item_matrix = user_item_matrix.to_numpy()
+book_ids = ratings['bookId'].unique()
 
 def als(user_matrix, k=10, lambda_reg=10, iterations=10):
     # Replace NaNs with 0s to prevent propagation issues
@@ -33,6 +34,7 @@ def als(user_matrix, k=10, lambda_reg=10, iterations=10):
             V[j, :] = np.clip(np.linalg.solve(A, b), -5, 5)
 
         predicted_matrix = U @ V.T
+        predicted_matrix = np.clip(predicted_matrix, 1, 5)  # Round values to be within 1 to 5
         error = np.linalg.norm(mask * (user_matrix - predicted_matrix), ord='fro')
 
         if np.isnan(error):
@@ -45,7 +47,10 @@ def als(user_matrix, k=10, lambda_reg=10, iterations=10):
 
 U, V = als(user_item_matrix, k=10, lambda_reg=1, iterations=100)
 predicted_ratings = U @ V.T
-print(predicted_ratings)
+predicted_ratings = np.clip(predicted_ratings, 1, 5)  # Round values to be within 1 to 5
 
-# Save to csv file named als_book_ratings.csv
-np.savetxt("als_book_ratings.csv", predicted_ratings, delimiter=",")
+# Convert the predicted ratings to a DataFrame and include book IDs
+predicted_ratings_df = pd.DataFrame(predicted_ratings, columns=book_ids)
+predicted_ratings_df.to_csv("als_book_ratings.csv", index=False)
+
+print(predicted_ratings_df)
