@@ -31,7 +31,7 @@ def register():
         print(f"you got in the if")
         return jsonify(result), 201
 
-    return jsonify({"message": "Account successfully created!"}), 201
+    return jsonify({"success": True, "message": "Account successfully created!"}), 201
 
 # Run Flask app
 if __name__ == '__main__':
