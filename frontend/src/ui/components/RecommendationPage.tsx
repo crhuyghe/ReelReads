@@ -132,12 +132,18 @@ const RecommendationPage: React.FC = () => {
         )}
 
         {/* POP UP CODE */}
+        {/* BOOK INFO TO DISPLAY
+              name, author, publication date, publisher description, book rating
+        */}
+        {/* MOVIE INFO TO DISPLAY 
+              title, genre, release date, movie rating, description, runtime
+        */}
         {showPopup && selectedTile && (
           <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
             <div className="bg-white p-6 rounded-lg w-[60%] relative">
               <button
                 onClick={handleClosePopup}
-                className="absolute top-2 right-2 text-lg font-bold"
+                className="absolute top-2 right-3 text-lg font-bold"
               >
                 X
               </button>
