@@ -50,12 +50,12 @@ def create_new_user(username, password):
         print("Successfully created account!")
         return jsonify ({"success": True}), 201
 
-    # This will catch integrity errors such as duplicate usernames 
+    # This will catch integrity errors such as duplicate usernames
     except mysql.connector.IntegrityError:
-        conn.rollback() 
+        conn.rollback()
         print(f"Error: the username '{username}' already exists!")
         return ({"success": False, "error_codes": "[username_exists]"})
-    
+
     cursor.close()
     conn.close()
 
@@ -79,7 +79,7 @@ def check_password_minumum(password):
     # ALL CRITERIA MET
     return "6"
 
-# Will validate the username and password, while also getting the user_if for tracking!
+# Will validate the username and password, while also getting the user_id for tracking!
 def validate_user_login(username, password):
     try:
         conn = get_connection()
@@ -94,9 +94,9 @@ def validate_user_login(username, password):
         if check_result:
             user_id, hashed_passwd = check_result
         else:
-            print("Incorrect Username!")  
+            print("Incorrect Username!")
             return
-        
+
         # Argon2 verifying the hashed password with the plaintext password
         try:
             valid = ph.verify(hashed_passwd, password)
@@ -111,8 +111,12 @@ def validate_user_login(username, password):
     except mysql.connector.Error as error:
         print(f"Error: {error}")
         return
-    
+
     cursor.close()
     conn.close()
- 
-        
+
+def get_books_by_isbn(ids):
+    pass
+
+def get_movies_by_id(ids):
+    pass

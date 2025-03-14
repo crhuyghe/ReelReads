@@ -1,8 +1,12 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS #cross-origin requests
+from flask_cors import CORS  # cross-origin requests
+
+from backend.RecommendationManager import RecommendationManager
+from backend.user_login import get_books_by_isbn, get_movies_by_id
 from user_login import create_new_user, validate_user_login
 
 app = Flask(__name__)
+rm = RecommendationManager()
 CORS(app)
 
 @app.route('/login', methods=['POST'])
@@ -18,7 +22,7 @@ def login():
         return jsonify({"message": "Login successful", "user_id": user_id}), 200
     else:
         return jsonify({"message": "Invalid username or password"}), 400
-    
+
 @app.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
@@ -32,6 +36,20 @@ def register():
         return jsonify(result), 201
 
     return jsonify({"success": True, "message": "Account successfully created!"}), 201
+
+@app.route('/search', methods=['POST'])
+def search():
+    data = request.get_json()
+    query = data.get('query')
+
+    rec_ids = rm.search_by_query(query)
+    fetched_movie_data = get_movies_by_id(rec_ids[0])
+    fetched_book_data = get_books_by_isbn(rec_ids[1])
+
+    if fetched_movie_data or fetched_book_data:
+        return jsonify({"message": "Fetch Successful", "fetched_data": {"movies": fetched_movie_data, "books": fetched_book_data}}), 200
+    else:
+        return jsonify({"message": "No recommendations found"}), 400
 
 # Run Flask app
 if __name__ == '__main__':
