@@ -1,7 +1,7 @@
 import mysql.connector
 import argon2
 from argon2 import PasswordHasher
-from connection_database import get_connection
+from backend.connection_database import get_connection
 from flask import jsonify
 
 #cursor.execute()

@@ -1,8 +1,8 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS  # cross-origin requests
 
-from RecommendationManager import RecommendationManager
-from database_func import create_new_user, validate_user_login, get_books_by_isbn, get_movies_by_id
+from backend.RecommendationManager import RecommendationManager
+from backend.database_func import create_new_user, validate_user_login, get_books_by_isbn, get_movies_by_id
 
 app = Flask(__name__)
 rm = RecommendationManager()
@@ -39,11 +39,11 @@ def register():
 @app.route('/search', methods=['POST'])
 def search():
     data = request.get_json()
-    query = data.get('query')
+    query = data.get('searchQuery')
 
     rec_ids = rm.search_by_query(query)
-    fetched_movie_data = get_movies_by_id(rec_ids[0])
-    fetched_book_data = get_books_by_isbn(rec_ids[1])
+    fetched_movie_data = get_movies_by_id(rec_ids[0]["id"].values.tolist())
+    fetched_book_data = get_books_by_isbn(rec_ids[1]["ISBN"].values.tolist())
 
     if fetched_movie_data or fetched_book_data:
         return jsonify({"message": "Fetch Successful", "fetched_data": {"movies": fetched_movie_data, "books": fetched_book_data}}), 200
@@ -53,4 +53,3 @@ def search():
 # Run Flask app
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
-
