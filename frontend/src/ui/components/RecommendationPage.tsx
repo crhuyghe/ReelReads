@@ -37,6 +37,7 @@ const RecommendationPage: React.FC = () => {
 
       setTilesData(response.data);
       //grab info from response
+      console.error("Response from recommend:", response.data);
     } catch (error) {
       console.error(
         "An error occurred while fetching your recommendations",
