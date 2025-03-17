@@ -1,11 +1,12 @@
 import React from "react";
 
 interface Tile {
+  type: "book" | "movie";
   id: number;
   imageUrl: string;
   title: string;
   summary: string;
-  author: string;
+  author?: string;
   rating: number;
 }
 
