@@ -30,7 +30,7 @@ class RecommendationManager:
 
     def search_by_book(self, book_id, top_n=5):
         """Returns the top N most similar books and movies to the provided book."""
-        book_embedding = self._book_embeddings.loc[self._book_embeddings["id"] == book_id].iloc[:, 1:].to_numpy()[0]
+        book_embedding = self._book_embeddings.loc[self._book_embeddings["ISBN"] == book_id].iloc[:, 1:].to_numpy()[0]
         mdf, bdf = self._sentiment_analysis_search(book_embedding)
 
         return mdf.head(top_n), bdf.head(top_n+1).iloc[1:]
@@ -45,7 +45,7 @@ class RecommendationManager:
         """Runs a sentiment analysis search on the book and movie datasets using the provided embedding vector.
         Returns two pandas dataframes of similarity scores and movie/book identifiers."""
         movie_sim = pd.concat([self._movie_embeddings["id"], pd.DataFrame(cosine_similarity(np.reshape(vec, (1, -1)), self._movie_embeddings.iloc[:, 1:])[0], columns=["sim"])], axis=1)
-        book_sim = pd.concat([self._book_embeddings["id"], pd.DataFrame(cosine_similarity(np.reshape(vec, (1, -1)), self._book_embeddings.iloc[:, 1:])[0], columns=["sim"])], axis=1)
+        book_sim = pd.concat([self._book_embeddings["ISBN"], pd.DataFrame(cosine_similarity(np.reshape(vec, (1, -1)), self._book_embeddings.iloc[:, 1:])[0], columns=["sim"])], axis=1)
 
         movie_sim.sort_values(by="sim", ascending=False, inplace=True)
         book_sim.sort_values(by="sim", ascending=False, inplace=True)
