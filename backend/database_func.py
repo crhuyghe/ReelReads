@@ -115,8 +115,27 @@ def validate_user_login(username, password):
     cursor.close()
     conn.close()
 
-def get_books_by_isbn(ids):
-    pass
+def get_books_by_isbn():
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
 
-def get_movies_by_id(ids):
-    pass
+    get_books_query = ("SELECT isbn, books_name, author, publication_date, description, book_rating, book_rating_count, publisher FROM books_table")
+    cursor.execute(get_books_query)
+    fetched_book_data = cursor.fetchall()
+
+    conn.close()
+    cursor.close()
+    return fetched_book_data
+
+
+def get_movies_by_id():
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    get_movies_query = ("SELECT movie_id, title, genre, release_date, movie_rating, movie_rating_count, description, runtime FROM movies_table")
+    cursor.execute(get_movies_query)
+    fetched_movie_data = cursor.fetchall()
+
+    conn.close()
+    cursor.close()
+    return fetched_movie_data

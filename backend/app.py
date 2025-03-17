@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS  # cross-origin requests
 
 from RecommendationManager import RecommendationManager
-from database import create_new_user, validate_user_login, get_books_by_isbn, get_movies_by_id
+from database_func import create_new_user, validate_user_login, get_books_by_isbn, get_movies_by_id
 
 app = Flask(__name__)
 rm = RecommendationManager()
