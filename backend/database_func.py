@@ -19,7 +19,7 @@ def create_new_user(username, password):
         conn = get_connection()
         cursor = conn.cursor()
         errors = []
-        passwd_check = check_password_minumum(password)
+        passwd_check = check_password_minimum(password)
 
         if passwd_check == "1":
             print("Password must be at least 10 characters long!")
@@ -59,7 +59,7 @@ def create_new_user(username, password):
     cursor.close()
     conn.close()
 
-def check_password_minumum(password):
+def check_password_minimum(password):
     # Password must be at least 10 characters long.
     if len(password) < 10:
         return "1"
@@ -115,7 +115,13 @@ def validate_user_login(username, password):
     cursor.close()
     conn.close()
 
-def get_books_by_isbn():
+def get_user_vector(user_id):
+    pass
+
+def get_user_history(user_id):
+    pass
+
+def get_books_by_isbn(isbn_list):
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
 
@@ -128,7 +134,7 @@ def get_books_by_isbn():
     return fetched_book_data
 
 
-def get_movies_by_id():
+def get_movies_by_id(id_list):
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
 

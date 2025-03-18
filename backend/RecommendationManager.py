@@ -10,8 +10,8 @@ class RecommendationManager:
         self._book_embeddings, self._movie_embeddings = self._get_embeddings()
         self._embedding_model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
 
-    def get_recommendations(self, user_id):
-        """Combines the recommendation technique to get the top book and movie recommendations for a particular user"""
+    def get_recommendations(self, user_vector, user_history):
+        """Combines the recommendation technique to get the top book and movie recommendations for a particular user."""
         pass
 
     def search_by_query(self, query, top_n=5):
@@ -36,9 +36,7 @@ class RecommendationManager:
         return mdf.head(top_n), bdf.head(top_n+1).iloc[1:]
 
     def _get_embeddings(self):
-        """Placeholder function. Decide on final database usage before deleting.
-        Fetches book and movie embeddings"""
-        # Insert logic for querying the database here. Testing versions will use the CSV files.
+        """Fetches book and movie embeddings."""
         return pd.read_csv("database/book_data/book_embeddings.csv"), pd.read_csv("database/movie_data/movie_embeddings.csv")
 
     def _sentiment_analysis_search(self, vec):
