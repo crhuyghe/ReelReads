@@ -52,12 +52,12 @@ class RecommendationManager:
         return movie_sim, book_sim
 
 
-    def _collab_filtering_search(self, vec, dataset: Literal["movie", "book"] = "movie"):
+    def _collab_filtering_search(self, vec, dataset: Literal["movie", "book"] = "movie", top_n=10):
         """Runs a collaborative filtering search on the movie or book datasets using the provided user vector.
         Returns a pandas dataframe of relevance scores for the specified movie/book dataset."""
         pass
 
-    def _content_filtering_search(self, vec, dataset: Literal["movie", "book"] = "movie"):
+    def _content_filtering_search(self, vec, dataset: Literal["movie", "book"] = "movie", top_n=10):
         """Runs a content-based filtering search on the movie or book datasets using the provided item vector.
         Returns a pandas dataframe of relevance scores for the specified movie/book dataset."""
         pass
