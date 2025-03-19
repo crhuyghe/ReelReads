@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { useUser } from "./UserContext";
 
 const CreateAccount = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -10,6 +11,7 @@ const CreateAccount = () => {
   const [showError, setShowError] = useState(false);
   const [usernameError, setUsernameError] = useState("");
 
+  const { setUser } = useUser(); //gets setter for the user data
   const navigate = useNavigate(); //useNavigate hook for navigation after successful signup
 
   const [showPasswordRequirements, setShowPasswordRequirements] =
@@ -41,6 +43,9 @@ const CreateAccount = () => {
       if (response.data.success) {
         console.log("account creation successful!");
         setShowError(false);
+        // store the logged-in user data globally. Using the user_id right now
+        setUser({ user_id: response.data.user_id });
+        console.log("Current User: ", response.data.user_id); //debugging, making sure we are getting the correct thing
         navigate("/welcome");
       } else {
         console.log("account creation failed", response.data.message);

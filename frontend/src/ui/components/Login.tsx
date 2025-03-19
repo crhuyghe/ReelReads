@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useUser } from "./UserContext";
 import CreateAccount from "./CreateAccount";
 import Welcome from "./Welcome";
 import axios from "axios";
@@ -11,6 +12,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loginFailed, setLoginFailed] = useState(false);
 
+  const { setUser } = useUser(); //gets setter for the user data
   const navigate = useNavigate(); //useNavigate hook for navigation after successful login
 
   const togglePassword = (e: { preventDefault: () => void }) => {
@@ -34,6 +36,9 @@ const Login = () => {
       if (response.data.message === "Login successful") {
         console.log("Login successful!", response.data);
         setLoginFailed(false);
+        // store the logged-in user data globally. Using the user_id right now
+        setUser({ user_id: response.data.user_id });
+        console.log("Current User: ", response.data.user_id); //debugging, making sure we are getting the correct thing
         // setCurrentComponent("welcome");
         navigate("/welcome");
       } else {

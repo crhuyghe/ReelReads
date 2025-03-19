@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import Login from "./Login";
 import { Link } from "react-router-dom";
+import { useUser } from "./UserContext";
 
 const Welcome = () => {
+  const { user, setUser } = useUser();
+
+  const handleLogout = () => {
+    setUser(null);
+  };
   return (
     <>
       {/* NAVIGATION FOR NOW, DELETE LATER */}
@@ -21,7 +27,16 @@ const Welcome = () => {
           Recommendation
         </Link>
       </div>
-      <div>CONGRATS YOU SIGNED IN!!!!</div>
+      <div className="flex flex-col items-center mt-36">
+        <div>CONGRATS YOU SIGNED IN!!!!</div>
+
+        <button
+          onClick={handleLogout}
+          className="rounded-sm bg-blue-300 py-2 px-4 text-black mt-8"
+        >
+          LOGOUT
+        </button>
+      </div>
     </>
   );
 };
