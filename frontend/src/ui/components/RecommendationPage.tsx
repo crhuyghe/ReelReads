@@ -12,6 +12,10 @@ interface Tile {
   summary: string;
   author?: string;
   rating: number;
+  publisher?: string;
+  pub_date?: string;
+  rating_count?: number;
+  isbn?: string;
 }
 
 const RecommendationPage: React.FC = () => {
@@ -27,26 +31,90 @@ const RecommendationPage: React.FC = () => {
     console.log("Search query: ", query);
   };
 
+  /* THIS IS FOR TESTING PURPOSES ONLY */
   const handleSearchRecommendClick = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    try {
-      const response = await axios.post("http://localhost:5000/search", {
-        searchQuery,
-      });
-
-      setTilesData(response.data);
-      //grab info from response
-      console.error("Response from recommend:", response.data);
-    } catch (error) {
-      console.error(
-        "An error occurred while fetching your recommendations",
-        error
-      );
-    }
-
+    const fetchedData: Tile[] = [
+      {
+        type: "book",
+        id: 1,
+        imageUrl: "https://via.placeholder.com/150",
+        title: "Tile 1",
+        summary: "This is a summary of Tile 1",
+        author: "Author 1",
+        rating: 4.5,
+      },
+      {
+        type: "book",
+        id: 2,
+        imageUrl: "https://via.placeholder.com/150",
+        title: "Tile 2",
+        summary: "This is a summary of Tile 2",
+        author: "Author 2",
+        rating: 3.8,
+      },
+      {
+        type: "movie",
+        id: 3,
+        imageUrl: "https://via.placeholder.com/150",
+        title: "Tile 3",
+        summary: "This is a summary of Tile 3",
+        author: "Author 3",
+        rating: 4.2,
+      },
+      {
+        type: "book",
+        id: 4,
+        imageUrl: "https://via.placeholder.com/150",
+        title: "Tile 4",
+        summary: "This is a summary of Tile 4",
+        author: "Author 4",
+        rating: 4.0,
+      },
+      {
+        type: "movie",
+        id: 5,
+        imageUrl: "https://via.placeholder.com/150",
+        title: "Tile 5",
+        summary: "This is a summary of Tile 5",
+        author: "Author 5",
+        rating: 4.7,
+      },
+      {
+        type: "book",
+        id: 6,
+        imageUrl: "https://via.placeholder.com/150",
+        title: "Tile 6",
+        summary: "This is a summary of Tile 6",
+        author: "Author 6",
+        rating: 3.5,
+      },
+    ];
+    setTilesData(fetchedData);
     setShowTiles(true);
   };
+
+  /* THIS IS FOR REAL, UNCOMMENT WHEN DONE TESTING */
+  // const handleSearchRecommendClick = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+
+  //   try {
+  //     const response = await axios.post("http://localhost:5000/search", {
+  //       searchQuery,
+  //     });
+
+  //     setTilesData(response.data);
+  //     //grab info from response
+  //     console.error("Response from recommend:", response.data);
+  //   } catch (error) {
+  //     console.error(
+  //       "An error occurred while fetching your recommendations",
+  //       error
+  //     );
+  //   }
+
+  //   setShowTiles(true);
+  // };
 
   // useEffect(() => {
   //   {
@@ -175,13 +243,17 @@ const RecommendationPage: React.FC = () => {
                 alt={selectedTile.title}
                 className="w-full h-48 object-cover mb-4"
               />
+              <p className="text-sm">{selectedTile.summary}</p>
               <p className="text-sm font-medium mb-2">
                 Author: {selectedTile.author}
               </p>
+              <p className="text-sm">{selectedTile.publisher}</p>
+              <p className="text-sm">{selectedTile.pub_date}</p>
               <p className="text-sm font-medium mb-2">
                 Rating: {selectedTile.rating}
               </p>
-              <p className="text-sm">{selectedTile.summary}</p>
+              <p className="text-sm">{selectedTile.rating_count}</p>
+              <p className="text-sm">{selectedTile.isbn}</p>
             </div>
           </div>
         )}

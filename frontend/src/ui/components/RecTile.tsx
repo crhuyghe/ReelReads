@@ -8,6 +8,10 @@ interface Tile {
   summary: string;
   author?: string;
   rating: number;
+  publisher?: string;
+  pub_date?: string;
+  rating_count?: number;
+  isbn?: string;
 }
 
 interface TilesGridProps {
@@ -57,7 +61,7 @@ const RecTile: React.FC<TilesGridProps> = ({ tiles, onTileClick }) => {
       {/* BOOKS (if there are any) */}
       {bookTiles.length > 0 && (
         <div>
-          <h2 className="text-xl font-semibold mb-4">Books</h2>
+          <h2 className="text-xl font-semibold my-4">Books</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {bookTiles.map((tile) => (
               <div
