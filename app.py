@@ -46,8 +46,16 @@ def search():
     fetched_movie_data = get_movies_by_id(rec_ids[0]["id"].values.tolist())
     fetched_book_data = get_books_by_isbn(rec_ids[1]["ISBN"].values.tolist())
 
+    for movie in fetched_movie_data:
+        movie["type"] = "movie"
+
+    for book in fetched_book_data:
+        book["type"] = "book"
+
+    fetched_data = fetched_book_data + fetched_movie_data
+
     if fetched_movie_data or fetched_book_data:
-        return jsonify({"message": "Fetch Successful", "fetched_data": {"movies": fetched_movie_data, "books": fetched_book_data}}), 200
+        return jsonify({"message": "Fetch Successful", "fetched_data": fetched_data}), 200
     else:
         return jsonify({"message": "No recommendations found"}), 400
 
