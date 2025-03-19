@@ -12,6 +12,9 @@ interface Tile {
   pub_date?: string;
   rating_count?: number;
   isbn?: string;
+  runtime?: string;
+  genre?: string;
+  release_date?: string;
 }
 
 interface TilesGridProps {

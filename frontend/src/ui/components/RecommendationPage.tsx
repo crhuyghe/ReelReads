@@ -16,6 +16,9 @@ interface Tile {
   pub_date?: string;
   rating_count?: number;
   isbn?: string;
+  runtime?: string;
+  genre?: string;
+  release_date?: string;
 }
 
 const RecommendationPage: React.FC = () => {
@@ -31,7 +34,7 @@ const RecommendationPage: React.FC = () => {
     console.log("Search query: ", query);
   };
 
-  /* THIS IS FOR TESTING PURPOSES ONLY */
+  /* THIS IS FOR TESTING PURPOSES ONLY COMMENT OUT WHEN USING BACKEND */
   const handleSearchRecommendClick = async (e: React.FormEvent) => {
     e.preventDefault();
     const fetchedData: Tile[] = [
@@ -220,13 +223,11 @@ const RecommendationPage: React.FC = () => {
         )}
 
         {/* POP UP CODE */}
-        {/* BOOK INFO TO DISPLAY
-              name, author, publication date, publisher description, book rating
-        */}
+
         {/* MOVIE INFO TO DISPLAY 
               title, genre, release date, movie rating, description, runtime
         */}
-        {showPopup && selectedTile && (
+        {showPopup && selectedTile && selectedTile.type === "movie" && (
           <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
             <div className="bg-white p-6 rounded-lg w-[60%] relative">
               <button
@@ -244,9 +245,39 @@ const RecommendationPage: React.FC = () => {
                 className="w-full h-48 object-cover mb-4"
               />
               <p className="text-sm">{selectedTile.summary}</p>
+              <p className="text-sm">{selectedTile.runtime}</p>
+              <p className="text-sm mb-2">Genre: {selectedTile.genre}</p>
+              <p className="text-sm">Released: {selectedTile.release_date}</p>
               <p className="text-sm font-medium mb-2">
-                Author: {selectedTile.author}
+                Rating: {selectedTile.rating}
               </p>
+              <p className="text-sm">{selectedTile.rating_count}</p>
+            </div>
+          </div>
+        )}
+
+        {/* BOOK INFO TO DISPLAY
+              name, author, publication date, publisher description, book rating
+        */}
+        {showPopup && selectedTile && selectedTile.type === "book" && (
+          <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
+            <div className="bg-white p-6 rounded-lg w-[60%] relative">
+              <button
+                onClick={handleClosePopup}
+                className="absolute top-2 right-3 text-lg font-bold"
+              >
+                X
+              </button>
+              <h2 className="text-xl font-semibold mb-4">
+                {selectedTile.title}
+              </h2>
+              <img
+                src={selectedTile.imageUrl}
+                alt={selectedTile.title}
+                className="w-full h-48 object-cover mb-4"
+              />
+              <p className="text-sm">{selectedTile.summary}</p>
+              <p className="text-sm mb-2">Author: {selectedTile.author}</p>
               <p className="text-sm">{selectedTile.publisher}</p>
               <p className="text-sm">{selectedTile.pub_date}</p>
               <p className="text-sm font-medium mb-2">
