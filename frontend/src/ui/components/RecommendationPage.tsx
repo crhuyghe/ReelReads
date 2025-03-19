@@ -35,96 +35,11 @@ const RecommendationPage: React.FC = () => {
   };
 
   /* THIS IS FOR TESTING PURPOSES ONLY COMMENT OUT WHEN USING BACKEND */
-  const handleSearchRecommendClick = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const fetchedData: Tile[] = [
-      {
-        type: "book",
-        id: 1,
-        imageUrl: "https://via.placeholder.com/150",
-        title: "Tile 1",
-        summary: "This is a summary of Tile 1",
-        author: "Author 1",
-        rating: 4.5,
-      },
-      {
-        type: "book",
-        id: 2,
-        imageUrl: "https://via.placeholder.com/150",
-        title: "Tile 2",
-        summary: "This is a summary of Tile 2",
-        author: "Author 2",
-        rating: 3.8,
-      },
-      {
-        type: "movie",
-        id: 3,
-        imageUrl: "https://via.placeholder.com/150",
-        title: "Tile 3",
-        summary: "This is a summary of Tile 3",
-        author: "Author 3",
-        rating: 4.2,
-      },
-      {
-        type: "book",
-        id: 4,
-        imageUrl: "https://via.placeholder.com/150",
-        title: "Tile 4",
-        summary: "This is a summary of Tile 4",
-        author: "Author 4",
-        rating: 4.0,
-      },
-      {
-        type: "movie",
-        id: 5,
-        imageUrl: "https://via.placeholder.com/150",
-        title: "Tile 5",
-        summary: "This is a summary of Tile 5",
-        author: "Author 5",
-        rating: 4.7,
-      },
-      {
-        type: "book",
-        id: 6,
-        imageUrl: "https://via.placeholder.com/150",
-        title: "Tile 6",
-        summary: "This is a summary of Tile 6",
-        author: "Author 6",
-        rating: 3.5,
-      },
-    ];
-    setTilesData(fetchedData);
-    setShowTiles(true);
-  };
-
-  /* THIS IS FOR REAL, UNCOMMENT WHEN DONE TESTING */
   // const handleSearchRecommendClick = async (e: React.FormEvent) => {
   //   e.preventDefault();
-
-  //   try {
-  //     const response = await axios.post("http://localhost:5000/search", {
-  //       searchQuery,
-  //     });
-
-  //     setTilesData(response.data);
-  //     //grab info from response
-  //     console.error("Response from recommend:", response.data);
-  //   } catch (error) {
-  //     console.error(
-  //       "An error occurred while fetching your recommendations",
-  //       error
-  //     );
-  //   }
-
-  //   setShowTiles(true);
-  // };
-
-  // useEffect(() => {
-  //   {
-  //     /*TODO: this is a demo placeholder for now */
-  //   }
-  //   const fetchedData = [
+  //   const fetchedData: Tile[] = [
   //     {
+  //       type: "book",
   //       id: 1,
   //       imageUrl: "https://via.placeholder.com/150",
   //       title: "Tile 1",
@@ -133,6 +48,7 @@ const RecommendationPage: React.FC = () => {
   //       rating: 4.5,
   //     },
   //     {
+  //       type: "book",
   //       id: 2,
   //       imageUrl: "https://via.placeholder.com/150",
   //       title: "Tile 2",
@@ -141,6 +57,7 @@ const RecommendationPage: React.FC = () => {
   //       rating: 3.8,
   //     },
   //     {
+  //       type: "movie",
   //       id: 3,
   //       imageUrl: "https://via.placeholder.com/150",
   //       title: "Tile 3",
@@ -149,6 +66,7 @@ const RecommendationPage: React.FC = () => {
   //       rating: 4.2,
   //     },
   //     {
+  //       type: "book",
   //       id: 4,
   //       imageUrl: "https://via.placeholder.com/150",
   //       title: "Tile 4",
@@ -157,6 +75,7 @@ const RecommendationPage: React.FC = () => {
   //       rating: 4.0,
   //     },
   //     {
+  //       type: "movie",
   //       id: 5,
   //       imageUrl: "https://via.placeholder.com/150",
   //       title: "Tile 5",
@@ -165,6 +84,7 @@ const RecommendationPage: React.FC = () => {
   //       rating: 4.7,
   //     },
   //     {
+  //       type: "book",
   //       id: 6,
   //       imageUrl: "https://via.placeholder.com/150",
   //       title: "Tile 6",
@@ -173,9 +93,31 @@ const RecommendationPage: React.FC = () => {
   //       rating: 3.5,
   //     },
   //   ];
-
   //   setTilesData(fetchedData);
-  // }, []);
+  //   setShowTiles(true);
+  // };
+
+  /* THIS IS FOR REAL, UNCOMMENT WHEN DONE TESTING */
+  const handleSearchRecommendClick = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post("http://localhost:5000/search", {
+        searchQuery,
+      });
+
+      setTilesData(response.data);
+      //grab info from response
+      console.error("Response from recommend:", response.data);
+    } catch (error) {
+      console.error(
+        "An error occurred while fetching your recommendations",
+        error
+      );
+    }
+
+    setShowTiles(true);
+  };
 
   const handleTileClick = (tile: Tile) => {
     setSelectedTile(tile); //set popup info to the matching clicked tile
