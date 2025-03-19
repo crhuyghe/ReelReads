@@ -8,6 +8,7 @@ const Welcome = () => {
 
   const handleLogout = () => {
     setUser(null);
+    console.log(user)
   };
   return (
     <>

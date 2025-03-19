@@ -29,13 +29,13 @@ def register():
     username = data.get('username')
     password = data.get('password')
 
-    result = create_new_user(username, password)
+    result,_ = create_new_user(username, password)
     print(result)
     if isinstance(result, dict) and not result.get("success"):
         print(f"you got in the if")
         return jsonify(result), 201
-
-    return jsonify({"success": True, "message": "Account successfully created!"}), 201
+    print(result.get("user_id"))
+    return jsonify({"success": True, "message": "Account successfully created!", "user_id": result.get("user_id")}), 201
 
 @app.route('/search', methods=['POST'])
 def search():
@@ -53,7 +53,7 @@ def search():
         book["type"] = "book"
 
     fetched_data = fetched_book_data + fetched_movie_data
-
+    print(fetched_data)
     if fetched_movie_data or fetched_book_data:
         return jsonify({"message": "Fetch Successful", "fetched_data": fetched_data}), 200
     else:

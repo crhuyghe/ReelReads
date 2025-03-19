@@ -19,7 +19,7 @@ def create_new_user(username, password):
         conn = get_connection()
         cursor = conn.cursor()
         errors = []
-        passwd_check = check_password_minimum(password)
+        passwd_check = check_password_minumum(password)
 
         if passwd_check == "1":
             print("Password must be at least 10 characters long!")
@@ -44,11 +44,15 @@ def create_new_user(username, password):
 
         login_query = ("INSERT INTO user_login_table (username, password) VALUES (%s, %s)")
         values = (username, hashed_passwd)
-
+    
         cursor.execute(login_query, values)
         conn.commit()
         print("Successfully created account!")
-        return jsonify ({"success": True}), 201
+        user_query = ("SELECT user_id FROM user_login_table WHERE username = %s")
+        value = (username,)
+        cursor.execute(user_query, value)
+        user_id = cursor.fetchone()
+        return ({"success": True, 'user_id': user_id[0]}), 201
 
     # This will catch integrity errors such as duplicate usernames
     except mysql.connector.IntegrityError:
@@ -59,7 +63,7 @@ def create_new_user(username, password):
     cursor.close()
     conn.close()
 
-def check_password_minimum(password):
+def check_password_minumum(password):
     # Password must be at least 10 characters long.
     if len(password) < 10:
         return "1"
@@ -121,27 +125,52 @@ def get_user_vector(user_id):
 def get_user_history(user_id):
     pass
 
-def get_books_by_isbn(isbn_list):
+
+def get_books_by_isbn(isbn):
+    if not isbn:
+        return 
+
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
 
-    get_books_query = ("SELECT isbn, books_name, author, publication_date, description, book_rating, book_rating_count, publisher FROM books_table")
-    cursor.execute(get_books_query)
+    # Query makes it possible to get multiple movie_id's
+    get_books_query = (f"SELECT isbn, book_name, author, publication_date, description, book_rating, book_rating_count, publisher FROM books_table WHERE isbn IN ({', '.join(['%s'] * len(isbn))})")
+    
+    cursor.execute(get_books_query, tuple(isbn))
     fetched_book_data = cursor.fetchall()
 
-    conn.close()
     cursor.close()
+    conn.close()
     return fetched_book_data
 
 
-def get_movies_by_id(id_list):
+def get_movies_by_id(movie_id):
+    if not movie_id:
+        return
+
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
 
-    get_movies_query = ("SELECT movie_id, title, genre, release_date, movie_rating, movie_rating_count, description, runtime FROM movies_table")
-    cursor.execute(get_movies_query)
+    # Query makes it possible to get multiple isbn's
+    get_movies_query = (f"SELECT movie_id, title, genre, release_date, movie_rating, movie_rating_count, description, runtime FROM movies_table WHERE movie_id IN ({', '.join(['%s'] * len(movie_id))})")
+    
+    cursor.execute(get_movies_query, tuple(movie_id))
     fetched_movie_data = cursor.fetchall()
 
-    conn.close()
     cursor.close()
+    conn.close()
     return fetched_movie_data
+
+
+
+
+
+
+'''
+movies = get_movies_by_id([5, 6, 11])
+print(movies)
+print('---------------------------------------------------------------------')
+print('---------------------------------------------------------------------')
+books = get_books_by_isbn(['0007273746', '0007276885'])
+print(books)
+'''

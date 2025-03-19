@@ -3,7 +3,7 @@ import mysql.connector
 from dotenv import load_dotenv
 
 # Load environment variables from the .env file
-load_dotenv("connection.env")
+load_dotenv("backend/connection.env")
 
 # Database credentials
 SQL_HOST = os.getenv("DB_HOST")
