@@ -1,7 +1,7 @@
 # Must run "recombine.py" before running this file
 import pandas as pd
 
-allBooks = pd.read_csv("book_data_cleaned.csv")
+allBooks = pd.read_csv("Original Data/book_data_cleaned.csv")
 print(allBooks.keys())
 print("Books in the dataset: ", len(allBooks))
 
@@ -24,6 +24,12 @@ print("Books in the dataset after removing books that are not in English: ", len
 # Remove duplicate entries
 allBooks = allBooks.drop_duplicates(subset='Name', keep='first')
 print("Books in the dataset after removing duplicate entries: ", len(allBooks))
+
+ratings = pd.read_csv("Original Data/user_ratings_cleaned.csv")
+names = set(ratings['Name'])
+
+allBooks = allBooks[allBooks["Name"].isin(names)]
+print("Books in the dataset after removing books without ratings in the rating file: ", len(allBooks))
 
 # Sort the dataset by CountsOfReview in descending order
 allBooks = allBooks.sort_values(by='CountsOfReview', ascending=False)

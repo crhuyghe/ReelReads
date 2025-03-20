@@ -8,6 +8,6 @@ model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
 embeddings = model.encode(sentences)
 
 embeddings_df = pd.DataFrame(embeddings)
-embeddings_df = pd.concat([df["Id"], embeddings_df], axis=1)
+embeddings_df = pd.concat([df["ISBN"], embeddings_df], axis=1)
 
 embeddings_df.to_csv('book_embeddings.csv', index=False)
