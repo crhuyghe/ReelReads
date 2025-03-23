@@ -1,11 +1,11 @@
 import pandas as pd
 import numpy as np
-file_path = '../database/book_data/ratings_trimmed.csv'
+file_path = '../database/book_data/cleaned_books_5000.csv'
 ratings = pd.read_csv(file_path)
 
-user_item_matrix = ratings.pivot_table(index='userId', columns='bookId', values='rating')
+user_item_matrix = ratings.pivot_table(index='Id', columns='ISBN', values='Rating')
 user_item_matrix = user_item_matrix.to_numpy()
-book_ids = ratings['bookId'].unique()
+book_ids = ratings['ISBN'].unique()
 
 def als(user_matrix, k=10, lambda_reg=10, iterations=10):
     # Replace NaNs with 0s to prevent propagation issues
@@ -51,6 +51,13 @@ predicted_ratings = np.clip(predicted_ratings, 1, 5)  # Round values to be withi
 
 # Convert the predicted ratings to a DataFrame and include book IDs
 predicted_ratings_df = pd.DataFrame(predicted_ratings, columns=book_ids)
-predicted_ratings_df.to_csv("als_book_ratings.csv", index=False)
+
+# Split the DataFrame into 5 equal parts
+num_splits = 5
+split_dfs = np.array_split(predicted_ratings_df, num_splits)
+
+# Save each part as a separate .csv file
+for i, split_df in enumerate(split_dfs):
+    split_df.to_csv(f"als_book_ratings_part_{i+1}.csv", index=False)
 
 print(predicted_ratings_df)
