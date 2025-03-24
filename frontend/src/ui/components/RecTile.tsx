@@ -2,19 +2,22 @@ import React from "react";
 
 interface Tile {
   type: "book" | "movie";
-  id: number;
-  imageUrl: string;
-  title: string;
-  summary: string;
-  author?: string;
-  rating: number;
-  publisher?: string;
-  pub_date?: string;
-  rating_count?: number;
-  isbn?: string;
-  runtime?: string;
+  imageUrl?: string;
+  movie_id?: string;
+  title?: string;
   genre?: string;
   release_date?: string;
+  movie_rating?: number;
+  movie_rating_count?: number;
+  runtime?: number;
+  book_name?: string;
+  description: string;
+  author?: string;
+  book_rating?: number;
+  publisher?: string;
+  publication_date?: string;
+  book_rating_count?: number;
+  isbn?: string;
 }
 
 interface TilesGridProps {
@@ -37,7 +40,7 @@ const RecTile: React.FC<TilesGridProps> = ({ tiles, onTileClick }) => {
             {movieTiles.map((tile) => (
               /* TODO: CHECK THAT THE PARAMS MATCH UP WITH WHAT YOU GET FROM BACKEND */
               <div
-                key={tile.id}
+                key={tile.movie_id}
                 className="bg-white border rounded-lg shadow-md overflow-hidden hover:cursor-pointer"
                 onClick={() => onTileClick(tile)}
               >
@@ -52,7 +55,7 @@ const RecTile: React.FC<TilesGridProps> = ({ tiles, onTileClick }) => {
                   </h3>
                   {/*TODO: THE RATING HAS TO BE STARS*/}
                   <h4 className="text-base text-center font-semibold">
-                    {tile.rating}
+                    {tile.movie_rating}
                   </h4>
                 </div>
               </div>
@@ -68,7 +71,7 @@ const RecTile: React.FC<TilesGridProps> = ({ tiles, onTileClick }) => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {bookTiles.map((tile) => (
               <div
-                key={tile.id}
+                key={tile.isbn}
                 className="bg-white border rounded-lg shadow-md overflow-hidden hover:cursor-pointer"
                 onClick={() => onTileClick(tile)}
               >
@@ -83,7 +86,7 @@ const RecTile: React.FC<TilesGridProps> = ({ tiles, onTileClick }) => {
                   </h3>
                   {/*TODO: THE RATING HAS TO BE STARS*/}
                   <h4 className="text-base text-center font-semibold">
-                    {tile.rating}
+                    {tile.book_rating}
                   </h4>
                 </div>
               </div>

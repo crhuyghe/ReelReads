@@ -6,19 +6,22 @@ import axios from "axios";
 
 interface Tile {
   type: "book" | "movie";
-  id: number;
-  imageUrl: string;
-  title: string;
-  summary: string;
-  author?: string;
-  rating: number;
-  publisher?: string;
-  pub_date?: string;
-  rating_count?: number;
-  isbn?: string;
-  runtime?: string;
+  imageUrl?: string;
+  movie_id?: string;
+  title?: string;
   genre?: string;
   release_date?: string;
+  movie_rating?: number;
+  movie_rating_count?: number;
+  runtime?: number;
+  book_name?: string;
+  description: string;
+  author?: string;
+  book_rating?: number;
+  publisher?: string;
+  publication_date?: string;
+  book_rating_count?: number;
+  isbn?: string;
 }
 
 const RecommendationPage: React.FC = () => {
@@ -186,14 +189,14 @@ const RecommendationPage: React.FC = () => {
                 alt={selectedTile.title}
                 className="w-full h-48 object-cover mb-4"
               />
-              <p className="text-sm">{selectedTile.summary}</p>
+              <p className="text-sm">{selectedTile.description}</p>
               <p className="text-sm">{selectedTile.runtime}</p>
               <p className="text-sm mb-2">Genre: {selectedTile.genre}</p>
               <p className="text-sm">Released: {selectedTile.release_date}</p>
               <p className="text-sm font-medium mb-2">
-                Rating: {selectedTile.rating}
+                Rating: {selectedTile.movie_rating}
               </p>
-              <p className="text-sm">{selectedTile.rating_count}</p>
+              <p className="text-sm">{selectedTile.movie_rating_count}</p>
             </div>
           </div>
         )}
@@ -211,21 +214,21 @@ const RecommendationPage: React.FC = () => {
                 X
               </button>
               <h2 className="text-xl font-semibold mb-4">
-                {selectedTile.title}
+                {selectedTile.book_name}
               </h2>
               <img
                 src={selectedTile.imageUrl}
-                alt={selectedTile.title}
+                alt={selectedTile.book_name}
                 className="w-full h-48 object-cover mb-4"
               />
-              <p className="text-sm">{selectedTile.summary}</p>
+              <p className="text-sm">{selectedTile.description}</p>
               <p className="text-sm mb-2">Author: {selectedTile.author}</p>
               <p className="text-sm">{selectedTile.publisher}</p>
-              <p className="text-sm">{selectedTile.pub_date}</p>
+              <p className="text-sm">{selectedTile.publication_date}</p>
               <p className="text-sm font-medium mb-2">
-                Rating: {selectedTile.rating}
+                Rating: {selectedTile.book_rating}
               </p>
-              <p className="text-sm">{selectedTile.rating_count}</p>
+              <p className="text-sm">{selectedTile.book_rating_count}</p>
               <p className="text-sm">{selectedTile.isbn}</p>
             </div>
           </div>
