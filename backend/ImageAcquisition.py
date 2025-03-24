@@ -26,7 +26,7 @@ def handle_movie_search(imdb_id):
         if not image_url:
             print("Image not found")
             return
-        print(f"Image URL: {image_url}")
+        return image_url
     except Exception as error:
         print("Problem:", error)
 
@@ -53,14 +53,14 @@ def handle_book_search(isbn):
         if not fetched_book:
             print("Book not found")
             return
+
         book_details = {
             'fetchedTitle': fetched_book['volumeInfo']['title'],
             'identifier': fetched_book['volumeInfo']['industryIdentifiers'][0]['identifier'],
             'author': ", ".join(fetched_book['volumeInfo'].get('authors', ["Unknown"])),
-            'genre': ", ".join(fetched_book['volumeInfo'].get('categories', ["Unknown"])),
+            'genre': fetched_book['volumeInfo'].get('categories'),
             'thumbnail': fetched_book['volumeInfo'].get('imageLinks', {}).get('thumbnail')
         }
-        print(book_details)
+        return book_details
     except Exception as error:
         print("Problem:", error)
-
