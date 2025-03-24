@@ -5,7 +5,7 @@ interface Tile {
   image?: string;
   movie_id?: string;
   title?: string;
-  genres?: string[];
+  genre?: string[];
   release_date?: string;
   movie_rating?: number;
   movie_rating_count?: number;
@@ -45,7 +45,7 @@ const RecTile: React.FC<TilesGridProps> = ({ tiles, onTileClick }) => {
                 onClick={() => onTileClick(tile)}
               >
                 <img
-                  src={tile.image}
+                  src={tile.image || "https://via.placeholder.com/150"}
                   alt={tile.title}
                   className="w-full h-44 object-cover bg-blue-400"
                 />
@@ -76,7 +76,7 @@ const RecTile: React.FC<TilesGridProps> = ({ tiles, onTileClick }) => {
                 onClick={() => onTileClick(tile)}
               >
                 <img
-                  src={tile.image}
+                  src={tile.image || "https://via.placeholder.com/150"}
                   alt={tile.title}
                   className="w-full h-44 object-cover bg-blue-400"
                 />

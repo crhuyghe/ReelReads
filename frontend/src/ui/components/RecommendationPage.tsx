@@ -9,7 +9,7 @@ interface Tile {
   image?: string;
   movie_id?: string;
   title?: string;
-  genres?: string[];
+  genre?: string[];
   release_date?: string;
   movie_rating?: number;
   movie_rating_count?: number;
@@ -108,10 +108,14 @@ const RecommendationPage: React.FC = () => {
       const response = await axios.post("http://localhost:5000/search", {
         searchQuery,
       });
-
-      setTilesData(response.data);
-      //grab info from response
-      console.error("Response from recommend:", response.data);
+      // Handle API response
+      console.log("Response from recommend:", response.data);
+      if (response.data && Array.isArray(response.data.fetched_data)) {
+        setTilesData(response.data.fetched_data);
+        console.log("Response formatted: ", response.data.fetched_data);
+      } else {
+        console.error("Fetched data is not in the expected format");
+      }
     } catch (error) {
       console.error(
         "An error occurred while fetching your recommendations",
@@ -185,13 +189,13 @@ const RecommendationPage: React.FC = () => {
                 {selectedTile.title}
               </h2>
               <img
-                src={selectedTile.image}
+                src={selectedTile.image || "https://via.placeholder.com/150"}
                 alt={selectedTile.title}
                 className="w-full h-48 object-cover mb-4"
               />
               <p className="text-sm">{selectedTile.description}</p>
               <p className="text-sm">{selectedTile.runtime}</p>
-              <p className="text-sm mb-2">Genre: {selectedTile.genres}</p>
+              <p className="text-sm mb-2">Genre: {selectedTile.genre}</p>
               <p className="text-sm">Released: {selectedTile.release_date}</p>
               <p className="text-sm font-medium mb-2">
                 Rating: {selectedTile.movie_rating}
@@ -217,11 +221,11 @@ const RecommendationPage: React.FC = () => {
                 {selectedTile.book_name}
               </h2>
               <img
-                src={selectedTile.image}
+                src={selectedTile.image || "https://via.placeholder.com/150"}
                 alt={selectedTile.book_name}
                 className="w-full h-48 object-cover mb-4"
               />
-              <p className="text-sm mb-2">Genre: {selectedTile.genres}</p>
+              <p className="text-sm mb-2">Genre: {selectedTile.genre}</p>
               <p className="text-sm">{selectedTile.description}</p>
               <p className="text-sm mb-2">Author: {selectedTile.author}</p>
               <p className="text-sm">{selectedTile.publisher}</p>
