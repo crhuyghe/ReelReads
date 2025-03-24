@@ -2,10 +2,10 @@ import React from "react";
 
 interface Tile {
   type: "book" | "movie";
-  imageUrl?: string;
+  image?: string;
   movie_id?: string;
   title?: string;
-  genre?: string;
+  genres?: string[];
   release_date?: string;
   movie_rating?: number;
   movie_rating_count?: number;
@@ -45,7 +45,7 @@ const RecTile: React.FC<TilesGridProps> = ({ tiles, onTileClick }) => {
                 onClick={() => onTileClick(tile)}
               >
                 <img
-                  src={tile.imageUrl}
+                  src={tile.image}
                   alt={tile.title}
                   className="w-full h-44 object-cover bg-blue-400"
                 />
@@ -76,7 +76,7 @@ const RecTile: React.FC<TilesGridProps> = ({ tiles, onTileClick }) => {
                 onClick={() => onTileClick(tile)}
               >
                 <img
-                  src={tile.imageUrl}
+                  src={tile.image}
                   alt={tile.title}
                   className="w-full h-44 object-cover bg-blue-400"
                 />

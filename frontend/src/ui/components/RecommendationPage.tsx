@@ -6,10 +6,10 @@ import axios from "axios";
 
 interface Tile {
   type: "book" | "movie";
-  imageUrl?: string;
+  image?: string;
   movie_id?: string;
   title?: string;
-  genre?: string;
+  genres?: string[];
   release_date?: string;
   movie_rating?: number;
   movie_rating_count?: number;
@@ -185,13 +185,13 @@ const RecommendationPage: React.FC = () => {
                 {selectedTile.title}
               </h2>
               <img
-                src={selectedTile.imageUrl}
+                src={selectedTile.image}
                 alt={selectedTile.title}
                 className="w-full h-48 object-cover mb-4"
               />
               <p className="text-sm">{selectedTile.description}</p>
               <p className="text-sm">{selectedTile.runtime}</p>
-              <p className="text-sm mb-2">Genre: {selectedTile.genre}</p>
+              <p className="text-sm mb-2">Genre: {selectedTile.genres}</p>
               <p className="text-sm">Released: {selectedTile.release_date}</p>
               <p className="text-sm font-medium mb-2">
                 Rating: {selectedTile.movie_rating}
@@ -217,10 +217,11 @@ const RecommendationPage: React.FC = () => {
                 {selectedTile.book_name}
               </h2>
               <img
-                src={selectedTile.imageUrl}
+                src={selectedTile.image}
                 alt={selectedTile.book_name}
                 className="w-full h-48 object-cover mb-4"
               />
+              <p className="text-sm mb-2">Genre: {selectedTile.genres}</p>
               <p className="text-sm">{selectedTile.description}</p>
               <p className="text-sm mb-2">Author: {selectedTile.author}</p>
               <p className="text-sm">{selectedTile.publisher}</p>
