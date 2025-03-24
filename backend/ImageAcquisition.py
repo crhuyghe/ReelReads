@@ -58,7 +58,7 @@ def handle_book_search(isbn):
             'fetchedTitle': fetched_book['volumeInfo']['title'],
             'identifier': fetched_book['volumeInfo']['industryIdentifiers'][0]['identifier'],
             'author': ", ".join(fetched_book['volumeInfo'].get('authors', ["Unknown"])),
-            'genre': fetched_book['volumeInfo'].get('categories'),
+            'genre': ", ".join(fetched_book['volumeInfo'].get('categories', ["Unknown"])),
             'thumbnail': fetched_book['volumeInfo'].get('imageLinks', {}).get('thumbnail')
         }
         return book_details

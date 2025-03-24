@@ -50,17 +50,16 @@ def search():
     for movie in fetched_movie_data:
         movie["type"] = "movie"
         movie["image"] = handle_movie_search(movie["imdb_id"])
-        movie["genres"] = [pair["name"] for pair in movie["genres"]]
 
     for book in fetched_book_data:
         book["type"] = "book"
         book_info = handle_book_search(book["isbn"])
         if book_info:
             book["image"] = book_info["thumbnail"]
-            book["genres"] = book_info["genre"]
+            book["genre"] = book_info["genre"]
         else:
             book["image"] = None
-            book["genres"] = None
+            book["genre"] = None
 
     fetched_data = fetched_book_data + fetched_movie_data
     print(fetched_data)
