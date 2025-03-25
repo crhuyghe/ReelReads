@@ -5,7 +5,7 @@ interface Tile {
   image?: string;
   movie_id?: string;
   title?: string;
-  genre?: string[];
+  genre?: string;
   release_date?: string;
   movie_rating?: number;
   movie_rating_count?: number;
