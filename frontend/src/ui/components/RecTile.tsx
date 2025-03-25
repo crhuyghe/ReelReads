@@ -77,12 +77,12 @@ const RecTile: React.FC<TilesGridProps> = ({ tiles, onTileClick }) => {
               >
                 <img
                   src={tile.image || "https://via.placeholder.com/150"}
-                  alt={tile.title}
+                  alt={tile.book_name}
                   className="w-full h-44 object-cover bg-blue-400"
                 />
                 <div className="p-2 bg-blue-200">
                   <h3 className="text-lg text-center font-semibold">
-                    {tile.title}
+                    {tile.book_name}
                   </h3>
                   {/*TODO: THE RATING HAS TO BE STARS*/}
                   <h4 className="text-base text-center font-semibold">
