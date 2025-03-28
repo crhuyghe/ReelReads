@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SearchRec from "./SearchRec";
 import RecTile from "./RecTile";
+import Stars from "./Stars";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -189,18 +190,31 @@ const RecommendationPage: React.FC = () => {
                 {selectedTile.title}
               </h2>
               <img
-                src={selectedTile.image || "https://via.placeholder.com/150"}
+                src={selectedTile.image || "/movie_default.svg"}
                 alt={selectedTile.title}
-                className="w-full h-48 object-cover mb-4"
+                className="w-full h-48 object-contain mb-4"
               />
-              <p className="text-sm">{selectedTile.description}</p>
-              <p className="text-sm">{selectedTile.runtime}</p>
-              <p className="text-sm mb-2">Genre: {selectedTile.genre}</p>
-              <p className="text-sm">Released: {selectedTile.release_date}</p>
-              <p className="text-sm font-medium mb-2">
-                Rating: {selectedTile.movie_rating}
+              <div className="flex gap-2 items-center">
+                <p className="text-sm font-medium mb-2">
+                  <Stars rating={selectedTile.movie_rating} type="movie" />
+                </p>
+                <p className="text-sm font-semibold">
+                  {selectedTile.runtime} min
+                </p>
+              </div>
+              <p className="text-sm italic mb-2">{selectedTile.description}</p>
+              <p className="text-sm">
+                <span className="font-semibold">Genre: </span>
+                {selectedTile.genre}
               </p>
-              <p className="text-sm">{selectedTile.movie_rating_count}</p>
+              <p className="text-sm">
+                <span className="font-semibold">Released: </span>
+                {selectedTile.release_date}
+              </p>
+              <p className="text-sm">
+                <span className="font-semibold">Ratings: </span>
+                {selectedTile.movie_rating_count}
+              </p>
             </div>
           </div>
         )}
@@ -221,20 +235,33 @@ const RecommendationPage: React.FC = () => {
                 {selectedTile.book_name}
               </h2>
               <img
-                src={selectedTile.image || "https://via.placeholder.com/150"}
+                src={selectedTile.image || "/book_default.svg"}
                 alt={selectedTile.book_name}
-                className="w-full h-48 object-cover mb-4"
+                className="w-full h-48 object-contain mb-4"
               />
-              <p className="text-sm mb-2">Genre: {selectedTile.genre}</p>
-              <p className="text-sm">{selectedTile.description}</p>
-              <p className="text-sm mb-2">Author: {selectedTile.author}</p>
-              <p className="text-sm">{selectedTile.publisher}</p>
-              <p className="text-sm">{selectedTile.publication_date}</p>
-              <p className="text-sm font-medium mb-2">
-                Rating: {selectedTile.book_rating}
+              <div className="flex gap-2 items-center">
+                <p className="text-sm font-medium mb-2">
+                  <Stars rating={selectedTile.book_rating} type="book" />
+                </p>
+                <p className="text-sm font-semibold">{selectedTile.author}</p>
+              </div>
+              <p className="text-sm italic mb-2">{selectedTile.description}</p>
+              <p className="text-sm">
+                <span className="font-semibold">Publisher: </span>
+                {selectedTile.publisher}
               </p>
-              <p className="text-sm">{selectedTile.book_rating_count}</p>
-              <p className="text-sm">{selectedTile.isbn}</p>
+              <p className="text-sm">
+                <span className="font-semibold">Published: </span>
+                {selectedTile.publication_date}
+              </p>
+              <p className="text-sm">
+                <span className="font-semibold">Ratings: </span>
+                {selectedTile.book_rating_count}
+              </p>
+              <p className="text-sm">
+                <span className="font-semibold">ISBN: </span>
+                {selectedTile.isbn}
+              </p>
             </div>
           </div>
         )}
