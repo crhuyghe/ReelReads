@@ -152,7 +152,7 @@ def get_movies_by_id(movie_id):
     cursor = conn.cursor(dictionary=True)
 
     # Query makes it possible to get multiple isbn's
-    get_movies_query = (f"SELECT movie_id, title, genre, release_date, movie_rating, movie_rating_count, description, runtime FROM movies_table WHERE movie_id IN ({', '.join(['%s'] * len(movie_id))})")
+    get_movies_query = (f"SELECT movie_id, imdb_id, title, genre, release_date, movie_rating, movie_rating_count, description, runtime FROM movies_table WHERE movie_id IN ({', '.join(['%s'] * len(movie_id))})")
     
     cursor.execute(get_movies_query, tuple(movie_id))
     fetched_movie_data = cursor.fetchall()
