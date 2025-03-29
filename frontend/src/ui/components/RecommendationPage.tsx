@@ -137,6 +137,11 @@ const RecommendationPage: React.FC = () => {
     setSelectedTile(null); //reset the tile popup
   };
 
+  const addTile = (tile: Tile) => {
+    //ADD CODE TO ADD TILE INFO
+    console.log("added tile to user data");
+  };
+
   return (
     <>
       <div className="">
@@ -215,6 +220,12 @@ const RecommendationPage: React.FC = () => {
                 <span className="font-semibold">Ratings: </span>
                 {selectedTile.movie_rating_count}
               </p>
+              <button
+                className="rounded-full w-10 h-10 flex justify-center font-bold text-2xl ring-2 ring-blue-500 text-black absolute bottom-4 right-4"
+                onClick={() => addTile(selectedTile)}
+              >
+                +
+              </button>
             </div>
           </div>
         )}
@@ -262,6 +273,12 @@ const RecommendationPage: React.FC = () => {
                 <span className="font-semibold">ISBN: </span>
                 {selectedTile.isbn}
               </p>
+              <button
+                className="rounded-full w-10 h-10 flex justify-center font-bold text-2xl ring-2 ring-blue-500 text-black absolute bottom-4 right-4"
+                onClick={() => addTile(selectedTile)}
+              >
+                +
+              </button>
             </div>
           </div>
         )}
