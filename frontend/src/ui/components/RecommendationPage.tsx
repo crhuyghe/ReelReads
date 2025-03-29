@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import SearchRec from "./SearchRec";
 import RecTile from "./RecTile";
 import Stars from "./Stars";
@@ -139,7 +139,7 @@ const RecommendationPage: React.FC = () => {
 
   const addTile = (tile: Tile) => {
     //ADD CODE TO ADD TILE INFO
-    console.log("added tile to user data");
+    console.log("added tile to user data", tile);
   };
 
   return (
