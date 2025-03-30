@@ -1,5 +1,3 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
 import "./App.css";
 import "./index.css";
 import RecommendationPage from "./components/RecommendationPage";
@@ -8,6 +6,7 @@ import CreateAccount from "./components/CreateAccount";
 import Welcome from "./components/Welcome";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { UserProvider } from "./components/UserContext";
+import UserLibrary from "./components/UserLibrary";
 
 function App() {
   return (
@@ -19,6 +18,7 @@ function App() {
           <Route path="/createAccount" element={<CreateAccount />} />
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/recommendation" element={<RecommendationPage />} />
+          <Route path="/userLibrary" element={<UserLibrary />} />
         </Routes>
       </Router>
     </UserProvider>
