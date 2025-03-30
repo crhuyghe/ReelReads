@@ -31,6 +31,7 @@ const Welcome = () => {
   useEffect(() => {
     const fetchTilesData = async () => {
       if (!user?.user_id) return; // Ensure user_id exists before making the request
+
       try {
         const response = await axios.post("http://localhost:5000/recommend", {
           userId: user.user_id,
