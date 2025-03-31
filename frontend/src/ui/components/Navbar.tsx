@@ -9,6 +9,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     setUser(null);
+    localStorage.removeItem("user"); // Clear user from localStorage
     console.log(user);
   };
   return (

@@ -4,6 +4,7 @@ import RecTile from "./RecTile";
 import Stars from "./Stars";
 import Navbar from "./Navbar";
 import axios from "axios";
+import { useUser } from "./UserContext";
 
 interface Tile {
   type: "book" | "movie";
@@ -31,7 +32,10 @@ const RecommendationPage: React.FC = () => {
   const [showTiles, setShowTiles] = useState<boolean>(false);
   const [selectedTile, setSelectedTile] = useState<Tile | null>(null);
   const [showPopup, setShowPopup] = useState<boolean>(false);
+  const [addShowPopup, setAddShowPopup] = useState<boolean>(false);
   // const [fetchedData, setFetchedData] = useState<Tile[]>([]);
+
+  const { user } = useUser();
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
@@ -139,12 +143,63 @@ const RecommendationPage: React.FC = () => {
 
   const addTile = (tile: Tile) => {
     //ADD CODE TO ADD TILE INFO
+    setAddShowPopup(!addShowPopup);
     console.log("added tile to user data", tile);
+  };
+
+  //needs to send user_id, and id of the tile
+  const handleAddRec = (tile: Tile) => {
+    console.log("Made it inside handleAddRec. User_id: ", user?.user_id);
+    if (!user?.user_id) return; // Ensure user_id exists before making the request
+    console.log("has a user id");
+    const data: any = {
+      userId: user.user_id,
+    };
+
+    if (tile.type === "movie") {
+      data.movieId = tile.movie_id;
+    } else if (tile.type === "book") {
+      data.isbn = tile.isbn;
+    }
+
+    axios
+      .post("http://localhost:5000/addRec", data)
+      .then((response) => {
+        console.log("Data sent successfully:", response);
+      })
+      .catch((error) => {
+        console.error("Error sending data:", error);
+      });
+  };
+
+  //needs to send user_id, rating, and id of tile
+  //TODO: Still need to prompt a rating!!!
+  const handleAddLibrary = (tile: Tile) => {
+    if (!user?.user_id) return; // Ensure user_id exists before making the request
+    const data: any = {
+      userId: user.user_id,
+    };
+
+    if (tile.type === "movie") {
+      data.movieId = tile.movie_id;
+    } else if (tile.type === "book") {
+      data.isbn = tile.isbn;
+    }
+
+    axios
+      .post("http://localhost:5000/addRec", data)
+      .then((response) => {
+        console.log("Data sent successfully:", response);
+      })
+      .catch((error) => {
+        console.error("Error sending data:", error);
+      });
   };
 
   return (
     <>
       <Navbar />
+      <h2>CURRENT USER: {user?.user_id}</h2>
       <div className="">
         <SearchRec onSearch={handleSearch} />
         <div className="flex justify-center mt-[2rem]">
@@ -211,6 +266,22 @@ const RecommendationPage: React.FC = () => {
               >
                 +
               </button>
+              {addShowPopup && (
+                <div className="z-20 absolute right-0 -mt-32 w-40 bg-white shadow-md rounded-md border p-2 text-left">
+                  <button
+                    onClick={() => handleAddRec(selectedTile)}
+                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                  >
+                    Add to Watch List
+                  </button>
+                  <button
+                    onClick={() => handleAddLibrary(selectedTile)}
+                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                  >
+                    Add to Library
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         )}
