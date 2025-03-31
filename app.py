@@ -3,7 +3,7 @@ from flask_cors import CORS  # cross-origin requests
 
 from backend.RecommendationManager import RecommendationManager
 from backend.database_func import create_new_user, validate_user_login, get_books_by_isbn, get_movies_by_id, \
-    get_user_vector, get_user_history
+    get_user_vector, get_user_history, insert_into_watch_read_list
 from backend.ImageAcquisition import handle_book_search, handle_movie_search
 
 app = Flask(__name__)
@@ -98,6 +98,26 @@ def recommend():
         return jsonify({"message": "Fetch Successful", "fetched_data": fetched_data}), 200
     else:
         return jsonify({"message": "No recommendations found"}), 400
+
+
+@app.route('/addLib', methods=['POST'])
+def addLib():
+    data = request.get_json()
+    user_id = data.get("userId")
+    user_rating = data.get("rating")
+    content_type = data.get("type")
+    identifier = data.get("identifier")
+    return insert_into_watch_read_list(user_id, user_rating, identifier, content_type), 200
+
+@app.route('/addList', methods=['POST'])
+def addList():
+    data = request.get_json()
+    user_id = data.get("userId")
+    content_type = data.get("type")
+    identifier = data.get("identifier")
+    return insert_into_watch_read_list(user_id, None, identifier, content_type), 200
+
+
 
 # Run Flask app
 if __name__ == '__main__':

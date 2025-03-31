@@ -94,16 +94,17 @@ const RecommendationPage: React.FC = () => {
     console.log("has a user id");
     const data: any = {
       userId: user.user_id,
+      type: tile.type,
     };
 
     if (tile.type === "movie") {
-      data.movieId = tile.movie_id;
+      data.identifier = tile.movie_id;
     } else if (tile.type === "book") {
-      data.isbn = tile.isbn;
+      data.identifier = tile.isbn;
     }
 
     axios
-      .post("http://localhost:5000/addRec", data)
+      .post("http://localhost:5000/addList", data)
       .then((response) => {
         console.log("Data sent successfully:", response);
       })
@@ -114,7 +115,7 @@ const RecommendationPage: React.FC = () => {
 
   //needs to send user_id, rating, and id of tile
   //TODO: Still need to prompt a rating!!!
-  const handleAddLibrary = (tile: Tile) => {
+  const handleAddLibrary = () => {
     if (!user?.user_id) return; // Ensure user_id exists before making the request
 
     // Show the rating popup
@@ -131,18 +132,21 @@ const RecommendationPage: React.FC = () => {
     const data: any = {
       userId: user?.user_id,
       rating: rating,
+      type: tile.type,
     };
 
     console.log("rating selected: ", data.rating);
 
     if (tile.type === "movie") {
-      data.movieId = tile.movie_id;
+      data.identifier = tile.movie_id;
     } else if (tile.type === "book") {
-      data.isbn = tile.isbn;
+      data.identifier = tile.isbn;
     }
 
+    console.log("Sending to backend: ", data);
+
     axios
-      .post("http://localhost:5000/addRec", data)
+      .post("http://localhost:5000/addLib", data)
       .then((response) => {
         console.log("Data sent successfully:", response);
       })
@@ -234,7 +238,7 @@ const RecommendationPage: React.FC = () => {
                     Add to Watch List
                   </button>
                   <button
-                    onClick={() => handleAddLibrary(selectedTile)}
+                    onClick={() => handleAddLibrary()}
                     className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
                   >
                     Add to Library
@@ -326,7 +330,7 @@ const RecommendationPage: React.FC = () => {
                     Add to Read List
                   </button>
                   <button
-                    onClick={() => handleAddLibrary(selectedTile)}
+                    onClick={() => handleAddLibrary()}
                     className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
                   >
                     Add to Library

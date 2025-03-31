@@ -161,6 +161,32 @@ def get_movies_by_id(movie_id):
     conn.close()
     return fetched_movie_data
 
+def insert_into_watch_read_list(user_id, user_rating, identifier, content_type):
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+
+        if content_type == "movie":
+            insert_query = ("INSERT INTO watch_read_list_table (user_id, movie_id, user_rating) VALUES (%s, %s, %s)")
+            values = (user_id, identifier, user_rating)
+        else:
+            insert_query = ("INSERT INTO watch_read_list_table (user_id, isbn, user_rating) VALUES (%s, %s, %s)")
+            values = (user_id, identifier, user_rating)
+
+        cursor.execute(insert_query, values)
+        conn.commit()
+        print("Insert successful!")
+        return {"success": True, "rows_affected": cursor.rowcount}
+
+    except mysql.connector.Error as error:
+        conn.rollback() 
+        print(f"Error: {error}")
+        return {"success": False, "error": str(error)}
+
+    finally:
+        cursor.close()
+        conn.close()
+
 
 
 
