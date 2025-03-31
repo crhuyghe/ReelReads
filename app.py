@@ -3,7 +3,7 @@ from flask_cors import CORS  # cross-origin requests
 
 from backend.RecommendationManager import RecommendationManager
 from backend.database_func import create_new_user, validate_user_login, get_books_by_isbn, get_movies_by_id, \
-    get_user_vector, get_user_history, insert_into_watch_read_list
+    get_user_vector, get_user_history, insert_into_watch_read_list, select_watch_read_list
 from backend.ImageAcquisition import handle_book_search, handle_movie_search
 
 app = Flask(__name__)
@@ -117,7 +117,11 @@ def addList():
     identifier = data.get("identifier")
     return insert_into_watch_read_list(user_id, None, identifier, content_type), 200
 
-
+@app.route('/grabList', methods=["POST"])
+def grabList():
+    data = request.get_json()
+    user_id = data.get("userId")
+    return select_watch_read_list(user_id), 200
 
 # Run Flask app
 if __name__ == '__main__':

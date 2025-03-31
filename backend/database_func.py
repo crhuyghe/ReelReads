@@ -187,6 +187,10 @@ def insert_into_watch_read_list(user_id, user_rating, identifier, content_type):
         cursor.close()
         conn.close()
 
+def select_watch_read_list(user_id):
+    #SELECT QUERY! I need the identifier and type back
+    print()
+
 
 
 
