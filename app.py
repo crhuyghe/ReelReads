@@ -121,7 +121,49 @@ def addList():
 def grabList():
     data = request.get_json()
     user_id = data.get("userId")
-    return select_watch_read_list(user_id), 200
+    print("app.py", user_id)
+    identifiers = select_watch_read_list(user_id)
+
+    movie_ids, isbns = process_identifiers(identifiers)
+
+    fetched_movie_data = get_movies_by_id(movie_ids) if movie_ids else []
+    fetched_book_data = get_books_by_isbn(isbns) if isbns else []
+
+    fetched_data = fetched_book_data + fetched_movie_data
+    if fetched_movie_data or fetched_book_data:
+        return jsonify({"message": "Fetch Successful", "fetched_data": fetched_data}), 200
+    else:
+        return jsonify({"message": "No recommendations found"}), 400
+
+def process_identifiers(identifiers):
+    movie_ids = []
+    isbns = []
+
+    for isbn, movie_id in identifiers:
+        if isbn is None:
+            movie_ids.append(movie_id)  # Collect movie IDs
+        elif movie_id is None:
+            isbns.append(isbn)  # Collect ISBNs
+
+    return movie_ids, isbns
+
+@app.route('/removeList', methods=['PSOT'])
+def removeList():
+    data = request.get_json()
+    user_id = data.get("userId")
+    content_type = data.get("type")
+    identifier = data.get("identifier")
+    return #CALL DATABASE FUNC TO REMOVE FROM READ WATCH LIST
+
+@app.route('/updateLib', methods=['POST'])
+def updateLib():
+    data = request.get_json()
+    user_id = data.get("userId")
+    user_rating = data.get("rating")
+    content_type = data.get("type")
+    identifier = data.get("identifier")
+    return #CALL DATABASE FUNC TO UPDATE READ WATCH LIST AND ADD IN THE RATING
+
 
 # Run Flask app
 if __name__ == '__main__':
