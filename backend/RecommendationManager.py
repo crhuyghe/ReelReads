@@ -58,15 +58,6 @@ class RecommendationManager:
 
             return joined_movies.head(top_n), joined_books.head(top_n)
 
-        # movies = pd.read_csv("database/movie_data/movies_metadata_trimmed.csv", usecols=["id", "original_title"])
-        #
-        # print(movies.loc[movies["id"].isin(set(joined_movies.head(top_n)["id"])), ("original_title", "id")])
-        # books = pd.read_csv("database/book_data/cleaned_books_5000.csv", usecols=["ISBN", "Name"])
-        #
-        # print(books.loc[books["ISBN"].isin(set(joined_books.head(top_n)["ISBN"])), ("Name", "ISBN")])
-
-
-
     def search_by_query(self, query, top_n=5):
         """Returns the top N most similar books and movies to the provided query."""
         embedding = self._embedding_model.encode(query)
@@ -96,6 +87,17 @@ class RecommendationManager:
         bdf.sort_values(by="sim", ascending=False, inplace=True)
 
         return mdf.head(top_n), bdf.head(top_n+1).iloc[1:]
+
+    def update_user_vector(self, user_vector, identifier, content_type, rating):
+        """Takes in previous user data and returns an updated user vector"""
+        if content_type == "movie":
+            embedding = self._movie_embeddings.loc[self._movie_embeddings["id"] == identifier].iloc[0, 1:].to_numpy()
+        else:
+            embedding = self._book_embeddings.loc[self._book_embeddings["ISBN"] == identifier].iloc[0, 1:].to_numpy()
+
+        new_vector = (np.array(user_vector) * 6) + (embedding * (rating - 2))
+        new_vector /= np.linalg.norm(new_vector)
+        return new_vector
 
     def _get_embeddings(self):
         """Fetches book and movie embeddings."""

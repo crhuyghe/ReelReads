@@ -107,6 +107,12 @@ def addLib():
     user_rating = data.get("rating")
     content_type = data.get("type")
     identifier = data.get("identifier")
+
+    user_vector = get_user_vector(user_id)
+    updated_vector = rm.update_user_vector(user_vector, identifier, content_type, user_rating)
+
+    # Send updated vector to database
+
     return insert_into_watch_read_list(user_id, user_rating, identifier, content_type), 200
 
 @app.route('/addList', methods=['POST'])
