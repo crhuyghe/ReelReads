@@ -265,6 +265,27 @@ def update_watch_read_list(user_id, user_rating, identifier, content_type):
     finally:
         cursor.close()
         conn.close()
+
+def select_library(user_id):
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+
+        print(user_id)
+
+        select_query = ("SELECT isbn, movie_id FROM watch_read_list_table WHERE user_id = %s AND user_rating IS NOT NULL")
+        values = (user_id,)
+
+        cursor.execute(select_query, values)
+        fetched_list_data = cursor.fetchall()
+        print("select query results:", fetched_list_data)
+        return fetched_list_data
+    
+    except mysql.connector.Error as error:
+        conn.rollback() 
+        print(f"Error: {error}")
+        return {"success": False, "error": str(error)}
+
 '''
 movies = insert_into_watch_read_list(1, 5.0, 5, "movie")
 print(movies)

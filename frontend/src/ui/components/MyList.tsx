@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
-import Stars from "./Stars";
 import StarRating from "./StarRating";
 import { useUser } from "./UserContext";
 import axios from "axios";
