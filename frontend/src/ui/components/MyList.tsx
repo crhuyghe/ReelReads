@@ -57,14 +57,15 @@ const MyList: React.FC = () => {
     const data: any = {
       userId: user?.user_id,
       rating: rating,
-      type: tile.type,
     };
 
     console.log("rating selected: ", data.rating);
 
-    if (tile.type === "movie") {
+    if (tile.movie_id) {
+      data.type = "movie";
       data.identifier = tile.movie_id;
-    } else if (tile.type === "book") {
+    } else {
+      data.type = "book";
       data.identifier = tile.isbn;
     }
 
@@ -74,6 +75,7 @@ const MyList: React.FC = () => {
       .post("http://localhost:5000/updateLib", data)
       .then((response) => {
         console.log("Data sent successfully:", response);
+        setTiles((prevTiles) => prevTiles.filter((t) => t !== tile)); //filter out the one you added to watched for now until the user comes back to page
       })
       .catch((error) => {
         console.error("Error sending data:", error);
