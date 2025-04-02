@@ -213,14 +213,23 @@ def delete_watch_read_list(user_id, identifier, content_type):
         cursor = conn.cursor()
 
         if content_type == "movie":
+            cursor.execute("SELECT * FROM watch_read_list_table WHERE user_id = %s AND movie_id = %s", (user_id, identifier))
+            result = cursor.fetchall()
+            print("Records found before delete:", result)
             delete_query = "DELETE FROM watch_read_list_table WHERE user_id = %s AND movie_id = %s"
+            print("Delete successful!:", delete_query)
+            values = (user_id, int(identifier))
         else:
+            cursor.execute("SELECT * FROM watch_read_list_table WHERE user_id = %s AND isbn = %s", (user_id, identifier))
+            result = cursor.fetchall()
+            print("Records found before delete:", result)
             delete_query = "DELETE FROM watch_read_list_table WHERE user_id = %s AND isbn = %s"
+            print("Delete successful!:", delete_query)
+            values = (user_id, str(identifier))
 
-        values = (user_id, identifier)
         cursor.execute(delete_query, values)
         conn.commit()
-        print("Delete successful!")
+        print("Rows affected:", cursor.rowcount)
         return {"success": True, "rows_affected": cursor.rowcount}
 
     except mysql.connector.Error as error:

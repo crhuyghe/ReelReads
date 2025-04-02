@@ -3,7 +3,7 @@ from flask_cors import CORS  # cross-origin requests
 
 from backend.RecommendationManager import RecommendationManager
 from backend.database_func import create_new_user, validate_user_login, get_books_by_isbn, get_movies_by_id, \
-    get_user_vector, get_user_history, insert_into_watch_read_list, select_watch_read_list
+    get_user_vector, get_user_history, insert_into_watch_read_list, select_watch_read_list, delete_watch_read_list, update_watch_read_list
 from backend.ImageAcquisition import handle_book_search, handle_movie_search
 
 app = Flask(__name__)
@@ -153,13 +153,14 @@ def process_identifiers(identifiers):
 
     return movie_ids, isbns
 
-@app.route('/removeList', methods=['PSOT'])
+@app.route('/removeList', methods=['POST'])
 def removeList():
     data = request.get_json()
     user_id = data.get("userId")
     content_type = data.get("type")
     identifier = data.get("identifier")
-    return #CALL DATABASE FUNC TO REMOVE FROM READ WATCH LIST
+    print("testing: ", user_id, identifier, content_type)
+    return delete_watch_read_list(user_id, identifier, content_type)
 
 @app.route('/updateLib', methods=['POST'])
 def updateLib():
@@ -168,7 +169,7 @@ def updateLib():
     user_rating = data.get("rating")
     content_type = data.get("type")
     identifier = data.get("identifier")
-    return #CALL DATABASE FUNC TO UPDATE READ WATCH LIST AND ADD IN THE RATING
+    return update_watch_read_list(user_id, user_rating, identifier, content_type)
 
 
 # Run Flask app

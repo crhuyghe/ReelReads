@@ -81,15 +81,16 @@ const MyList: React.FC = () => {
   };
 
   const handleRemove = (tile: Tile) => {
-    //NEED TO DELETE THIS ROW FROM THE DATABASE
+    console.log("removing tile: ", tile);
     const data: any = {
       userId: user?.user_id,
-      type: tile.type,
     };
 
-    if (tile.type === "movie") {
+    if (tile.movie_id) {
+      data.type = "movie";
       data.identifier = tile.movie_id;
-    } else if (tile.type === "book") {
+    } else {
+      data.type = "book";
       data.identifier = tile.isbn;
     }
 
@@ -99,6 +100,7 @@ const MyList: React.FC = () => {
       .post("http://localhost:5000/removeList", data)
       .then((response) => {
         console.log("Data removed successfully:", response);
+        setTiles((prevTiles) => prevTiles.filter((t) => t !== tile)); //filter out the one you deleted for now until the user comes back to page
       })
       .catch((error) => {
         console.error("Error sending data:", error);
