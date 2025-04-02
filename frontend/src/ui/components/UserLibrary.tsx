@@ -108,7 +108,7 @@ const UserLibrary: React.FC = () => {
                       ))}
                   </div>
                   {/* Shelf under each row */}
-                  <div className="w-full border-b-4 border-gray-600 mt-4"></div>
+                  <div className="w-full border-b-4 border-gray-600 mt-4 mb-12"></div>
                 </div>
               )
             )}
