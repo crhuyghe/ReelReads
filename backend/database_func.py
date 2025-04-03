@@ -45,7 +45,7 @@ def create_new_user(username, password):
 
         login_query = ("INSERT INTO user_login_table (username, password) VALUES (%s, %s)")
         values = (username, hashed_passwd)
-    
+
         cursor.execute(login_query, values)
         conn.commit()
         print("Successfully created account!")
@@ -123,14 +123,14 @@ def validate_user_login(username, password):
 
 def get_books_by_isbn(isbn):
     if not isbn:
-        return 
+        return
 
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
 
     # Query makes it possible to get multiple movie_id's
     get_books_query = (f"SELECT isbn, book_name, author, publication_date, description, book_rating, book_rating_count, publisher FROM books_table WHERE isbn IN ({', '.join(['%s'] * len(isbn))})")
-    
+
     cursor.execute(get_books_query, tuple(isbn))
     fetched_book_data = cursor.fetchall()
 
@@ -148,7 +148,7 @@ def get_movies_by_id(movie_id):
 
     # Query makes it possible to get multiple isbn's
     get_movies_query = (f"SELECT movie_id, imdb_id, title, genre, release_date, movie_rating, movie_rating_count, description, runtime FROM movies_table WHERE movie_id IN ({', '.join(['%s'] * len(movie_id))})")
-    
+
     cursor.execute(get_movies_query, tuple(movie_id))
     fetched_movie_data = cursor.fetchall()
 
@@ -186,7 +186,7 @@ def insert_into_watch_read_list(user_id, user_rating, identifier, content_type):
         return {"success": True, "rows_affected": cursor.rowcount}
 
     except mysql.connector.Error as error:
-        conn.rollback() 
+        conn.rollback()
         print(f"Error: {error}")
         return {"success": False, "error": str(error)}
 
@@ -263,9 +263,9 @@ def select_watch_read_list(user_id):
         fetched_list_data = cursor.fetchall()
         print("select query results:", fetched_list_data)
         return fetched_list_data
-    
+
     except mysql.connector.Error as error:
-        conn.rollback() 
+        conn.rollback()
         print(f"Error: {error}")
         return {"success": False, "error": str(error)}
 
@@ -342,12 +342,12 @@ def select_library(user_id):
         fetched_list_data = cursor.fetchall()
         print("select query results:", fetched_list_data)
         return fetched_list_data
-    
+
     except mysql.connector.Error as error:
-        conn.rollback() 
+        conn.rollback()
         print(f"Error: {error}")
         return {"success": False, "error": str(error)}
-    
+
 
 def insert_user_history(user_id, user_history):
     try:
@@ -367,7 +367,7 @@ def insert_user_history(user_id, user_history):
         conn.rollback()
         print(f"Error: {error}")
         return {"success": False, "error": str(error)}
-    
+
     finally:
         cursor.close()
         conn.close()
@@ -391,7 +391,7 @@ def insert_user_vector(user_id, user_vector):
         conn.rollback()
         print(f"Error: {error}")
         return {"success": False, "error": str(error)}
-    
+
     finally:
         cursor.close()
         conn.close()
@@ -415,7 +415,7 @@ def update_user_history(user_id, user_history):
         conn.rollback()
         print(f"Error: {error}")
         return {"success": False, "error": str(error)}
-    
+
     finally:
         cursor.close()
         conn.close()
@@ -439,7 +439,7 @@ def update_user_vector(user_id, user_vector):
         conn.rollback()
         print(f"Error: {error}")
         return {"success": False, "error": str(error)}
-    
+
     finally:
         cursor.close()
         conn.close()
@@ -491,6 +491,8 @@ def get_user_vector(user_id):
         cursor.close()
         conn.close()
 
+def update_user_info(user_id, user_vec, user_history):
+    pass
 
 def get_user_library_watch_read_items(user_id):
     try:
