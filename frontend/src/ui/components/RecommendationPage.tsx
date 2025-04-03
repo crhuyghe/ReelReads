@@ -4,6 +4,8 @@ import RecTile from "./RecTile";
 import Stars from "./Stars";
 import Navbar from "./Navbar";
 import axios from "axios";
+import { useUser } from "./UserContext";
+import StarRating from "./StarRating";
 
 interface Tile {
   type: "book" | "movie";
@@ -31,77 +33,19 @@ const RecommendationPage: React.FC = () => {
   const [showTiles, setShowTiles] = useState<boolean>(false);
   const [selectedTile, setSelectedTile] = useState<Tile | null>(null);
   const [showPopup, setShowPopup] = useState<boolean>(false);
+  const [addShowPopup, setAddShowPopup] = useState<boolean>(false);
+
+  const [rating, setRating] = useState<number | null>(null);
+  const [showRatingPopup, setShowRatingPopup] = useState(false);
   // const [fetchedData, setFetchedData] = useState<Tile[]>([]);
+
+  const { user } = useUser();
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
     console.log("Search query: ", query);
   };
 
-  /* THIS IS FOR TESTING PURPOSES ONLY COMMENT OUT WHEN USING BACKEND */
-  // const handleSearchRecommendClick = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   const fetchedData: Tile[] = [
-  //     {
-  //       type: "book",
-  //       id: 1,
-  //       imageUrl: "https://via.placeholder.com/150",
-  //       title: "Tile 1",
-  //       summary: "This is a summary of Tile 1",
-  //       author: "Author 1",
-  //       rating: 4.5,
-  //     },
-  //     {
-  //       type: "book",
-  //       id: 2,
-  //       imageUrl: "https://via.placeholder.com/150",
-  //       title: "Tile 2",
-  //       summary: "This is a summary of Tile 2",
-  //       author: "Author 2",
-  //       rating: 3.8,
-  //     },
-  //     {
-  //       type: "movie",
-  //       id: 3,
-  //       imageUrl: "https://via.placeholder.com/150",
-  //       title: "Tile 3",
-  //       summary: "This is a summary of Tile 3",
-  //       author: "Author 3",
-  //       rating: 4.2,
-  //     },
-  //     {
-  //       type: "book",
-  //       id: 4,
-  //       imageUrl: "https://via.placeholder.com/150",
-  //       title: "Tile 4",
-  //       summary: "This is a summary of Tile 4",
-  //       author: "Author 4",
-  //       rating: 4.0,
-  //     },
-  //     {
-  //       type: "movie",
-  //       id: 5,
-  //       imageUrl: "https://via.placeholder.com/150",
-  //       title: "Tile 5",
-  //       summary: "This is a summary of Tile 5",
-  //       author: "Author 5",
-  //       rating: 4.7,
-  //     },
-  //     {
-  //       type: "book",
-  //       id: 6,
-  //       imageUrl: "https://via.placeholder.com/150",
-  //       title: "Tile 6",
-  //       summary: "This is a summary of Tile 6",
-  //       author: "Author 6",
-  //       rating: 3.5,
-  //     },
-  //   ];
-  //   setTilesData(fetchedData);
-  //   setShowTiles(true);
-  // };
-
-  /* THIS IS FOR REAL, UNCOMMENT WHEN DONE TESTING */
   const handleSearchRecommendClick = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -139,12 +83,86 @@ const RecommendationPage: React.FC = () => {
 
   const addTile = (tile: Tile) => {
     //ADD CODE TO ADD TILE INFO
+    setAddShowPopup(!addShowPopup);
     console.log("added tile to user data", tile);
+  };
+
+  //needs to send user_id, and id of the tile
+  const handleAddRec = (tile: Tile) => {
+    console.log("Made it inside handleAddRec. User_id: ", user?.user_id);
+    if (!user?.user_id) return; // Ensure user_id exists before making the request
+    console.log("has a user id");
+    const data: any = {
+      userId: user.user_id,
+      type: tile.type,
+    };
+
+    if (tile.type === "movie") {
+      data.identifier = tile.movie_id;
+    } else if (tile.type === "book") {
+      data.identifier = tile.isbn;
+    }
+
+    axios
+      .post("http://localhost:5000/addList", data)
+      .then((response) => {
+        console.log("Data sent successfully:", response);
+      })
+      .catch((error) => {
+        console.error("Error sending data:", error);
+      });
+  };
+
+  //needs to send user_id, rating, and id of tile
+  //TODO: Still need to prompt a rating!!!
+  const handleAddLibrary = () => {
+    if (!user?.user_id) return; // Ensure user_id exists before making the request
+
+    // Show the rating popup
+    setShowRatingPopup(true);
+  };
+
+  const handleRate = (newRating: number) => {
+    setRating(newRating);
+  };
+
+  const handleSubmit = (tile: Tile) => {
+    if (!rating) return;
+
+    const data: any = {
+      userId: user?.user_id,
+      rating: rating,
+      type: tile.type,
+    };
+
+    console.log("rating selected: ", data.rating);
+
+    if (tile.type === "movie") {
+      data.identifier = tile.movie_id;
+    } else if (tile.type === "book") {
+      data.identifier = tile.isbn;
+    }
+
+    console.log("Sending to backend: ", data);
+
+    axios
+      .post("http://localhost:5000/addLib", data)
+      .then((response) => {
+        console.log("Data sent successfully:", response);
+      })
+      .catch((error) => {
+        console.error("Error sending data:", error);
+      });
+
+    setTimeout(() => {
+      setShowRatingPopup(false); // Close popup after 0.3 seconds
+    }, 300);
   };
 
   return (
     <>
       <Navbar />
+      <h2>CURRENT USER: {user?.user_id}</h2>
       <div className="">
         <SearchRec onSearch={handleSearch} />
         <div className="flex justify-center mt-[2rem]">
@@ -211,6 +229,45 @@ const RecommendationPage: React.FC = () => {
               >
                 +
               </button>
+              {addShowPopup && (
+                <div className="z-20 absolute right-0 -mt-32 w-40 bg-white shadow-md rounded-md border p-2 text-left">
+                  <button
+                    onClick={() => handleAddRec(selectedTile)}
+                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                  >
+                    Add to Watch List
+                  </button>
+                  <button
+                    onClick={() => handleAddLibrary()}
+                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                  >
+                    Add to Library
+                  </button>
+                  {showRatingPopup && (
+                    <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
+                      <div className="bg-white p-6 rounded-lg w-[60%] relative">
+                        <button
+                          onClick={() => setShowRatingPopup(false)} // Close the popup
+                          className="absolute top-2 right-3 text-lg font-bold"
+                        >
+                          X
+                        </button>
+                        <h2 className="text-xl font-semibold mb-4">
+                          Rate {selectedTile.title}
+                        </h2>
+                        <StarRating onRate={handleRate} />{" "}
+                        {/* Your star rating component */}
+                        <button
+                          onClick={() => handleSubmit(selectedTile)}
+                          className="mt-4 bg-blue-500 text-white rounded px-4 py-2"
+                        >
+                          Submit Rating
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -264,6 +321,45 @@ const RecommendationPage: React.FC = () => {
               >
                 +
               </button>
+              {addShowPopup && (
+                <div className="z-20 absolute right-0 -mt-32 w-40 bg-white shadow-md rounded-md border p-2 text-left">
+                  <button
+                    onClick={() => handleAddRec(selectedTile)}
+                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                  >
+                    Add to Read List
+                  </button>
+                  <button
+                    onClick={() => handleAddLibrary()}
+                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                  >
+                    Add to Library
+                  </button>
+                  {showRatingPopup && (
+                    <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
+                      <div className="bg-white p-6 rounded-lg w-[60%] relative">
+                        <button
+                          onClick={() => setShowRatingPopup(false)} // Close the popup
+                          className="absolute top-2 right-3 text-lg font-bold"
+                        >
+                          X
+                        </button>
+                        <h2 className="text-xl font-semibold mb-4">
+                          Rate {selectedTile.book_name}
+                        </h2>
+                        <StarRating onRate={handleRate} />{" "}
+                        {/* Your star rating component */}
+                        <button
+                          onClick={() => handleSubmit(selectedTile)}
+                          className="mt-4 bg-blue-500 text-white rounded px-4 py-2"
+                        >
+                          Submit Rating
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         )}
