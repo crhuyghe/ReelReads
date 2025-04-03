@@ -3,7 +3,7 @@ from flask_cors import CORS  # cross-origin requests
 
 from backend.RecommendationManager import RecommendationManager
 from backend.database_func import create_new_user, validate_user_login, get_books_by_isbn, get_movies_by_id, \
-    get_user_vector, get_user_history, insert_into_watch_read_list, select_watch_read_list, delete_watch_read_list, update_watch_read_list, select_library
+    get_user_vector, get_user_history, insert_into_watch_read_list, select_watch_read_list, delete_watch_read_list, update_watch_read_list, select_library, insert_update_into_watch_read_list
 from backend.ImageAcquisition import handle_book_search, handle_movie_search
 
 app = Flask(__name__)
@@ -159,7 +159,7 @@ def addLib():
 
     # Send updated vector to database
 
-    return insert_into_watch_read_list(user_id, user_rating, identifier, content_type), 200
+    return insert_update_into_watch_read_list(user_id, user_rating, identifier, content_type), 200
 
 @app.route('/updateLib', methods=['POST'])
 def updateLib():
