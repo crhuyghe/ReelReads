@@ -14,11 +14,7 @@ const Welcome = () => {
         </div>
         <div className="w-[70%]">
           {/* QUIZ */}
-          <QuizQuestion
-            question={"this is a question?"}
-            answers={["answer a", "answer b", "answer c", "answer d"]}
-            correct="a"
-          />
+          <QuizQuestion />
         </div>
       </div>
     </>
