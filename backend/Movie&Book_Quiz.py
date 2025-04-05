@@ -1,34 +1,6 @@
 import random
 
 
-def run_quiz(movie_questions, book_questions):
-    selected_movie_questions = random.sample(movie_questions, 5)
-    selected_book_questions = random.sample(book_questions, 5)
-
-    selected_questions = selected_movie_questions + selected_book_questions
-    random.shuffle(selected_questions)
-
-    score = 0
-    for question, options, answer in selected_questions:
-        print(question)
-        scrambled_options = random.sample(options, len(options))
-        for i, option in enumerate(scrambled_options):
-            print(f"{i + 1}. {option}")
-        while True:
-            try:
-                user_answer = int(input("Enter your answer (1-{}): ".format(len(options))))
-                if 1 <= user_answer <= len(options):
-                    break
-                else:
-                    print("Invalid input. Please enter a number within the range.")
-            except ValueError:
-                print("Invalid input. Please enter a number.")
-        if scrambled_options[user_answer - 1] == answer:
-            score += 1
-        print("-" * 20)
-    print(f"You scored {score} out of {len(selected_questions)} questions.")
-
-
 def main():
     movie_questions = [
         ("What is the name of the snowman in 'Frozen'?", ["Frosty", "Snowy", "Olaf", "Iceman"], "Olaf"),
@@ -42,12 +14,12 @@ def main():
         ("In 'Zootopia', what animal is Judy Hopps?", ["Fox", "Elephant", "Rabbit", "Lion"], "Rabbit"),
         ("Who provided the voice for Genie in the 1992 'Aladdin'?", ["Tom Hanks", "Jim Carrey", "Robin Williams", "Will Smith"], "Robin Williams"),
         ("Which movie features a villain named Lord Farquaad?", ["Shrek", "Tangled", "Frozen", "Moana"], "Shrek"),
-        ("In 'Fight Club,' what rule is most associated with Fight Club?", ["You do not talk about Fight Club", "Always fight", "No rules", "Fight to win"], "You do not talk about Fight Club"),
+        ("In 'Fight Club,' what rule is most associated with Fight Club?", ["You do not talk about Fight Club", "Always fight", "No rules", "Fight to win"],"You do not talk about Fight Club"),
         ("In 'Office Space', what is the name of the main character?", ["Michael Bolton", "Bill Lumbergh", "Peter Gibbons", "Samir Nagheenanajar"], "Peter Gibbons"),
         ("In 'Harry Potter', what is the name of Harry's pet owl?", ["Errol", "Pigwidgeon", "Hedwig", "Fawkes"], "Hedwig"),
         ("In 'The Chronicles of Narnia', what is the name of the lion?", ["Aslan", "Simba", "Mufasa", "Scar"], "Aslan"),
-        ("What fantasy series involves a dark lord known as Sauron?", ["Harry Potter", "The Chronicles of Narnia", "The Lord of the Rings", "Percy Jackson"], "The Lord of the Rings"),
-        ("What is the fictional sport played in 'Harry Potter'?", ["Soccer", "Quidditch", "Basketball", "Rugby"], "Quidditch"),
+        ("What fantasy series involves a dark lord known as Sauron?", ["Harry Potter", "The Chronicles of Narnia", "The Lord of the Rings", "Percy Jackson"],"The Lord of the Rings"),
+        ("What is the fictional sport played in 'Harry Potter'?", ["Soccer", "Quidditch", "Basketball", "Rugby"],"Quidditch"),
         ("Which person has not held the title of Captain America in the MCU?", ["Steve Rogers", "John Walker", "Tony Stark", "Sam Wilson"], "Tony Stark"),
         ("Who cut Thanos' head off in 'Avengers: Endgame'?", ["Iron Man", "Thor", "Hulk", "Captain America"], "Thor"),
         ("In 'Avengers: Endgame', which infinity stone does Natasha sacrifice herself for?", ["Soul Stone", "Time Stone", "Mind Stone", "Power Stone"], "Soul Stone"),
@@ -85,7 +57,24 @@ def main():
         ("What is the name of the author of 'The Da Vinci Code'?", ["Dan Brown", "Stephen King", "J.K. Rowling", "Agatha Christie"], "Dan Brown"),
     ]
 
-    run_quiz(movie_questions, book_questions)
+    selected_movie_questions = random.sample(movie_questions, 5)
+    selected_book_questions = random.sample(book_questions, 5)
+
+    selected_questions = selected_movie_questions + selected_book_questions
+    random.shuffle(selected_questions)
+
+    questions = []
+    answers = []
+    correct_answers = []
+
+    for question, options, answer in selected_questions:
+        scrambled_options = random.sample(options, len(options))
+        questions.append(question)
+        answers.append(scrambled_options)
+        correct_answers.append(answer)
+
+    return questions, answers, correct_answers
+
 
 if __name__ == "__main__":
     main()
