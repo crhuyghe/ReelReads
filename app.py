@@ -5,6 +5,8 @@ from backend.RecommendationManager import RecommendationManager
 from backend.database_func import create_new_user, validate_user_login, get_books_by_isbn, get_movies_by_id, \
     get_user_vector, get_user_history, insert_into_watch_read_list, select_watch_read_list, delete_watch_read_list, update_watch_read_list, select_library
 from backend.ImageAcquisition import handle_book_search, handle_movie_search
+from backend.Movie_Book_Quiz import main
+
 
 app = Flask(__name__)
 rm = RecommendationManager()
@@ -199,6 +201,12 @@ def process_identifiers(identifiers):
             isbns.append(isbn)  # Collect ISBNs
 
     return movie_ids, isbns
+
+
+@app.route('/grabQuiz', methods=['POST'])
+def grabQuiz():
+    fetched_quiz = main()
+    return jsonify({"fetched_quiz": fetched_quiz})
     
 
 
