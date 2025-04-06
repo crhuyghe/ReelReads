@@ -3,8 +3,10 @@ from flask_cors import CORS  # cross-origin requests
 
 from backend.RecommendationManager import RecommendationManager
 from backend.database_func import create_new_user, validate_user_login, get_books_by_isbn, get_movies_by_id, \
-    get_user_vector, get_user_history
+    get_user_vector, get_user_history, insert_into_watch_read_list, select_watch_read_list, delete_watch_read_list, update_watch_read_list, select_library
 from backend.ImageAcquisition import handle_book_search, handle_movie_search
+from backend.Movie_Book_Quiz import main
+
 
 app = Flask(__name__)
 rm = RecommendationManager()
@@ -98,6 +100,115 @@ def recommend():
         return jsonify({"message": "Fetch Successful", "fetched_data": fetched_data}), 200
     else:
         return jsonify({"message": "No recommendations found"}), 400
+
+@app.route('/addList', methods=['POST'])
+def addList():
+    data = request.get_json()
+    user_id = data.get("userId")
+    content_type = data.get("type")
+    identifier = data.get("identifier")
+    return insert_into_watch_read_list(user_id, None, identifier, content_type), 200
+
+@app.route('/grabList', methods=["POST"])
+def grabList():
+    data = request.get_json()
+    user_id = data.get("userId")
+    print("app.py", user_id)
+    identifiers = select_watch_read_list(user_id)
+
+    movie_ids, isbns = process_identifiers(identifiers)
+
+    fetched_movie_data = get_movies_by_id(movie_ids) if movie_ids else []
+    fetched_book_data = get_books_by_isbn(isbns) if isbns else []
+
+    fetched_data = fetched_book_data + fetched_movie_data
+    if fetched_movie_data or fetched_book_data:
+        return jsonify({"message": "Fetch Successful", "fetched_data": fetched_data}), 200
+    else:
+        return jsonify({"message": "No recommendations found"}), 400
+
+def process_identifiers(identifiers):
+    movie_ids = []
+    isbns = []
+
+    for isbn, movie_id in identifiers:
+        if isbn is None:
+            movie_ids.append(movie_id)  # Collect movie IDs
+        elif movie_id is None:
+            isbns.append(isbn)  # Collect ISBNs
+
+    return movie_ids, isbns
+
+@app.route('/removeList', methods=['POST'])
+def removeList():
+    data = request.get_json()
+    user_id = data.get("userId")
+    content_type = data.get("type")
+    identifier = data.get("identifier")
+    print("testing: ", user_id, identifier, content_type)
+    return delete_watch_read_list(user_id, identifier, content_type)
+
+@app.route('/addLib', methods=['POST'])
+def addLib():
+    data = request.get_json()
+    user_id = data.get("userId")
+    user_rating = data.get("rating")
+    content_type = data.get("type")
+    identifier = data.get("identifier")
+
+    # user_vector = get_user_vector(user_id)
+    # updated_vector = rm.update_user_vector(user_vector, identifier, content_type, user_rating)
+
+    # Send updated vector to database
+
+    return insert_into_watch_read_list(user_id, user_rating, identifier, content_type), 200
+
+@app.route('/updateLib', methods=['POST'])
+def updateLib():
+    data = request.get_json()
+    user_id = data.get("userId")
+    user_rating = data.get("rating")
+    content_type = data.get("type")
+    identifier = data.get("identifier")
+    return update_watch_read_list(user_id, user_rating, identifier, content_type)
+
+@app.route('/grabLib', methods=['POST'])
+def grabLib():
+    data = request.get_json()
+    user_id = data.get("userId")
+    print("app.py", user_id)
+    identifiers = select_library(user_id)
+
+    movie_ids, isbns = process_identifiers(identifiers)
+
+    fetched_movie_data = get_movies_by_id(movie_ids) if movie_ids else []
+    fetched_book_data = get_books_by_isbn(isbns) if isbns else []
+
+    fetched_data = fetched_book_data + fetched_movie_data
+    if fetched_movie_data or fetched_book_data:
+        return jsonify({"message": "Fetch Successful", "fetched_data": fetched_data}), 200
+    else:
+        return jsonify({"message": "No recommendations found"}), 400
+
+def process_identifiers(identifiers):
+    movie_ids = []
+    isbns = []
+
+    for isbn, movie_id in identifiers:
+        if isbn is None:
+            movie_ids.append(movie_id)  # Collect movie IDs
+        elif movie_id is None:
+            isbns.append(isbn)  # Collect ISBNs
+
+    return movie_ids, isbns
+
+
+@app.route('/grabQuiz', methods=['POST'])
+def grabQuiz():
+    fetched_quiz = main()
+    return jsonify({"fetched_quiz": fetched_quiz})
+    
+
 
 # Run Flask app
 if __name__ == '__main__':

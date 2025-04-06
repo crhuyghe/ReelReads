@@ -161,7 +161,149 @@ def get_movies_by_id(movie_id):
     conn.close()
     return fetched_movie_data
 
+def insert_into_watch_read_list(user_id, user_rating, identifier, content_type):
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
 
+        if content_type == "movie":
+            insert_query = ("INSERT INTO watch_read_list_table (user_id, movie_id, user_rating) VALUES (%s, %s, %s)")
+            values = (user_id, identifier, user_rating)
+        else:
+            insert_query = ("INSERT INTO watch_read_list_table (user_id, isbn, user_rating) VALUES (%s, %s, %s)")
+            values = (user_id, identifier, user_rating)
+
+        cursor.execute(insert_query, values)
+        conn.commit()
+        print("Insert successful!")
+        return {"success": True, "rows_affected": cursor.rowcount}
+
+    except mysql.connector.Error as error:
+        conn.rollback() 
+        print(f"Error: {error}")
+        return {"success": False, "error": str(error)}
+
+    finally:
+        cursor.close()
+        conn.close()
+
+def select_watch_read_list(user_id):
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+
+        print(user_id)
+
+        select_query = ("SELECT isbn, movie_id FROM watch_read_list_table WHERE user_id = %s AND user_rating IS NULL")
+        values = (user_id,)
+
+        cursor.execute(select_query, values)
+        fetched_list_data = cursor.fetchall()
+        print("select query results:", fetched_list_data)
+        return fetched_list_data
+    
+    except mysql.connector.Error as error:
+        conn.rollback() 
+        print(f"Error: {error}")
+        return {"success": False, "error": str(error)}
+
+def delete_watch_read_list(user_id, identifier, content_type):
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+
+        if content_type == "movie":
+            cursor.execute("SELECT * FROM watch_read_list_table WHERE user_id = %s AND movie_id = %s", (user_id, identifier))
+            result = cursor.fetchall()
+            print("Records found before delete:", result)
+            delete_query = "DELETE FROM watch_read_list_table WHERE user_id = %s AND movie_id = %s"
+            print("Delete successful!:", delete_query)
+            values = (user_id, int(identifier))
+        else:
+            cursor.execute("SELECT * FROM watch_read_list_table WHERE user_id = %s AND isbn = %s", (user_id, identifier))
+            result = cursor.fetchall()
+            print("Records found before delete:", result)
+            delete_query = "DELETE FROM watch_read_list_table WHERE user_id = %s AND isbn = %s"
+            print("Delete successful!:", delete_query)
+            values = (user_id, str(identifier))
+
+        cursor.execute(delete_query, values)
+        conn.commit()
+        print("Rows affected:", cursor.rowcount)
+        return {"success": True, "rows_affected": cursor.rowcount}
+
+    except mysql.connector.Error as error:
+        conn.rollback()
+        print(f"Error: {error}")
+        return {"success": False, "error": str(error)}
+
+    finally:
+        cursor.close()
+        conn.close()
+
+def update_watch_read_list(user_id, user_rating, identifier, content_type):
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+
+        if content_type == "movie":
+            update_query = "UPDATE watch_read_list_table SET user_rating = %s WHERE user_id = %s AND movie_id = %s"
+        else:
+            update_query = "UPDATE watch_read_list_table SET user_rating = %s WHERE user_id = %s AND isbn = %s"
+
+        values = (user_rating, user_id, identifier)
+        cursor.execute(update_query, values)
+        conn.commit()
+        print("Update successful!")
+        return {"success": True, "rows_affected": cursor.rowcount}
+
+    except mysql.connector.Error as error:
+        conn.rollback()
+        print(f"Error: {error}")
+        return {"success": False, "error": str(error)}
+
+    finally:
+        cursor.close()
+        conn.close()
+
+def select_library(user_id):
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+
+        print(user_id)
+
+        select_query = ("SELECT isbn, movie_id FROM watch_read_list_table WHERE user_id = %s AND user_rating IS NOT NULL")
+        values = (user_id,)
+
+        cursor.execute(select_query, values)
+        fetched_list_data = cursor.fetchall()
+        print("select query results:", fetched_list_data)
+        return fetched_list_data
+    
+    except mysql.connector.Error as error:
+        conn.rollback() 
+        print(f"Error: {error}")
+        return {"success": False, "error": str(error)}
+
+'''
+movies = insert_into_watch_read_list(1, 5.0, 5, "movie")
+print(movies)
+books = insert_into_watch_read_list(1, 4.5, '0007273746', "book")
+print(books)
+'''
+'''
+update_movie = update_watch_read_list(1, 4.8, 5, "movie")
+print(update_movie)
+update_book = update_watch_read_list(1, 4.9, '0007273746', "book")
+print(update_book)
+'''
+'''
+delete_movie = delete_watch_read_list(1, 5, "movie")
+print(delete_movie)
+delete_book = delete_watch_read_list(1, '0007273746', "book")
+print(delete_book)
+'''
 
 
 

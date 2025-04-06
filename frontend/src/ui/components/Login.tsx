@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useUser } from "./UserContext";
 import CreateAccount from "./CreateAccount";
 import Welcome from "./Welcome";
@@ -12,7 +12,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loginFailed, setLoginFailed] = useState(false);
 
-  const { setUser } = useUser(); //gets setter for the user data
+  const { setUser, user } = useUser(); //gets setter for the user data
   const navigate = useNavigate(); //useNavigate hook for navigation after successful login
 
   const togglePassword = (e: { preventDefault: () => void }) => {
@@ -38,8 +38,7 @@ const Login = () => {
         setLoginFailed(false);
         // store the logged-in user data globally. Using the user_id right now
         setUser({ user_id: response.data.user_id });
-        console.log("Current User: ", response.data.user_id); //debugging, making sure we are getting the correct thing
-        // setCurrentComponent("welcome");
+        console.log("Current User from backend: ", response.data.user_id); //debugging, making sure we are getting the correct thing
         navigate("/welcome");
       } else {
         console.log("Login failed", response.data.message);
@@ -50,6 +49,12 @@ const Login = () => {
       setLoginFailed(true);
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      console.log("User from frontend: ", user.user_id);
+    }
+  }, [user]);
 
   return (
     <div className="flex flex-col items-center justify-center h-screen w-full">

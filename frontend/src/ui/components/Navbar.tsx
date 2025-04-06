@@ -9,6 +9,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     setUser(null);
+    localStorage.removeItem("user"); // Clear user from localStorage
     console.log(user);
   };
   return (
@@ -22,18 +23,24 @@ const Navbar = () => {
           <img src="/profile.svg" />
         </button>
         {dropdownOpen && (
-          <div className="z-20 absolute right-0 mt-36 w-30 bg-white shadow-md rounded-md border p-2 text-left">
-            <a
-              href="/userLibrary"
-              className="block px-4 py-2 text-sm hover:bg-gray-100"
-            >
-              User Library
-            </a>
+          <div className="z-20 absolute right-0 mt-52 w-30 bg-white shadow-md rounded-md border p-2 text-left">
             <a
               href="/recommendation"
               className="block px-4 py-2 text-sm hover:bg-gray-100"
             >
               Recommend
+            </a>
+            <a
+              href="/myList"
+              className="block px-4 py-2 text-sm hover:bg-gray-100"
+            >
+              My List
+            </a>
+            <a
+              href="/userLibrary"
+              className="block px-4 py-2 text-sm hover:bg-gray-100"
+            >
+              View Library
             </a>
             <button
               onClick={handleLogout}

@@ -7,6 +7,7 @@ import Welcome from "./components/Welcome";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { UserProvider } from "./components/UserContext";
 import UserLibrary from "./components/UserLibrary";
+import MyList from "./components/MyList";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/createAccount" element={<CreateAccount />} />
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/recommendation" element={<RecommendationPage />} />
+          <Route path="/myList" element={<MyList />} />
           <Route path="/userLibrary" element={<UserLibrary />} />
         </Routes>
       </Router>

@@ -1,7 +1,13 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from "react";
 
 type User = {
-  user_id: number;
+  user_id: string;
 };
 
 type UserContextType = {
@@ -21,6 +27,22 @@ export const useUser = () => {
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+
+  // Load user from localStorage when the component first mounts
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      setUser(JSON.parse(savedUser)); // Parse the saved user data
+    }
+  }, []); // Empty dependency array ensures this runs only once
+
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
+    } else {
+      localStorage.removeItem("user");
+    }
+  }, [user]);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>

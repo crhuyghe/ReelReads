@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import Navbar from "./Navbar";
+import { useUser } from "./UserContext";
+import QuizQuestion from "./QuizQuestion";
 import ScrollingWrapper from "./ScrollingWrapper";
 import axios from "axios";
-import { useUser } from "./UserContext";
 
 interface Tile {
   type: "book" | "movie";
@@ -57,13 +58,19 @@ const Welcome = () => {
   return (
     <>
       <Navbar />
-      HOME PAGE
-      {tilesData.length > 0 && (
-        <ScrollingWrapper
-          tiles={tilesData}
-          onTileClick={(tile) => console.log(tile)}
-        />
-      )}
+      <div className="flex flex-col items-center gap-8 my-12 mx-8">
+        HOME PAGE
+        {tilesData.length > 0 && (
+          <ScrollingWrapper
+            tiles={tilesData}
+            onTileClick={(tile) => console.log(tile)}
+          />
+        )}
+        <div className="w-[70%]">
+          {/* QUIZ */}
+          <QuizQuestion />
+        </div>
+      </div>
     </>
   );
 };
