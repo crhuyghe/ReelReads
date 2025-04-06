@@ -496,7 +496,7 @@ def update_user_info(user_id, user_vector, user_history):
         conn = get_connection()
         cursor = conn.cursor()
 
-        vectors = json.dumps(user_vector)
+        vectors = json.dumps(user_vector.tolist())
         history_dic = json.dumps(user_history)
 
         update_vector_query = ("INSERT INTO user_pref_table (user_id, user_vector, user_history) VALUES (%s, %s, %s) ON DUPLICATE KEY UPDATE user_vector = VALUES(user_vector), user_history = VALUES(user_history)")
