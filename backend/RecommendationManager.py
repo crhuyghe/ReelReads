@@ -13,10 +13,11 @@ class RecommendationManager:
         self._embedding_model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
 
     def get_recommendations(self, user_vector, user_history, top_n=10):
+        print(user_history)
         """Combines the recommendation techniques to get the top book and movie recommendations for a particular user."""
         alpha, beta = 1, .5  # weight factor for recommendation techniques
 
-        if len(user_history["movie"].keys()) == 0 and len(user_history["book"].keys()) == 0:
+        if len(user_history.keys()) == 0 or (len(user_history["movie"].keys()) == 0 and len(user_history["book"].keys()) == 0):
             with open("./database/default_recommendations.json") as rec_file:
                 default_recommendations = json.load(rec_file)
 
@@ -55,6 +56,9 @@ class RecommendationManager:
                 joined_books = joined_books.loc[~joined_books["ISBN"].isin(user_history["book"].keys())].reset_index(drop=True)
             else:
                 joined_books = book_sim.sort_values(by=["sim"], ascending=False).reset_index(drop=True)
+
+            joined_movies = joined_movies.loc[~joined_movies["id"].isin(user_history["movie"].keys())]
+            joined_books = joined_books.loc[~joined_books["ISBN"].isin(user_history["book"].keys())]
 
             return joined_movies.head(top_n), joined_books.head(top_n)
 
