@@ -55,15 +55,26 @@ const Welcome = () => {
     fetchTilesData();
   }, []);
 
+  console.log("Tile Length: ", tilesData.length);
+  const movieTiles = tilesData.filter((tile) => tile.type === "movie");
+  const bookTiles = tilesData.filter((tile) => tile.type === "book");
+
   return (
     <>
       <Navbar />
-      <div className="flex flex-col items-center gap-8 my-12 mx-8">
-        HOME PAGE
-        {tilesData.length > 0 && (
+      <div className="flex flex-col items-center my-4 mx-8">
+        {movieTiles.length > 0 && (
           <ScrollingWrapper
-            tiles={tilesData}
-            onTileClick={(tile) => console.log(tile)}
+            tiles={movieTiles}
+            title="Movies For You"
+            onTileClick={(tile) => console.log("Clicked movie: ", tile)}
+          />
+        )}
+        {movieTiles.length > 0 && (
+          <ScrollingWrapper
+            tiles={bookTiles}
+            title="Books For You"
+            onTileClick={(tile) => console.log("Clicked book: ", tile)}
           />
         )}
         <div className="w-[70%]">

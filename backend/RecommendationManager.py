@@ -13,6 +13,7 @@ class RecommendationManager:
         self._embedding_model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
 
     def get_recommendations(self, user_vector, user_history, top_n=10):
+        print(user_history)
         """Combines the recommendation techniques to get the top book and movie recommendations for a particular user."""
         alpha, beta = 1, .5  # weight factor for recommendation techniques
 
