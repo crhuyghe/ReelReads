@@ -1,7 +1,7 @@
 import random
 
 
-def main():
+def get_quizzes():
     movie_questions = [
         ("What is the name of the snowman in 'Frozen'?", ["Frosty", "Snowy", "Olaf", "Iceman"], "Olaf"),
         ("Which 1995 film is considered the first full-length computer-animated feature?", ["A Bug's Life", "Monsters, Inc.", "Finding Nemo", "Toy Story"], "Toy Story"),
@@ -77,4 +77,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    get_quizzes()

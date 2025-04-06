@@ -6,7 +6,7 @@ from backend.database_func import create_new_user, validate_user_login, get_book
     get_user_vector, get_user_history, insert_into_watch_read_list, select_watch_read_list, delete_watch_read_list, \
     update_watch_read_list, select_library, insert_update_into_watch_read_list, update_user_history, update_user_info
 from backend.ImageAcquisition import handle_book_search, handle_movie_search
-from backend.Movie_Book_Quiz import main
+from backend.Movie_Book_Quiz import get_quizzes
 
 
 app = Flask(__name__)
@@ -217,7 +217,7 @@ def process_identifiers(identifiers):
 
 @app.route('/grabQuiz', methods=['POST'])
 def grabQuiz():
-    fetched_quiz = main()
+    fetched_quiz = get_quizzes()
     return jsonify({"fetched_quiz": fetched_quiz})
 
 
