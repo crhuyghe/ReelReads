@@ -7,7 +7,6 @@ const Welcome = () => {
 
   return (
     <>
-      <Navbar />
       <div className="flex flex-col items-center gap-8 my-12 mx-8">
         <div className="rounded ring ring-2 text-center ring-blue-300 w-full py-20">
           user: {user?.user_id}

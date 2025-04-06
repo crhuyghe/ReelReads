@@ -58,16 +58,6 @@ const Login = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen w-full">
-      {/* NAVIGATION FOR NOW, DELETE LATER */}
-      <div className="flex flex-col items-center font-semibold mb-3">
-        <h1>NAVIGATION FOR TESTING NOW, DELETE LATER</h1>
-        <Link
-          to="/recommendation"
-          className="text-blue-600 hover:underline underline-offset-2"
-        >
-          Recommendation
-        </Link>
-      </div>
       <div className="w-[60%] bg-blue-200 rounded-lg py-[2rem] px-[2rem] flex flex-col text-left">
         <div className="flex items-center gap-2 mb-6">
           <img src="../../../desktopIcon.png" className="w-8 object-cover" />

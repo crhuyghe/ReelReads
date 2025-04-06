@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useUser } from "./UserContext";
+import ThemeToggle from "./ThemeToggle";
 
 const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -50,6 +51,7 @@ const Navbar = () => {
                 Log Out
               </Link>
             </button>
+            <ThemeToggle />
           </div>
         )}
       </div>
