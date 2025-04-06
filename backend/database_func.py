@@ -491,8 +491,28 @@ def get_user_vector(user_id):
         cursor.close()
         conn.close()
 
-def update_user_info(user_id, user_vec, user_history):
-    pass
+def update_user_info(user_id, user_vector, user_history):
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+
+        vectors = json.dumps(user_vector)
+        history_dic = json.dumps(user_history)
+
+        update_vector_query = ("INSERT INTO user_pref_table (user_id, user_vector, user_history) VALUES (%s, %s, %s) ON DUPLICATE KEY UPDATE user_vector = VALUES(user_vector), user_history = VALUES(user_history)")
+
+        cursor.execute(update_vector_query, (user_id, vectors, history_dic))
+        conn.commit()
+        return {"success": True}
+
+    except mysql.connector.Error as error:
+        conn.rollback()
+        print(f"Error: {error}")
+        return {"success": False, "error": str(error)}
+
+    finally:
+        cursor.close()
+        conn.close()
 
 def get_user_library_watch_read_items(user_id):
     try:
@@ -583,16 +603,4 @@ delete_movie = delete_watch_read_list(1, 5, "movie")
 print(delete_movie)
 delete_book = delete_watch_read_list(1, '0007273746', "book")
 print(delete_book)
-'''
-
-
-
-
-'''
-movies = get_movies_by_id([5, 6, 11])
-print(movies)
-print('---------------------------------------------------------------------')
-print('---------------------------------------------------------------------')
-books = get_books_by_isbn(['0007273746', '0007276885'])
-print(books)
 '''
