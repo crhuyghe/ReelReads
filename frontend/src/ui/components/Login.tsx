@@ -58,7 +58,7 @@ const Login = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen w-full">
-      <div className="w-[60%] bg-blue-200 rounded-lg py-[2rem] px-[2rem] flex flex-col text-left">
+      <div className="w-[60%] bg-primary dark:bg-secondary_dark rounded-lg py-[2rem] px-[2rem] flex flex-col text-left">
         <div className="flex items-center gap-2 mb-6">
           <img src="../../../desktopIcon.png" className="w-8 object-cover" />
           <h2 className="font-bold text-lg">ReelReads</h2>
@@ -81,7 +81,7 @@ const Login = () => {
               name="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="ring ring-1 ring-grey-200 rounded-sm py-1 px-2 text-sm"
+              className="ring ring-1 dark:bg-brand-dark ring-secondary rounded-sm py-1 px-2 text-sm focus:outline-secondary dark:focus:outline-secondary_light"
               placeholder="Enter your username"
             />
           </div>
@@ -94,7 +94,7 @@ const Login = () => {
                 name="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="ring ring-1 ring-grey-200 rounded-sm py-1 px-2 text-sm w-full"
+                className="ring ring-1 dark:bg-brand-dark ring-secondary focus:outline-secondary dark:focus:outline-secondary_light rounded-sm py-1 px-2 text-sm w-full"
                 placeholder="********"
               />
 
@@ -153,7 +153,7 @@ const Login = () => {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="size-4 text-red-600"
+                className="size-4 text-red-800"
               >
                 <path
                   strokeLinecap="round"
@@ -162,7 +162,7 @@ const Login = () => {
                 />
               </svg>
             </div>
-            <p className="text-xs text-red-600">
+            <p className="text-xs font-semibold dark:font-normal text-red-800 dark:text-red-300">
               Your username or password is incorrect. Please enter valid
               credentials.
             </p>
@@ -170,7 +170,7 @@ const Login = () => {
           <input
             type="submit"
             value="Sign In"
-            className="rounded-sm bg-blue-600 w-full py-1 text-white mb-3 hover:cursor-pointer hover:bg-blue-500"
+            className="rounded-sm bg-secondary dark:bg-secondary_hover_light w-full py-1 text-white dark:text-black mb-3 hover:cursor-pointer hover:bg-secondary_hover dark:hover:bg-secondary_hover_light2"
           />
         </form>
 
@@ -178,7 +178,7 @@ const Login = () => {
           <p>New on our platform?</p>
           <Link
             to="/createAccount"
-            className="text-blue-600 hover:underline underline-offset-2"
+            className="font-semibold hover:underline underline-offset-2"
           >
             Create an account
           </Link>

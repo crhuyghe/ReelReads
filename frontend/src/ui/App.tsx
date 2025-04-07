@@ -53,11 +53,11 @@ function App() {
     location.pathname === "/" || location.pathname === "/createAccount";
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 text-black dark:text-white">
+    <div className="min-h-screen bg-white dark:bg-brand-dark text-black dark:text-white">
       {isMainOrCreateAccountPage && (
         <button
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          className="fixed top-4 right-4 px-2 py-1 rounded"
+          className="fixed top-4 right-4 px-2 py-2 rounded-full hover:bg-primary ring ring-1 ring-primary dark:ring-secondary_dark dark:hover:bg-secondary_dark"
         >
           {theme === "dark" ? <img src="/sun.svg" /> : <img src="/moon.svg" />}
         </button>

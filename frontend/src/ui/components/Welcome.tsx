@@ -61,7 +61,6 @@ const Welcome = () => {
 
   return (
     <>
-      <Navbar />
       <div className="flex flex-col items-center my-4 mx-8">
         {movieTiles.length > 0 && (
           <ScrollingWrapper
