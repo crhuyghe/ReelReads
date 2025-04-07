@@ -59,9 +59,9 @@ const Login = () => {
   return (
     <div className="flex flex-col items-center justify-center h-screen w-full">
       <div className="w-[60%] bg-primary dark:bg-secondary_dark rounded-lg py-[2rem] px-[2rem] flex flex-col text-left">
-        <div className="flex items-center gap-2 mb-6">
-          <img src="../../../desktopIcon.png" className="w-8 object-cover" />
-          <h2 className="font-bold text-lg">ReelReads</h2>
+        <div className="flex items-center gap-2 mb-4">
+          <img src="/reelreads.svg" className="w-12 object-cover" />
+          <h2 className="font-bold text-xl">ReelReads</h2>
         </div>
         <div className="flex flex-col mb-3">
           <h3 className="text-lg font-semibold">Welcome to ReelReads! 👋</h3>

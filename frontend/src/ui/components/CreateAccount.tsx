@@ -69,7 +69,7 @@ const CreateAccount = () => {
   };
   return (
     <div className="flex items-center justify-center h-screen w-full">
-      <div className="w-[60%] bg-blue-200 rounded-lg py-[2rem] px-[2rem] flex flex-col text-left">
+      <div className="w-[60%] bg-primary dark:bg-secondary_dark rounded-lg py-[2rem] px-[2rem] flex flex-col text-left">
         <div className="flex items-center gap-2 mb-6">
           <img src="../../../desktopIcon.png" className="w-8 object-cover" />
           <h2 className="font-bold text-lg">ReelReads</h2>
@@ -91,7 +91,7 @@ const CreateAccount = () => {
               name="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="ring ring-1 ring-grey-200 rounded-sm py-1 px-2 text-sm"
+              className="ring ring-1 dark:bg-brand-dark ring-secondary rounded-sm py-1 px-2 text-sm focus:outline-secondary dark:focus:outline-secondary_light"
               placeholder="Enter your username"
             />
           </div>
@@ -125,7 +125,7 @@ const CreateAccount = () => {
 
             {/* Tooltip with password requirements */}
             {showPasswordRequirements && (
-              <div className="-mt-1 mb-1 text-xs text-gray-500">
+              <div className="-mt-1 mb-1 text-xs text-red-800 dark:text-red-300">
                 <ul>
                   {" "}
                   Password must:
@@ -145,7 +145,7 @@ const CreateAccount = () => {
                 name="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="ring ring-1 ring-grey-200 rounded-sm py-1 px-2 text-sm w-full"
+                className="ring ring-1 dark:bg-brand-dark ring-secondary focus:outline-secondary dark:focus:outline-secondary_light rounded-sm py-1 px-2 text-sm w-full"
                 placeholder="********"
               />
 
@@ -195,7 +195,7 @@ const CreateAccount = () => {
           </div>
           {/* Error message div */}
           {showError && (
-            <div className="text-red-600 text-xs mb-2">
+            <div className="text-red-800 dark:text-red-300 text-xs mb-2">
               {errorMessages.map((msg, index) => (
                 <p key={index}>{msg}</p> // Render each error message
               ))}
@@ -205,14 +205,14 @@ const CreateAccount = () => {
           <input
             type="submit"
             value="Sign Up"
-            className="rounded-sm bg-blue-600 w-full py-1 text-white mb-3"
+            className="rounded-sm bg-secondary dark:bg-secondary_hover_light w-full py-1 text-white dark:text-black mb-3 hover:cursor-pointer hover:bg-secondary_hover dark:hover:bg-secondary_hover_light2"
           />
         </form>
         <div className="flex gap-1 justify-center text-sm">
           <p>Already have an account? </p>
           <Link
             to="/"
-            className="text-blue-600 hover:underline underline-offset-2"
+            className="font-semibold hover:underline underline-offset-2"
           >
             Login
           </Link>
