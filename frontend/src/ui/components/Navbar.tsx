@@ -28,7 +28,7 @@ const Navbar = () => {
               href="/recommendation"
               className="block px-4 py-2 text-sm hover:bg-gray-100"
             >
-              Recommend
+              Content Search
             </a>
             <a
               href="/myList"
