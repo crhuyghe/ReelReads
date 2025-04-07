@@ -43,7 +43,6 @@ const UserLibrary: React.FC = () => {
 
   return (
     <div>
-      <Navbar />
       <h1 className="font-semibold text-2xl mx-[3rem] my-[2rem]">My Library</h1>
       <div className="relative px-[3rem] space-y-10">
         {movieTiles.length > 0 && (
