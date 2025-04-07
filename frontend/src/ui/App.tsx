@@ -19,24 +19,10 @@ import { useEffect, useState } from "react";
 //theme toggle placement
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
-  const isMainPage =
+  const isMainOrCreateAccountPage =
     location.pathname === "/" || location.pathname === "/createAccount";
 
-  return (
-    <>
-      {!isMainPage && <Navbar />}
-      <main className="min-h-screen">{children}</main>
-    </>
-  );
-};
-
-function App() {
   const [theme, setTheme] = useState("light");
-
-  useEffect(() => {
-    document.documentElement.classList.remove("light", "dark");
-    document.documentElement.classList.add(theme);
-  }, [theme]);
 
   useEffect(() => {
     const saved = localStorage.getItem("theme");
@@ -49,19 +35,25 @@ function App() {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  const isMainOrCreateAccountPage =
-    location.pathname === "/" || location.pathname === "/createAccount";
-
   return (
-    <div className="min-h-screen bg-white dark:bg-brand-dark text-black dark:text-white">
+    <>
+      {!isMainOrCreateAccountPage && <Navbar />}
       {isMainOrCreateAccountPage && (
         <button
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          className="fixed top-4 right-4 px-2 py-2 rounded-full hover:bg-primary ring ring-1 ring-primary dark:ring-secondary_dark dark:hover:bg-secondary_dark"
+          className="fixed top-4 right-4 px-2 py-2 rounded-full hover:bg-primary ring ring-1 ring-primary dark:ring-secondary_dark dark:hover:bg-secondary_dark focus:outline-none"
         >
           {theme === "dark" ? <img src="/sun.svg" /> : <img src="/moon.svg" />}
         </button>
       )}
+      <main className="min-h-screen">{children}</main>
+    </>
+  );
+};
+
+function App() {
+  return (
+    <div className="min-h-screen bg-white dark:bg-brand-dark text-black dark:text-white">
       <UserProvider>
         <Router>
           <Layout>

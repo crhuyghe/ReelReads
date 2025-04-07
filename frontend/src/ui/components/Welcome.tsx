@@ -26,6 +26,7 @@ interface Tile {
 }
 
 const Welcome = () => {
+  console.log("Current pathname:", location.pathname);
   const [tilesData, setTilesData] = useState<Tile[]>([]);
   const { user } = useUser();
 
