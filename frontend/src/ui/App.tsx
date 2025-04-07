@@ -15,6 +15,8 @@ import UserLibrary from "./components/UserLibrary";
 import MyList from "./components/MyList";
 import Navbar from "./components/Navbar";
 import { useEffect, useState } from "react";
+import { ThemeProvider } from "./components/ThemeContext";
+import { useTheme } from "./components/ThemeContext";
 
 //theme toggle placement
 const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -22,18 +24,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const isMainOrCreateAccountPage =
     location.pathname === "/" || location.pathname === "/createAccount";
 
-  const [theme, setTheme] = useState("light");
-
-  useEffect(() => {
-    const saved = localStorage.getItem("theme");
-    if (saved) setTheme(saved);
-  }, []);
-
-  useEffect(() => {
-    document.documentElement.classList.remove("light", "dark");
-    document.documentElement.classList.add(theme);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
+  const { theme, setTheme } = useTheme();
 
   return (
     <>
@@ -54,20 +45,25 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 function App() {
   return (
     <div className="min-h-screen bg-white dark:bg-brand-dark text-black dark:text-white">
-      <UserProvider>
-        <Router>
-          <Layout>
-            <Routes>
-              <Route path="/" element={<Login />} />
-              <Route path="/createAccount" element={<CreateAccount />} />
-              <Route path="/welcome" element={<Welcome />} />
-              <Route path="/recommendation" element={<RecommendationPage />} />
-              <Route path="/myList" element={<MyList />} />
-              <Route path="/userLibrary" element={<UserLibrary />} />
-            </Routes>
-          </Layout>
-        </Router>
-      </UserProvider>
+      <ThemeProvider>
+        <UserProvider>
+          <Router>
+            <Layout>
+              <Routes>
+                <Route path="/" element={<Login />} />
+                <Route path="/createAccount" element={<CreateAccount />} />
+                <Route path="/welcome" element={<Welcome />} />
+                <Route
+                  path="/recommendation"
+                  element={<RecommendationPage />}
+                />
+                <Route path="/myList" element={<MyList />} />
+                <Route path="/userLibrary" element={<UserLibrary />} />
+              </Routes>
+            </Layout>
+          </Router>
+        </UserProvider>
+      </ThemeProvider>
     </div>
   );
 }
