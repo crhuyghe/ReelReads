@@ -78,7 +78,7 @@ def recommend():
     user_vec = get_user_vector(user_id)
     user_history = get_user_history(user_id)
 
-    rec_ids = rm.get_recommendations(user_vec, user_history, 25)
+    rec_ids = rm.get_recommendations(user_vec, user_history, 16)
     fetched_movie_data = get_movies_by_id(rec_ids[0]["id"].values.tolist())
     fetched_book_data = get_books_by_isbn(rec_ids[1]["ISBN"].values.tolist())
 
@@ -128,17 +128,17 @@ def grabList():
     else:
         return jsonify({"message": "No recommendations found"}), 400
 
-def process_identifiers(identifiers):
-    movie_ids = []
-    isbns = []
-
-    for isbn, movie_id in identifiers:
-        if isbn is None:
-            movie_ids.append(movie_id)  # Collect movie IDs
-        elif movie_id is None:
-            isbns.append(isbn)  # Collect ISBNs
-
-    return movie_ids, isbns
+# def process_identifiers(identifiers):
+#     movie_ids = []
+#     isbns = []
+#
+#     for isbn, movie_id in identifiers:
+#         if isbn is None:
+#             movie_ids.append(movie_id)  # Collect movie IDs
+#         elif movie_id is None:
+#             isbns.append(isbn)  # Collect ISBNs
+#
+#     return movie_ids, isbns
 
 @app.route('/removeList', methods=['POST'])
 def removeList():
@@ -160,10 +160,14 @@ def addLib():
     user_vector = get_user_vector(user_id)
     user_history = get_user_history(user_id)
 
+    if len(user_history) == 0:
+        user_history["movie"] = {}
+        user_history["book"] = {}
+
     user_vector = rm.update_user_vector(user_vector, identifier, content_type, user_rating)
     user_history[content_type][identifier] = user_rating
 
-    update_user_info(user_id, user_vector, user_history)
+    print(update_user_info(user_id, user_vector, user_history))
 
     return insert_update_into_watch_read_list(user_id, user_rating, identifier, content_type), 200
 
@@ -177,6 +181,10 @@ def updateLib():
 
     user_vector = get_user_vector(user_id)
     user_history = get_user_history(user_id)
+
+    if len(user_history) == 0:
+        user_history["movie"] = {}
+        user_history["book"] = {}
 
     user_vector = rm.update_user_vector(user_vector, identifier, content_type, user_rating)
     user_history[content_type][identifier] = user_rating
@@ -203,6 +211,11 @@ def grabLib():
     else:
         return jsonify({"message": "No recommendations found"}), 400
 
+@app.route('/grabQuiz', methods=['POST'])
+def grabQuiz():
+    fetched_quiz = get_quizzes()
+    return jsonify({"fetched_quiz": fetched_quiz})
+
 def process_identifiers(identifiers):
     movie_ids = []
     isbns = []
@@ -214,11 +227,6 @@ def process_identifiers(identifiers):
             isbns.append(isbn)  # Collect ISBNs
 
     return movie_ids, isbns
-
-@app.route('/grabQuiz', methods=['POST'])
-def grabQuiz():
-    fetched_quiz = get_quizzes()
-    return jsonify({"fetched_quiz": fetched_quiz})
 
 
 # Run Flask app
