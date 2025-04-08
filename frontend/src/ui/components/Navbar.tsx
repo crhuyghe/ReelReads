@@ -21,8 +21,8 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white dark:bg-brand-dark shadow-soft-light dark:shadow-soft-dark p-4">
-      <div className="container flex justify-between items-center">
+    <nav className="bg-white dark:bg-brand-dark shadow-soft-light dark:shadow-soft-dark p-4 flex justify-center">
+      <div className="flex justify-between items-center w-full">
         <Link to="/welcome" className="ml-8 focus:outline-none">
           {theme === "light" ? (
             <img src="/home.svg" />
