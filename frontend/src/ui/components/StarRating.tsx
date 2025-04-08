@@ -17,11 +17,9 @@ const StarRating: React.FC<StarRatingProps> = ({ onRate }) => {
         <span
           key={star}
           onClick={() => handleStarClick(star)}
-          style={{
-            cursor: "pointer",
-            color: star <= rating ? "gold" : "gray",
-            fontSize: "24px",
-          }}
+          className={`cursor-pointer text-2xl ${
+            star <= rating ? "text-secondary" : "text-gray-300"
+          }`}
         >
           ★
         </span>

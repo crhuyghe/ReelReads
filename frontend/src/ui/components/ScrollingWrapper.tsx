@@ -39,7 +39,7 @@ const ScrollingWrapper: React.FC<ScrollingWrapperProps> = ({
   }, []);
 
   return (
-    <div className="w-full py-6">
+    <div className="w-full py-3">
       <h2 className="text-xl font-bold mb-2 px-4">{title}</h2>
       <div
         ref={scrollRef}
@@ -51,11 +51,11 @@ const ScrollingWrapper: React.FC<ScrollingWrapperProps> = ({
       >
         {[...tiles, ...tiles].map((tile, index) => {
           const displayTitle = tile.title || tile.book_name || "Untitled";
-          const displayAuthor = tile.author || tile.director || null;
+          const displayAuthor = tile.author || tile.genre || null;
           return (
             <div
               key={index}
-              className={`flex-shrink-0 w-[200px] bg-white rounded shadow p-3 cursor-pointer hover:shadow-lg transition-shadow`}
+              className={`flex-shrink-0 w-[150px] bg-primary rounded shadow p-3 cursor-pointer hover:shadow-lg transition-shadow`}
               onClick={() => onTileClick(tile)}
             >
               <img
@@ -64,16 +64,12 @@ const ScrollingWrapper: React.FC<ScrollingWrapperProps> = ({
                   (tile.title ? "/movie_default.svg" : "book_default.svg")
                 }
                 alt={displayTitle}
-                className="w-full h-40 object-cover rounded mb-2"
+                className="w-full h-32 object-cover rounded mb-2"
               />
-              <h3 className="text-sm font-semibold text-gray-800 truncate">
+              <h3 className="text-md font-semibold text-gray-800 truncate">
                 {displayTitle}
               </h3>
-              {tile.author && (
-                <p className="text-xs text-gray-500 truncate">
-                  {displayAuthor}
-                </p>
-              )}
+              <p className="text-xs text-gray-500 truncate">{displayAuthor}</p>
             </div>
           );
         })}
