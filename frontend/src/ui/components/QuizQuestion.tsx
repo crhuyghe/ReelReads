@@ -9,14 +9,15 @@ const QuizQuestion: React.FC = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [quizFinished, setQuizFinished] = useState<boolean>(false);
+  const [quizKey, setQuizKey] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    let hasFetched = false;
-
-    setQuizFinished(false);
     const fetchData = async () => {
-      if (hasFetched) return;
-      hasFetched = true;
+      setIsLoading(true); // prevent rendering while data is loading
+      setQuizFinished(false);
+      setCurrentQuestionIndex(0);
+      setScore(0);
 
       try {
         const response = await axios.post("http://localhost:5000/grabQuiz");
@@ -32,11 +33,13 @@ const QuizQuestion: React.FC = () => {
         console.log("trying to grab answers", response.data.fetched_quiz[2]);
       } catch (error) {
         console.error("Error fetching data: ", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchData();
-  }, []); //empty array makes sure it only runs once
+  }, [quizKey]); //runs again when quizKey changes
 
   const handleAnswer = (selected: string) => {
     const correct = answers[currentQuestionIndex];
@@ -72,6 +75,8 @@ const QuizQuestion: React.FC = () => {
     return <div>Loading quiz...</div>;
   }
 
+  if (isLoading) return <div>Loading quiz...</div>;
+
   return (
     <>
       <div className="flex flex-col items-center gap-4 ring ring-4 ring-primary dark:ring-secondary rounded-lg justify-center h-[230px] px-4 w-full">
@@ -94,14 +99,20 @@ const QuizQuestion: React.FC = () => {
           </>
         )}
         {quizFinished && (
-          <div className="flex flex-col gap-8 my-6">
-            <div className="font-semibold text-lg text-center">
+          <>
+            <div className="font-semibold text-lg text-center -mb-1">
               {getScoreMessage(score)}
             </div>
-            <div className="font-semibold text-2xl text-center">
+            <div className="font-semibold text-2xl text-center mb-3">
               SCORE: {score}
             </div>
-          </div>
+            <button
+              onClick={() => setQuizKey((prev) => prev + 1)}
+              className="mt-4 bg-primary dark:bg-secondary text-black dark:text-white font-semibold py-2 px-4 rounded hover:bg-secondary_hover_light2 dark:hover:bg-secondary_hover transition"
+            >
+              Play Again
+            </button>
+          </>
         )}
       </div>
     </>
