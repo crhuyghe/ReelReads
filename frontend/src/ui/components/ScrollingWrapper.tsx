@@ -59,7 +59,10 @@ const ScrollingWrapper: React.FC<ScrollingWrapperProps> = ({
               onClick={() => onTileClick(tile)}
             >
               <img
-                src={tile.image}
+                src={
+                  tile.image ||
+                  (tile.title ? "/movie_default.svg" : "book_default.svg")
+                }
                 alt={displayTitle}
                 className="w-full h-40 object-cover rounded mb-2"
               />
