@@ -55,6 +55,13 @@ const QuizQuestion: React.FC = () => {
     }
   };
 
+  const getScoreMessage = (score: number) => {
+    if (score === 10) return "Perfect score! WOW! You know your trivia 🌟";
+    if (score >= 8) return "Great job! Almost perfect 👍";
+    if (score >= 5) return "Not bad! But you can definitely do better!";
+    return "Give it another go! You've got this";
+  };
+
   // Defensive check
   if (
     questions.length === 0 ||
@@ -67,13 +74,13 @@ const QuizQuestion: React.FC = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center ring ring-2 ring-blue-300 rounded-lg pt-4 pb-8 px-4 w-full">
+      <div className="flex flex-col items-center gap-4 ring ring-4 ring-primary dark:ring-secondary rounded-lg justify-center h-[230px] px-4 w-full">
         {!quizFinished && (
           <>
             <div className="font-semibold text-lg text-center mb-4">
               {questions[currentQuestionIndex]}
             </div>
-            <div className="grid grid-rows-{2} grid-cols-2 gap-x-8 gap-y-4 ring ring-2 ring-red-200">
+            <div className="grid grid-rows-{2} grid-cols-2 gap-x-8 gap-y-2">
               {choices[currentQuestionIndex].map((choice, index) => (
                 <div key={index} className="flex justify-left">
                   <QuizChoices
@@ -87,11 +94,14 @@ const QuizQuestion: React.FC = () => {
           </>
         )}
         {quizFinished && (
-          <>
+          <div className="flex flex-col gap-8 my-6">
             <div className="font-semibold text-lg text-center">
+              {getScoreMessage(score)}
+            </div>
+            <div className="font-semibold text-2xl text-center">
               SCORE: {score}
             </div>
-          </>
+          </div>
         )}
       </div>
     </>

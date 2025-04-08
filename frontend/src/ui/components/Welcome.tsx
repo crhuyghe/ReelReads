@@ -161,7 +161,7 @@ const Welcome = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center my-2 mx-8">
+      <div className="flex flex-col items-center mt-2 mx-8">
         {movieTiles.length > 0 && (
           <ScrollingWrapper
             tiles={movieTiles}
@@ -358,7 +358,7 @@ const Welcome = () => {
             </div>
           </div>
         )}
-        <div className="w-[70%]">
+        <div className="w-[70%] mt-8 mb-12">
           {/* QUIZ */}
           <QuizQuestion />
         </div>
