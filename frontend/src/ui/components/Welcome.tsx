@@ -177,8 +177,8 @@ const Welcome = () => {
           />
         )}
         {showPopup && selectedTile && selectedTile.type === "movie" && (
-          <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white h-[80%] p-6 rounded-lg w-[60%] relative">
+          <div className="fixed inset-0 bg-gray-500 bg-opacity-50 dark:bg-gray-800 dark:bg-opacity-50 flex justify-center items-center z-50">
+            <div className="bg-white dark:bg-brand-dark dark:border dark:border-black h-[80%] p-6 rounded-lg w-[60%] relative">
               <button
                 onClick={handleClosePopup}
                 className="absolute top-2 right-3 text-lg font-bold"
@@ -217,28 +217,28 @@ const Welcome = () => {
                 {selectedTile.movie_rating_count}
               </p>
               <button
-                className="rounded-full w-8 h-8 flex justify-center font-bold text-xl ring-2 ring-secondary hover:ring-secondary_hover text-secondary hover:text-secondary_hover absolute bottom-4 right-4"
+                className="rounded-full w-8 h-8 flex justify-center font-bold text-xl ring-2 dark:ring-secondary_light dark:text-secondary_light dark:hover:ring-brand-light dark:hover:text-brand-light ring-secondary hover:ring-secondary_hover text-secondary hover:text-secondary_hover absolute bottom-4 right-4"
                 onClick={() => addTile(selectedTile)}
               >
                 +
               </button>
               {addShowPopup && (
-                <div className="z-20 absolute right-0 -mt-32 w-40 bg-white shadow-md rounded-md border p-2 text-left">
+                <div className="z-20 absolute right-0 -mt-32 w-40 bg-white dark:bg-brand-dark shadow-md rounded-md border dark:border-black p-2 text-left">
                   <button
                     onClick={() => handleAddRec(selectedTile)}
-                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-900"
                   >
                     Add to Watch List
                   </button>
                   <button
                     onClick={() => handleAddLibrary()}
-                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-900"
                   >
                     Add to Library
                   </button>
                   {showRatingPopup && (
                     <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
-                      <div className="bg-white p-6 rounded-lg w-[40%] relative text-center">
+                      <div className="bg-white dark:bg-brand-dark p-6 rounded-lg w-[40%] relative text-center">
                         <button
                           onClick={() => setShowRatingPopup(false)} // Close the popup
                           className="absolute top-2 right-3 text-lg font-bold"
@@ -252,7 +252,7 @@ const Welcome = () => {
                         {/* Your star rating component */}
                         <button
                           onClick={() => handleSubmit(selectedTile)}
-                          className="mt-4 bg-secondary hover:bg-secondary_hover text-white rounded px-4 py-2"
+                          className="mt-4 bg-secondary dark:bg-secondary_hover_light dark:text-black dark:hover:bg-secondary_hover_light2 hover:bg-secondary_hover text-white rounded px-4 py-2"
                         >
                           Submit Rating
                         </button>
@@ -270,7 +270,7 @@ const Welcome = () => {
         */}
         {showPopup && selectedTile && selectedTile.type === "book" && (
           <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white h-[80%] p-6 rounded-lg w-[60%] relative">
+            <div className="bg-white dark:bg-brand-dark dark:border dark:border-black h-[80%] p-6 rounded-lg w-[60%] relative">
               <button
                 onClick={handleClosePopup}
                 className="absolute top-2 right-3 text-lg font-bold"
@@ -311,28 +311,28 @@ const Welcome = () => {
                 {selectedTile.isbn}
               </p>
               <button
-                className="rounded-full w-8 h-8 flex justify-center font-bold text-xl ring-2 ring-secondary hover:ring-secondary_hover text-secondary hover:text-secondary_hover absolute bottom-4 right-4"
+                className="rounded-full w-8 h-8 flex justify-center font-bold text-xl ring-2 dark:ring-secondary_light dark:text-secondary_light dark:hover:ring-brand-light dark:hover:text-brand-light ring-secondary hover:ring-secondary_hover text-secondary hover:text-secondary_hover absolute bottom-4 right-4"
                 onClick={() => addTile(selectedTile)}
               >
                 +
               </button>
               {addShowPopup && (
-                <div className="z-20 absolute right-0 -mt-32 w-40 bg-white shadow-md rounded-md border p-2 text-left">
+                <div className="z-20 absolute right-0 -mt-32 w-40 bg-white dark:bg-brand-dark shadow-md rounded-md border dark:border-black p-2 text-left">
                   <button
                     onClick={() => handleAddRec(selectedTile)}
-                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-900"
                   >
                     Add to Read List
                   </button>
                   <button
                     onClick={() => handleAddLibrary()}
-                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-900"
                   >
                     Add to Library
                   </button>
                   {showRatingPopup && (
                     <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
-                      <div className="bg-white p-6 rounded-lg w-[40%] relative text-center">
+                      <div className="bg-white dark:bg-brand-dark p-6 rounded-lg w-[40%] relative text-center">
                         <button
                           onClick={() => setShowRatingPopup(false)} // Close the popup
                           className="absolute top-2 right-3 text-lg font-bold"
@@ -346,7 +346,7 @@ const Welcome = () => {
                         {/* Your star rating component */}
                         <button
                           onClick={() => handleSubmit(selectedTile)}
-                          className="mt-4 bg-secondary hover:bg-secondary_hover text-white rounded px-4 py-2"
+                          className="mt-4 bg-secondary dark:bg-secondary_hover_light dark:text-black dark:hover:bg-secondary_hover_light2 hover:bg-secondary_hover text-white rounded px-4 py-2"
                         >
                           Submit Rating
                         </button>

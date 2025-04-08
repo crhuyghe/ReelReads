@@ -55,7 +55,7 @@ const ScrollingWrapper: React.FC<ScrollingWrapperProps> = ({
           return (
             <div
               key={index}
-              className={`flex-shrink-0 w-[150px] bg-primary rounded shadow p-3 cursor-pointer hover:shadow-lg transition-shadow`}
+              className={`flex-shrink-0 w-[150px] bg-primary dark:bg-secondary text-black dark:text-white rounded shadow p-3 cursor-pointer hover:shadow-lg transition-shadow`}
               onClick={() => onTileClick(tile)}
             >
               <img
@@ -66,10 +66,10 @@ const ScrollingWrapper: React.FC<ScrollingWrapperProps> = ({
                 alt={displayTitle}
                 className="w-full h-32 object-cover rounded mb-2"
               />
-              <h3 className="text-md font-semibold text-gray-800 truncate">
-                {displayTitle}
-              </h3>
-              <p className="text-xs text-gray-500 truncate">{displayAuthor}</p>
+              <h3 className="text-md font-semibold truncate">{displayTitle}</h3>
+              <p className="text-xs text-gray-500 dark:text-gray-300 truncate">
+                {displayAuthor}
+              </p>
             </div>
           );
         })}

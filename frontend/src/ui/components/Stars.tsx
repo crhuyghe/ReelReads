@@ -18,7 +18,7 @@ const Stars: React.FC<StarRatingProps> = ({ rating = 0, type }) => {
 
   return (
     <div
-      className="text-2xl text-secondary flex text-center"
+      className="text-2xl text-secondary dark:text-secondary_light flex text-center"
       style={{ letterSpacing: "4px" }}
     >
       {"★".repeat(fullStars)}

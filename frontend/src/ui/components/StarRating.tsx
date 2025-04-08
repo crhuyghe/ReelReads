@@ -18,7 +18,9 @@ const StarRating: React.FC<StarRatingProps> = ({ onRate }) => {
           key={star}
           onClick={() => handleStarClick(star)}
           className={`cursor-pointer text-2xl ${
-            star <= rating ? "text-secondary" : "text-gray-300"
+            star <= rating
+              ? "text-secondary dark:text-secondary_light"
+              : "text-gray-300 dark:text-gray-600"
           }`}
         >
           ★
