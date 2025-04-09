@@ -2,9 +2,10 @@ import React, { useState } from "react";
 
 interface SearchInputProps {
   onSearch: (query: string) => void;
+  onEnter: (e: React.FormEvent) => void;
 }
 
-const SearchRec: React.FC<SearchInputProps> = ({ onSearch }) => {
+const SearchRec: React.FC<SearchInputProps> = ({ onSearch, onEnter }) => {
   const [query, setQuery] = useState<string>("");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,7 +25,13 @@ const SearchRec: React.FC<SearchInputProps> = ({ onSearch }) => {
           placeholder="Search..."
           value={query}
           onChange={handleChange}
-          className="py-1 pl-8 w-full ring ring-2 ring-primary rounded-lg"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              onEnter(e); // Call the function from parent
+            }
+          }}
+          className="py-1 pl-8 w-full ring ring-2 ring-primary rounded-lg focus:outline-secondary_light"
         />
       </div>
     </>
