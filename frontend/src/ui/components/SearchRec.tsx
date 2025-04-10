@@ -31,7 +31,7 @@ const SearchRec: React.FC<SearchInputProps> = ({ onSearch, onEnter }) => {
               onEnter(e); // Call the function from parent
             }
           }}
-          className="py-1 pl-8 w-full ring ring-2 ring-secondary_hover_light rounded-lg focus:outline-primary"
+          className="py-1 pl-8 w-full bg-white dark:bg-brand-dark ring ring-2 ring-secondary_hover_light dark:ring-secondary_dark rounded-lg focus:outline-primary dark:focus:ring-secondary dark:outline-none"
         />
       </div>
     </>

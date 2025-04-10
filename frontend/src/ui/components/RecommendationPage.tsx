@@ -111,6 +111,10 @@ const RecommendationPage: React.FC = () => {
       .catch((error) => {
         console.error("Error sending data:", error);
       });
+
+    setTimeout(() => {
+      setAddShowPopup(false); // Close popup after 0.3 seconds
+    }, 300);
   };
 
   //needs to send user_id, rating, and id of tile
@@ -156,6 +160,7 @@ const RecommendationPage: React.FC = () => {
 
     setTimeout(() => {
       setShowRatingPopup(false); // Close popup after 0.3 seconds
+      setAddShowPopup(false);
     }, 300);
   };
 
@@ -170,7 +175,7 @@ const RecommendationPage: React.FC = () => {
           {/*TODO: this would call the code for the recommender*/}
           <button
             onClick={handleSearchRecommendClick}
-            className="w-[25%] ring ring-2 ring-secondary_hover_light bg-primary rounded-xl py-2 px-8 text-lg font-semibold hover:bg-primary_light"
+            className="w-[25%] ring ring-2 ring-secondary_hover_light bg-primary dark:bg-secondary_dark dark:ring-brand-dark rounded-xl py-2 px-8 text-lg font-semibold hover:bg-primary_light dark:hover:opacity-90"
           >
             Recommend
           </button>
@@ -188,20 +193,20 @@ const RecommendationPage: React.FC = () => {
         */}
         {showPopup && selectedTile && selectedTile.type === "movie" && (
           <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white p-6 rounded-lg w-[60%] relative">
+            <div className="bg-white h-[80%] p-6 rounded-lg w-[60%] relative">
               <button
                 onClick={handleClosePopup}
                 className="absolute top-2 right-3 text-lg font-bold"
               >
                 X
               </button>
-              <h2 className="text-xl font-semibold mb-4">
+              <h2 className="text-lg font-semibold mb-4">
                 {selectedTile.title}
               </h2>
               <img
                 src={selectedTile.image || "/movie_default.svg"}
                 alt={selectedTile.title}
-                className="w-full h-48 object-contain mb-4"
+                className="w-full h-32 object-contain mb-2"
               />
               <div className="flex gap-2 items-center">
                 <p className="text-sm font-medium mb-2">
@@ -211,7 +216,9 @@ const RecommendationPage: React.FC = () => {
                   {selectedTile.runtime} min
                 </p>
               </div>
-              <p className="text-sm italic mb-2">{selectedTile.description}</p>
+              <p className="text-sm italic mb-1 h-[27%] overflow-y-hidden">
+                {selectedTile.description}
+              </p>
               <p className="text-sm">
                 <span className="font-semibold">Genre: </span>
                 {selectedTile.genre}
@@ -225,7 +232,7 @@ const RecommendationPage: React.FC = () => {
                 {selectedTile.movie_rating_count}
               </p>
               <button
-                className="rounded-full w-10 h-10 flex justify-center font-bold text-2xl ring-2 ring-blue-500 text-black absolute bottom-4 right-4"
+                className="rounded-full w-8 h-8 flex justify-center font-bold text-xl ring-2 ring-secondary hover:ring-secondary_hover text-secondary hover:text-secondary_hover absolute bottom-4 right-4"
                 onClick={() => addTile(selectedTile)}
               >
                 +
@@ -246,7 +253,7 @@ const RecommendationPage: React.FC = () => {
                   </button>
                   {showRatingPopup && (
                     <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
-                      <div className="bg-white p-6 rounded-lg w-[60%] relative">
+                      <div className="bg-white p-6 rounded-lg w-[40%] relative text-center">
                         <button
                           onClick={() => setShowRatingPopup(false)} // Close the popup
                           className="absolute top-2 right-3 text-lg font-bold"
@@ -260,7 +267,7 @@ const RecommendationPage: React.FC = () => {
                         {/* Your star rating component */}
                         <button
                           onClick={() => handleSubmit(selectedTile)}
-                          className="mt-4 bg-blue-500 text-white rounded px-4 py-2"
+                          className="mt-4 bg-secondary hover:bg-secondary_hover text-white rounded px-4 py-2"
                         >
                           Submit Rating
                         </button>
@@ -338,7 +345,7 @@ const RecommendationPage: React.FC = () => {
                   </button>
                   {showRatingPopup && (
                     <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
-                      <div className="bg-white p-6 rounded-lg w-[60%] relative">
+                      <div className="bg-white p-6 rounded-lg w-[40%] relative text-center">
                         <button
                           onClick={() => setShowRatingPopup(false)} // Close the popup
                           className="absolute top-2 right-3 text-lg font-bold"
@@ -352,7 +359,7 @@ const RecommendationPage: React.FC = () => {
                         {/* Your star rating component */}
                         <button
                           onClick={() => handleSubmit(selectedTile)}
-                          className="mt-4 bg-blue-500 text-white rounded px-4 py-2"
+                          className="mt-4 bg-secondary hover:bg-secondary_hover text-white rounded px-4 py-2"
                         >
                           Submit Rating
                         </button>

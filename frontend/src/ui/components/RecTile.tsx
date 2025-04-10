@@ -81,13 +81,13 @@ const RecTile: React.FC<TilesGridProps> = ({ tiles, onTileClick }) => {
             </button>
 
             {/* Movie Grid */}
-            <div className="grid grid-cols-3 lg:grid-cols-4 gap-3 overflow-hidden">
+            <div className="grid grid-cols-3 lg:grid-cols-4 gap-3 overflow-hidden mx-1">
               {movieTiles
                 .slice(movieIndex, movieIndex + itemsPerRow)
                 .map((tile) => (
                   <div
                     key={tile.movie_id}
-                    className="bg-white w-[175px] h-[250px] border rounded-lg shadow my-1 hover:shadow-lg overflow-hidden hover:cursor-pointer"
+                    className="bg-white dark:bg-brand-dark w-[175px] h-[250px] border dark:border-black rounded-lg shadow my-1 hover:shadow-lg overflow-hidden hover:cursor-pointer"
                     onClick={() => onTileClick(tile)}
                   >
                     <img

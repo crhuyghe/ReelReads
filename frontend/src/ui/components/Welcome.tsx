@@ -152,6 +152,7 @@ const Welcome = () => {
 
     setTimeout(() => {
       setShowRatingPopup(false); // Close popup after 0.3 seconds
+      setAddShowPopup(false);
     }, 300);
   };
 
