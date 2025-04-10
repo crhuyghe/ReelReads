@@ -181,7 +181,7 @@ const RecommendationPage: React.FC = () => {
           </button>
         </div>
         {showTiles && (
-          <div className="my-[1rem] mx-[4rem] flex justify-center">
+          <div className="py-2 mx-[4rem] flex justify-center">
             <RecTile tiles={tilesData} onTileClick={handleTileClick} />
           </div>
         )}
@@ -192,68 +192,68 @@ const RecommendationPage: React.FC = () => {
               title, genre, release date, movie rating, description, runtime
         */}
         {showPopup && selectedTile && selectedTile.type === "movie" && (
-          <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white h-[80%] p-6 rounded-lg w-[60%] relative">
+          <div className="fixed inset-0 bg-gray-500 bg-opacity-50 dark:bg-gray-800 dark:bg-opacity-50 flex justify-center items-center z-50">
+            <div className="bg-white dark:bg-brand-dark dark:border dark:border-black h-[80%] p-6 rounded-lg w-[60%] lg:w-[40%] relative lg:px-12">
               <button
                 onClick={handleClosePopup}
                 className="absolute top-2 right-3 text-lg font-bold"
               >
                 X
               </button>
-              <h2 className="text-lg font-semibold mb-4">
+              <h2 className="text-lg lg:text-2xl font-semibold mb-4">
                 {selectedTile.title}
               </h2>
               <img
                 src={selectedTile.image || "/movie_default.svg"}
                 alt={selectedTile.title}
-                className="w-full h-32 object-contain mb-2"
+                className="w-full h-32 lg:h-64 bject-contain mb-2"
               />
               <div className="flex gap-2 items-center">
-                <p className="text-sm font-medium mb-2">
+                <p className="text-sm lg:text-base font-medium mb-2">
                   <Stars rating={selectedTile.movie_rating} type="movie" />
                 </p>
-                <p className="text-sm font-semibold">
+                <p className="text-sm lg:text-base font-semibold">
                   {selectedTile.runtime} min
                 </p>
               </div>
-              <p className="text-sm italic mb-1 h-[27%] overflow-y-hidden">
+              <p className="text-sm lg:text-base italic mb-1 h-[27%] overflow-y-hidden">
                 {selectedTile.description}
               </p>
-              <p className="text-sm">
+              <p className="text-sm lg:text-base">
                 <span className="font-semibold">Genre: </span>
                 {selectedTile.genre}
               </p>
-              <p className="text-sm">
+              <p className="text-sm lg:text-base">
                 <span className="font-semibold">Released: </span>
                 {selectedTile.release_date}
               </p>
-              <p className="text-sm">
+              <p className="text-sm lg:text-base">
                 <span className="font-semibold">Ratings: </span>
                 {selectedTile.movie_rating_count}
               </p>
               <button
-                className="rounded-full w-8 h-8 flex justify-center font-bold text-xl ring-2 ring-secondary hover:ring-secondary_hover text-secondary hover:text-secondary_hover absolute bottom-4 right-4"
+                className="rounded-full w-8 h-8 flex justify-center font-bold text-xl ring-2 dark:ring-secondary_light dark:text-secondary_light dark:hover:ring-brand-light dark:hover:text-brand-light ring-secondary hover:ring-secondary_hover text-secondary hover:text-secondary_hover absolute bottom-4 right-4"
                 onClick={() => addTile(selectedTile)}
               >
                 +
               </button>
               {addShowPopup && (
-                <div className="z-20 absolute right-0 -mt-32 w-40 bg-white shadow-md rounded-md border p-2 text-left">
+                <div className="z-20 absolute right-0 -mt-32 w-40 bg-white dark:bg-brand-dark shadow-md rounded-md border dark:border-black p-2 text-left">
                   <button
                     onClick={() => handleAddRec(selectedTile)}
-                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-900"
                   >
                     Add to Watch List
                   </button>
                   <button
                     onClick={() => handleAddLibrary()}
-                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-900"
                   >
                     Add to Library
                   </button>
                   {showRatingPopup && (
                     <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
-                      <div className="bg-white p-6 rounded-lg w-[40%] relative text-center">
+                      <div className="bg-white dark:bg-brand-dark p-6 rounded-lg w-[40%] relative text-center">
                         <button
                           onClick={() => setShowRatingPopup(false)} // Close the popup
                           className="absolute top-2 right-3 text-lg font-bold"
@@ -267,7 +267,7 @@ const RecommendationPage: React.FC = () => {
                         {/* Your star rating component */}
                         <button
                           onClick={() => handleSubmit(selectedTile)}
-                          className="mt-4 bg-secondary hover:bg-secondary_hover text-white rounded px-4 py-2"
+                          className="mt-4 bg-secondary dark:bg-secondary_hover_light dark:text-black dark:hover:bg-secondary_hover_light2 hover:bg-secondary_hover text-white rounded px-4 py-2"
                         >
                           Submit Rating
                         </button>
@@ -284,68 +284,72 @@ const RecommendationPage: React.FC = () => {
               name, author, publication date, publisher description, book rating
         */}
         {showPopup && selectedTile && selectedTile.type === "book" && (
-          <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white p-6 rounded-lg w-[60%] relative">
+          <div className="fixed inset-0 bg-gray-500 bg-opacity-50 dark:bg-gray-800 dark:bg-opacity-50 flex justify-center items-center z-50">
+            <div className="bg-white dark:bg-brand-dark dark:border dark:border-black h-[80%] p-6 rounded-lg w-[60%] lg:w-[40%] relative lg:px-12">
               <button
                 onClick={handleClosePopup}
                 className="absolute top-2 right-3 text-lg font-bold"
               >
                 X
               </button>
-              <h2 className="text-xl font-semibold mb-4">
+              <h2 className="text-xl lg:text-2xl font-semibold mb-2">
                 {selectedTile.book_name}
               </h2>
               <img
                 src={selectedTile.image || "/book_default.svg"}
                 alt={selectedTile.book_name}
-                className="w-full h-48 object-contain mb-4"
+                className="w-full h-32 lg:h-64 object-contain mb-2"
               />
-              <div className="flex gap-2 items-center">
-                <p className="text-sm font-medium mb-2">
+              <div className="flex gap-2 items-center -mb-1">
+                <p className="text-sm lg:text-base font-medium mb-2">
                   <Stars rating={selectedTile.book_rating} type="book" />
                 </p>
-                <p className="text-sm font-semibold">{selectedTile.author}</p>
+                <p className="text-sm lg:text-base font-semibold">
+                  {selectedTile.author}
+                </p>
               </div>
-              <p className="text-sm italic mb-2">{selectedTile.description}</p>
-              <p className="text-sm">
+              <p className="text-sm lg:text-base italic mb-1 h-[27%] overflow-y-hidden">
+                {selectedTile.description}
+              </p>
+              <p className="text-sm lg:text-base">
                 <span className="font-semibold">Publisher: </span>
                 {selectedTile.publisher}
               </p>
-              <p className="text-sm">
+              <p className="text-sm lg:text-base">
                 <span className="font-semibold">Published: </span>
                 {selectedTile.publication_date}
               </p>
-              <p className="text-sm">
+              <p className="text-sm lg:text-base">
                 <span className="font-semibold">Ratings: </span>
                 {selectedTile.book_rating_count}
               </p>
-              <p className="text-sm">
+              <p className="text-sm lg:text-base">
                 <span className="font-semibold">ISBN: </span>
                 {selectedTile.isbn}
               </p>
               <button
-                className="rounded-full w-10 h-10 flex justify-center font-bold text-2xl ring-2 ring-blue-500 text-black absolute bottom-4 right-4"
+                className="rounded-full w-8 h-8 flex justify-center font-bold text-xl ring-2 dark:ring-secondary_light dark:text-secondary_light dark:hover:ring-brand-light dark:hover:text-brand-light ring-secondary hover:ring-secondary_hover text-secondary hover:text-secondary_hover absolute bottom-4 right-4"
                 onClick={() => addTile(selectedTile)}
               >
                 +
               </button>
               {addShowPopup && (
-                <div className="z-20 absolute right-0 -mt-32 w-40 bg-white shadow-md rounded-md border p-2 text-left">
+                <div className="z-20 absolute right-0 -mt-32 w-40 bg-white dark:bg-brand-dark shadow-md rounded-md border dark:border-black p-2 text-left">
                   <button
                     onClick={() => handleAddRec(selectedTile)}
-                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-900"
                   >
                     Add to Read List
                   </button>
                   <button
                     onClick={() => handleAddLibrary()}
-                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-900"
                   >
                     Add to Library
                   </button>
                   {showRatingPopup && (
                     <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
-                      <div className="bg-white p-6 rounded-lg w-[40%] relative text-center">
+                      <div className="bg-white dark:bg-brand-dark p-6 rounded-lg w-[40%] relative text-center">
                         <button
                           onClick={() => setShowRatingPopup(false)} // Close the popup
                           className="absolute top-2 right-3 text-lg font-bold"
@@ -359,7 +363,7 @@ const RecommendationPage: React.FC = () => {
                         {/* Your star rating component */}
                         <button
                           onClick={() => handleSubmit(selectedTile)}
-                          className="mt-4 bg-secondary hover:bg-secondary_hover text-white rounded px-4 py-2"
+                          className="mt-4 bg-secondary dark:bg-secondary_hover_light dark:text-black dark:hover:bg-secondary_hover_light2 hover:bg-secondary_hover text-white rounded px-4 py-2"
                         >
                           Submit Rating
                         </button>

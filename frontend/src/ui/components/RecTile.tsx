@@ -70,13 +70,13 @@ const RecTile: React.FC<TilesGridProps> = ({ tiles, onTileClick }) => {
             {/* Left Arrow - Outside Grid */}
             <button
               className={`mr-1 -ml-8 h-8 rounded-full flex items-center ${
-                movieIndex === 0 ? "opacity-30" : ""
+                movieIndex === 0 ? "opacity-30 dark:opacity-50" : ""
               }`}
               onClick={prevMovies}
             >
               <img
                 src="left.svg"
-                className="h-12 w-12 opacity-40 hover:opacity-50"
+                className="h-12 w-12 opacity-40 dark:opacity-90 dark:hover:opacity-100 hover:opacity-50"
               />
             </button>
 
@@ -87,7 +87,7 @@ const RecTile: React.FC<TilesGridProps> = ({ tiles, onTileClick }) => {
                 .map((tile) => (
                   <div
                     key={tile.movie_id}
-                    className="bg-white dark:bg-brand-dark w-[175px] h-[250px] border dark:border-black rounded-lg shadow my-1 hover:shadow-lg overflow-hidden hover:cursor-pointer"
+                    className="bg-white dark:bg-brand-dark w-[175px] h-[250px] border dark:border-white/30 rounded-lg shadow my-1 hover:shadow-lg overflow-hidden hover:cursor-pointer"
                     onClick={() => onTileClick(tile)}
                   >
                     <img
@@ -110,14 +110,14 @@ const RecTile: React.FC<TilesGridProps> = ({ tiles, onTileClick }) => {
             <button
               className={`ml-1 -mr-8 h-8 rounded-full flex items-center ${
                 movieIndex + itemsPerRow >= movieTiles.length
-                  ? "opacity-30"
+                  ? "opacity-30 dark:opacity-50"
                   : ""
               }`}
               onClick={nextMovies}
             >
               <img
                 src="right.svg"
-                className="h-12 w-12 opacity-40 hover:opacity-50"
+                className="h-12 w-12 opacity-40 dark:opacity-90 dark:hover:opacity-100 hover:opacity-50"
               />
             </button>
           </div>
@@ -132,13 +132,13 @@ const RecTile: React.FC<TilesGridProps> = ({ tiles, onTileClick }) => {
             {/* Left Arrow - Outside Grid */}
             <button
               className={`mr-1 -ml-8 h-8 rounded-full flex items-center ${
-                bookIndex === 0 ? "opacity-30" : ""
+                bookIndex === 0 ? "opacity-30 dark:opacity-50" : ""
               }`}
               onClick={prevBooks}
             >
               <img
                 src="left.svg"
-                className="h-12 w-12 opacity-40 hover:opacity-50"
+                className="h-12 w-12 opacity-40 dark:opacity-90 dark:hover:opacity-full hover:opacity-50"
               />
             </button>
             <div className="grid grid-cols-3 lg:grid-cols-4 gap-3 overflow-hidden">
@@ -147,7 +147,7 @@ const RecTile: React.FC<TilesGridProps> = ({ tiles, onTileClick }) => {
                 .map((tile) => (
                   <div
                     key={tile.isbn}
-                    className="bg-white w-[175px] h-[250px] border rounded-lg shadow my-1 hover:shadow-lg overflow-hidden hover:cursor-pointer"
+                    className="bg-white dark:bg-brand-dark w-[175px] h-[250px] border dark:border-white/30 rounded-lg shadow my-1 hover:shadow-lg overflow-hidden hover:cursor-pointer"
                     onClick={() => onTileClick(tile)}
                   >
                     <img
@@ -169,13 +169,15 @@ const RecTile: React.FC<TilesGridProps> = ({ tiles, onTileClick }) => {
             {/* Right Arrow */}
             <button
               className={`ml-1 -mr-8 h-8 rounded-full flex items-center ${
-                bookIndex + itemsPerRow >= bookTiles.length ? "opacity-30" : ""
+                bookIndex + itemsPerRow >= bookTiles.length
+                  ? "opacity-30 dark:opacity-50"
+                  : ""
               }`}
               onClick={nextBooks}
             >
               <img
                 src="right.svg"
-                className="h-12 w-12 opacity-40 hover:opacity-50"
+                className="h-12 w-12 opacity-40 dark:opacity-90 dark:hover:opacity-100 hover:opacity-50"
               />
             </button>
           </div>
