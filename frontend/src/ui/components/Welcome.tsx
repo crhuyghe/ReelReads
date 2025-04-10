@@ -161,7 +161,7 @@ const Welcome = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center mt-2 mx-8">
+      <div className="flex flex-col items-center mt-2 lg:mt-4 2xl:mt-8 mx-8">
         {movieTiles.length > 0 && (
           <ScrollingWrapper
             tiles={movieTiles}
@@ -178,41 +178,41 @@ const Welcome = () => {
         )}
         {showPopup && selectedTile && selectedTile.type === "movie" && (
           <div className="fixed inset-0 bg-gray-500 bg-opacity-50 dark:bg-gray-800 dark:bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white dark:bg-brand-dark dark:border dark:border-black h-[80%] p-6 rounded-lg w-[60%] relative">
+            <div className="bg-white dark:bg-brand-dark dark:border dark:border-black h-[80%] p-6 rounded-lg w-[60%] lg:w-[40%] relative lg:px-12">
               <button
                 onClick={handleClosePopup}
                 className="absolute top-2 right-3 text-lg font-bold"
               >
                 X
               </button>
-              <h2 className="text-lg font-semibold mb-4">
+              <h2 className="text-lg lg:text-2xl font-semibold mb-4">
                 {selectedTile.title}
               </h2>
               <img
                 src={selectedTile.image || "/movie_default.svg"}
                 alt={selectedTile.title}
-                className="w-full h-32 object-contain mb-2"
+                className="w-full h-32 lg:h-64 object-contain mb-2"
               />
               <div className="flex gap-2 items-center">
-                <p className="text-sm font-medium mb-2">
+                <p className="text-sm lg:text-md font-medium mb-2">
                   <Stars rating={selectedTile.movie_rating} type="movie" />
                 </p>
-                <p className="text-sm font-semibold">
+                <p className="text-sm lg:text-base font-semibold">
                   {selectedTile.runtime} min
                 </p>
               </div>
-              <p className="text-xs italic mb-1 h-[28%] overflow-y-hidden">
+              <p className="text-xs lg:text-base italic mb-1 h-[28%] overflow-y-hidden">
                 {selectedTile.description}
               </p>
-              <p className="text-sm">
+              <p className="text-sm lg:text-base">
                 <span className="font-semibold">Genre: </span>
                 {selectedTile.genre}
               </p>
-              <p className="text-sm">
+              <p className="text-sm lg:text-base">
                 <span className="font-semibold">Released: </span>
                 {selectedTile.release_date}
               </p>
-              <p className="text-sm">
+              <p className="text-sm lg:text-base">
                 <span className="font-semibold">Ratings: </span>
                 {selectedTile.movie_rating_count}
               </p>
@@ -358,7 +358,7 @@ const Welcome = () => {
             </div>
           </div>
         )}
-        <div className="w-[70%] mt-8 mb-12">
+        <div className="w-[70%] lg:w-[60%] 2xl:w-[40%] mt-8 lg:mt-4 lg:mb-4 mb-12">
           {/* QUIZ */}
           <QuizQuestion />
         </div>

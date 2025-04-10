@@ -65,35 +65,38 @@ const RecTile: React.FC<TilesGridProps> = ({ tiles, onTileClick }) => {
       {/* MOVIES (if there are any) */}
       {movieTiles.length > 0 && (
         <div>
-          <h2 className="text-xl font-semibold mb-4">Movies</h2>
-          <div className="relative flex items-center">
+          <h2 className="text-xl font-semibold mb-2">Movies</h2>
+          <div className="relative flex justify-center items-center w-full">
             {/* Left Arrow - Outside Grid */}
             <button
-              className={`mr-4 h-8 rounded-full flex items-center hover:bg-blue-200 ${
-                movieIndex === 0 ? "invisible" : ""
+              className={`mr-1 -ml-8 h-8 rounded-full flex items-center ${
+                movieIndex === 0 ? "opacity-30" : ""
               }`}
               onClick={prevMovies}
             >
-              <img src="left_arrow.svg" className="h-16 w-16" />
+              <img
+                src="left.svg"
+                className="h-12 w-12 opacity-40 hover:opacity-50"
+              />
             </button>
 
             {/* Movie Grid */}
-            <div className="grid grid-cols-3 lg:grid-cols-4 gap-6 overflow-hidden">
+            <div className="grid grid-cols-3 lg:grid-cols-4 gap-3 overflow-hidden">
               {movieTiles
                 .slice(movieIndex, movieIndex + itemsPerRow)
                 .map((tile) => (
                   <div
                     key={tile.movie_id}
-                    className="bg-white border rounded-lg shadow-md overflow-hidden hover:cursor-pointer"
+                    className="bg-white w-[175px] h-[250px] border rounded-lg shadow my-1 hover:shadow-lg overflow-hidden hover:cursor-pointer"
                     onClick={() => onTileClick(tile)}
                   >
                     <img
                       src={tile.image || "/movie_default.svg"}
                       alt={tile.title}
-                      className="w-full h-44 object-contain bg-blue-400"
+                      className="w-full h-44 object-contain"
                     />
-                    <div className="p-2 bg-blue-200">
-                      <h3 className="text-lg text-center font-semibold">
+                    <div className="p-1">
+                      <h3 className="text-lg text-center font-semibold truncate">
                         {tile.title}
                       </h3>
                       <h4 className="text-base text-center font-semibold flex justify-center">
@@ -105,12 +108,17 @@ const RecTile: React.FC<TilesGridProps> = ({ tiles, onTileClick }) => {
             </div>
             {/* Right Arrow */}
             <button
-              className={`ml-4 h-8 rounded-full flex items-center hover:bg-blue-200 ${
-                movieIndex + itemsPerRow >= movieTiles.length ? "invisible" : ""
+              className={`ml-1 -mr-8 h-8 rounded-full flex items-center ${
+                movieIndex + itemsPerRow >= movieTiles.length
+                  ? "opacity-30"
+                  : ""
               }`}
               onClick={nextMovies}
             >
-              <img src="right_arrow.svg" className="h-16 w-16" />
+              <img
+                src="right.svg"
+                className="h-12 w-12 opacity-40 hover:opacity-50"
+              />
             </button>
           </div>
         </div>
@@ -118,34 +126,37 @@ const RecTile: React.FC<TilesGridProps> = ({ tiles, onTileClick }) => {
 
       {/* BOOKS (if there are any) */}
       {bookTiles.length > 0 && (
-        <div>
-          <h2 className="text-xl font-semibold my-4">Books</h2>
-          <div className="relative flex items-center">
+        <div className="mb-4">
+          <h2 className="text-xl font-semibold mt-4 mb-2">Books</h2>
+          <div className="relative flex justify-center items-center w-full">
             {/* Left Arrow - Outside Grid */}
             <button
-              className={`mr-4 h-8 rounded-full flex items-center hover:bg-blue-200 ${
-                movieIndex === 0 ? "invisible" : ""
+              className={`mr-1 -ml-8 h-8 rounded-full flex items-center ${
+                bookIndex === 0 ? "opacity-30" : ""
               }`}
               onClick={prevBooks}
             >
-              <img src="left_arrow.svg" className="h-16 w-16" />
+              <img
+                src="left.svg"
+                className="h-12 w-12 opacity-40 hover:opacity-50"
+              />
             </button>
-            <div className="grid grid-cols-3 lg:grid-cols-4 gap-6 overflow-hidden">
+            <div className="grid grid-cols-3 lg:grid-cols-4 gap-3 overflow-hidden">
               {bookTiles
                 .slice(bookIndex, bookIndex + itemsPerRow)
                 .map((tile) => (
                   <div
                     key={tile.isbn}
-                    className="bg-white border rounded-lg shadow-md overflow-hidden hover:cursor-pointer"
+                    className="bg-white w-[175px] h-[250px] border rounded-lg shadow my-1 hover:shadow-lg overflow-hidden hover:cursor-pointer"
                     onClick={() => onTileClick(tile)}
                   >
                     <img
                       src={tile.image || "/book_default.svg"}
                       alt={tile.book_name}
-                      className="w-full h-44 object-contain bg-blue-400"
+                      className="w-full h-44 object-contain"
                     />
-                    <div className="p-2 bg-blue-200">
-                      <h3 className="text-lg text-center font-semibold">
+                    <div className="p-1">
+                      <h3 className="text-lg text-center font-semibold truncate">
                         {tile.book_name}
                       </h3>
                       <h4 className="text-base text-center font-semibold flex justify-center">
@@ -157,12 +168,15 @@ const RecTile: React.FC<TilesGridProps> = ({ tiles, onTileClick }) => {
             </div>
             {/* Right Arrow */}
             <button
-              className={`ml-4 h-8 rounded-full flex items-center hover:bg-blue-200 ${
-                movieIndex + itemsPerRow >= movieTiles.length ? "invisible" : ""
+              className={`ml-1 -mr-8 h-8 rounded-full flex items-center ${
+                bookIndex + itemsPerRow >= bookTiles.length ? "opacity-30" : ""
               }`}
               onClick={nextBooks}
             >
-              <img src="right_arrow.svg" className="h-16 w-16" />
+              <img
+                src="right.svg"
+                className="h-12 w-12 opacity-40 hover:opacity-50"
+              />
             </button>
           </div>
         </div>

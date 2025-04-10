@@ -22,14 +22,11 @@ const ScrollingWrapper: React.FC<ScrollingWrapperProps> = ({
 
     // Smooth scrolling function
     const scroll = () => {
-      if (
-        container.scrollLeft >=
-        container.scrollWidth - container.clientWidth
-      ) {
-        container.scrollLeft = 0; // Reset to start when the end is reached
-      } else {
-        container.scrollLeft += scrollSpeed; // Scroll to the right
+      if (container.scrollLeft >= container.scrollWidth / 2) {
+        // Jump back to start of first duplicate
+        container.scrollLeft = 0;
       }
+      container.scrollLeft += scrollSpeed;
     };
 
     const intervalId = setInterval(scroll, scrollInterval); // Auto-scroll every 20ms
@@ -55,7 +52,7 @@ const ScrollingWrapper: React.FC<ScrollingWrapperProps> = ({
           return (
             <div
               key={index}
-              className={`flex-shrink-0 w-[150px] bg-primary dark:bg-secondary text-black dark:text-white rounded shadow p-3 cursor-pointer hover:shadow-lg transition-shadow`}
+              className={`flex-shrink-0 w-[150px] lg:w-[200px] bg-primary dark:bg-secondary text-black dark:text-white rounded shadow p-3 cursor-pointer hover:shadow-lg transition-shadow`}
               onClick={() => onTileClick(tile)}
             >
               <img
@@ -64,7 +61,7 @@ const ScrollingWrapper: React.FC<ScrollingWrapperProps> = ({
                   (tile.title ? "/movie_default.svg" : "book_default.svg")
                 }
                 alt={displayTitle}
-                className="w-full h-32 object-cover rounded mb-2"
+                className="w-full h-32 lg:h-36 object-cover rounded mb-2"
               />
               <h3 className="text-md font-semibold truncate">{displayTitle}</h3>
               <p className="text-xs text-gray-500 dark:text-gray-300 truncate">

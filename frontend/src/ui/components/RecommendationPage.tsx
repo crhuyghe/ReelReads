@@ -166,17 +166,17 @@ const RecommendationPage: React.FC = () => {
           onSearch={handleSearch}
           onEnter={handleSearchRecommendClick}
         />
-        <div className="flex justify-center mt-[2rem]">
+        <div className="flex justify-center mt-[1rem]">
           {/*TODO: this would call the code for the recommender*/}
           <button
             onClick={handleSearchRecommendClick}
-            className="w-[25%] ring ring-2 ring-secondary_hover_light bg-primary rounded-xl py-2 px-8 text-lg font-semibold hover:bg-secondary_hover_light2 hover:ring-blue-300"
+            className="w-[25%] ring ring-2 ring-secondary_hover_light bg-primary rounded-xl py-2 px-8 text-lg font-semibold hover:bg-primary_light"
           >
             Recommend
           </button>
         </div>
         {showTiles && (
-          <div className="my-[2rem] mx-[4rem]">
+          <div className="my-[1rem] mx-[4rem] flex justify-center">
             <RecTile tiles={tilesData} onTileClick={handleTileClick} />
           </div>
         )}
