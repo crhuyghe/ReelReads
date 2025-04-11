@@ -270,7 +270,7 @@ const Welcome = () => {
               name, author, publication date, publisher description, book rating
         */}
         {showPopup && selectedTile && selectedTile.type === "book" && (
-          <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
+          <div className="fixed inset-0 bg-gray-500 bg-opacity-50 dark:bg-gray-800 dark:bg-opacity-50 flex justify-center items-center z-50">
             <div className="bg-white dark:bg-brand-dark dark:border dark:border-black h-[80%] p-6 rounded-lg w-[60%] relative">
               <button
                 onClick={handleClosePopup}

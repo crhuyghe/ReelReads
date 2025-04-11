@@ -61,7 +61,7 @@ const ScrollingWrapper: React.FC<ScrollingWrapperProps> = ({
                   (tile.title ? "/movie_default.svg" : "book_default.svg")
                 }
                 alt={displayTitle}
-                className="w-full h-32 lg:h-36 object-cover rounded mb-2"
+                className="w-full h-36 lg:h-36 object-cover rounded mb-2"
               />
               <h3 className="text-md font-semibold truncate">{displayTitle}</h3>
               <p className="text-xs text-gray-500 dark:text-gray-300 truncate">

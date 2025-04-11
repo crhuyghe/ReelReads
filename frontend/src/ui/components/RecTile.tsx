@@ -93,7 +93,7 @@ const RecTile: React.FC<TilesGridProps> = ({ tiles, onTileClick }) => {
                     <img
                       src={tile.image || "/movie_default.svg"}
                       alt={tile.title}
-                      className="w-full h-44 object-contain"
+                      className="w-full h-44 object-cover"
                     />
                     <div className="p-1">
                       <h3 className="text-lg text-center font-semibold truncate">
@@ -153,7 +153,7 @@ const RecTile: React.FC<TilesGridProps> = ({ tiles, onTileClick }) => {
                     <img
                       src={tile.image || "/book_default.svg"}
                       alt={tile.book_name}
-                      className="w-full h-44 object-contain"
+                      className="w-full h-44 object-cover"
                     />
                     <div className="p-1">
                       <h3 className="text-lg text-center font-semibold truncate">
