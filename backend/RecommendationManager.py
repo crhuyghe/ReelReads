@@ -13,7 +13,6 @@ class RecommendationManager:
         self._embedding_model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
 
     def get_recommendations(self, user_vector, user_history, top_n=10):
-        print(user_history)
         """Combines the recommendation techniques to get the top book and movie recommendations for a particular user."""
         alpha, beta = 1, .5  # weight factor for recommendation techniques
 
@@ -57,7 +56,8 @@ class RecommendationManager:
             else:
                 joined_books = book_sim.sort_values(by=["sim"], ascending=False).reset_index(drop=True)
 
-            joined_movies = joined_movies.loc[~joined_movies["id"].isin(user_history["movie"].keys())]
+            movie_ids = set([int(movie_id) for movie_id in user_history["movie"].keys()])
+            joined_movies = joined_movies.loc[~joined_movies["id"].isin(movie_ids)]
             joined_books = joined_books.loc[~joined_books["ISBN"].isin(user_history["book"].keys())]
 
             return joined_movies.head(top_n), joined_books.head(top_n)
@@ -99,9 +99,12 @@ class RecommendationManager:
         else:
             embedding = self._book_embeddings.loc[self._book_embeddings["ISBN"] == identifier].iloc[0, 1:].to_numpy()
 
-        new_vector = (np.array(user_vector) * 6) + (embedding * (rating - 2))
-        new_vector /= np.linalg.norm(new_vector)
-        return new_vector
+        if len(user_vector) == 0:
+            return embedding
+        else:
+            new_vector = (np.array(user_vector) * 6) + (embedding * (rating - 2))
+            new_vector /= np.linalg.norm(new_vector)
+            return new_vector
 
     def _get_embeddings(self):
         """Fetches book and movie embeddings."""

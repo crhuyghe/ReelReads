@@ -177,7 +177,7 @@ const RecommendationPage: React.FC = () => {
             onClick={handleSearchRecommendClick}
             className="w-[25%] ring ring-2 ring-secondary_hover_light bg-primary dark:bg-secondary_dark dark:ring-brand-dark rounded-xl py-2 px-8 text-lg font-semibold hover:bg-primary_light dark:hover:opacity-90"
           >
-            Recommend
+            Search
           </button>
         </div>
         {showTiles && (
@@ -188,7 +188,7 @@ const RecommendationPage: React.FC = () => {
 
         {/* POP UP CODE */}
 
-        {/* MOVIE INFO TO DISPLAY 
+        {/* MOVIE INFO TO DISPLAY
               title, genre, release date, movie rating, description, runtime
         */}
         {showPopup && selectedTile && selectedTile.type === "movie" && (
