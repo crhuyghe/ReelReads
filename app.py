@@ -122,6 +122,20 @@ def grabList():
     fetched_movie_data = get_movies_by_id(movie_ids) if movie_ids else []
     fetched_book_data = get_books_by_isbn(isbns) if isbns else []
 
+    for movie in fetched_movie_data:
+        movie["type"] = "movie"
+        movie["image"] = handle_movie_search(movie["imdb_id"])
+
+    for book in fetched_book_data:
+        book["type"] = "book"
+        book_info = handle_book_search(book["isbn"])
+        if book_info:
+            book["image"] = book_info["thumbnail"]
+            book["genre"] = book_info["genre"]
+        else:
+            book["image"] = None
+            book["genre"] = None
+
     fetched_data = fetched_book_data + fetched_movie_data
     if fetched_movie_data or fetched_book_data:
         return jsonify({"message": "Fetch Successful", "fetched_data": fetched_data}), 200
@@ -204,6 +218,20 @@ def grabLib():
 
     fetched_movie_data = get_movies_by_id(movie_ids) if movie_ids else []
     fetched_book_data = get_books_by_isbn(isbns) if isbns else []
+
+    for movie in fetched_movie_data:
+        movie["type"] = "movie"
+        movie["image"] = handle_movie_search(movie["imdb_id"])
+
+    for book in fetched_book_data:
+        book["type"] = "book"
+        book_info = handle_book_search(book["isbn"])
+        if book_info:
+            book["image"] = book_info["thumbnail"]
+            book["genre"] = book_info["genre"]
+        else:
+            book["image"] = None
+            book["genre"] = None
 
     fetched_data = fetched_book_data + fetched_movie_data
     if fetched_movie_data or fetched_book_data:
