@@ -12,7 +12,7 @@ const StarRating: React.FC<StarRatingProps> = ({ onRate }) => {
     onRate(star);
   };
   return (
-    <div className="flex items-center">
+    <div className="flex items-center justify-center">
       {[1, 2, 3, 4, 5].map((star) => (
         <span
           key={star}

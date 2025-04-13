@@ -13,6 +13,7 @@ export default {
         secondary_hover_light2: "#85A9C1",
         secondary_light: "#cbebf6",
         secondary_dark: "#3E627A",
+        brown_color: "#6A5431",
         accent: "#A72E1E",
         brand: {
           light: "#FCFBF1",

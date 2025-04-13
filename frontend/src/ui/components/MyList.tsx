@@ -135,11 +135,11 @@ const MyList: React.FC = () => {
                     className="w-5 opacity-70 hover:opacity-100"
                   />
                 </button>
-                <div>
+                <div className="w-[40%]">
                   <img
                     src={tile.image || "/movie_default.svg"}
                     alt={tile.title}
-                    className="w-full h-32 object-contain"
+                    className="w-full h-32 object-cover"
                   />
                 </div>
                 <div className="px-2 py-2 bg-primary dark:bg-secondary flex flex-col justify-center w-full gap-2">
@@ -151,7 +151,7 @@ const MyList: React.FC = () => {
                     <StarRating onRate={handleRate} />
                     <button
                       onClick={() => handleSubmit(tile)}
-                      className="rounded-md hover:text-accent px-2 pt-[6px] text-base text-center font-semibold flex justify-center"
+                      className="rounded-md hover:text-accent dark:hover:text-red-300 px-2 pt-[6px] text-base text-center font-semibold flex justify-center"
                     >
                       Watched It!
                     </button>
@@ -177,11 +177,11 @@ const MyList: React.FC = () => {
                     className="w-5 opacity-70 hover:opacity-100"
                   />
                 </button>
-                <div>
+                <div className="w-[40%]">
                   <img
                     src={tile.image || "/movie_default.svg"}
                     alt={tile.title}
-                    className="w-full h-32 object-contain"
+                    className="w-full h-32 object-cover"
                   />
                 </div>
                 <div className="px-2 py-2 bg-primary dark:bg-secondary flex flex-col justify-center w-full gap-2">
@@ -192,7 +192,7 @@ const MyList: React.FC = () => {
                     <StarRating onRate={handleRate} />
                     <button
                       onClick={() => handleSubmit(tile)}
-                      className="rounded-md hover:text-accent px-2 pt-[6px] text-base text-center font-semibold flex justify-center"
+                      className="rounded-md hover:text-accent dark:hover:text-red-300 px-2 pt-[6px] text-base text-center font-semibold flex justify-center"
                     >
                       Read It!
                     </button>
