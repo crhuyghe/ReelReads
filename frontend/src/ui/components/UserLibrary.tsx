@@ -92,10 +92,10 @@ const UserLibrary: React.FC = () => {
                         <img
                           src={tile.image || "/movie_default.svg"}
                           alt={tile.title}
-                          className="w-full h-32 object-contain"
+                          className="w-full h-32 xl:h-40 object-contain"
                         />
                         <div>
-                          <h3 className="text-lg text-center font-semibold truncate">
+                          <h3 className="text-lg xl:text-xl text-center font-semibold truncate">
                             {tile.title}
                           </h3>
                         </div>
@@ -135,10 +135,10 @@ const UserLibrary: React.FC = () => {
                         <img
                           src={tile.image || "/movie_default.svg"}
                           alt={tile.book_name}
-                          className="w-full h-32 object-contain"
+                          className="w-full h-32 xl:h-40 object-contain"
                         />
                         <div>
-                          <h3 className="text-lg text-center font-semibold truncate">
+                          <h3 className="text-lg xl:text-xl text-center font-semibold truncate">
                             {tile.book_name}
                           </h3>
                         </div>
