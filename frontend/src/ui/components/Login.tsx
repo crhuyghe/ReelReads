@@ -58,14 +58,16 @@ const Login = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen w-full">
-      <div className="w-[60%] bg-primary dark:bg-secondary_dark rounded-lg py-[2rem] px-[2rem] flex flex-col text-left">
+      <div className="w-[60%] lg:w-[50%] xl:w-[40%] bg-primary dark:bg-secondary_dark rounded-lg py-[2rem] px-[2rem] flex flex-col text-left">
         <div className="flex items-center gap-2 mb-4">
           <img src="/reelreads.svg" className="w-12 object-cover" />
-          <h2 className="font-bold text-xl">ReelReads</h2>
+          <h2 className="font-bold text-xl 2xl:text-2xl">ReelReads</h2>
         </div>
         <div className="flex flex-col mb-3">
-          <h3 className="text-lg font-semibold">Welcome to ReelReads! 👋</h3>
-          <p className="text-sm">
+          <h3 className="text-lg 2xl:text-xl font-semibold">
+            Welcome to ReelReads! 👋
+          </h3>
+          <p className="text-sm 2xl:text-base">
             Please sign-in to your account to grab your entertainment
             recommendations
           </p>
@@ -74,7 +76,7 @@ const Login = () => {
         {/* Login Form */}
         <form onSubmit={handleLoginSubmit}>
           <div className="flex flex-col mb-3 gap-1">
-            <label className="text-sm">USERNAME</label>
+            <label className="text-sm 2xl:text-base">USERNAME</label>
             <input
               type="text"
               id="username"
@@ -86,7 +88,7 @@ const Login = () => {
             />
           </div>
           <div className="flex flex-col mb-3 gap-1">
-            <label className="text-sm">PASSWORD</label>
+            <label className="text-sm 2xl:text-base">PASSWORD</label>
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
@@ -162,7 +164,7 @@ const Login = () => {
                 />
               </svg>
             </div>
-            <p className="text-xs font-semibold dark:font-normal text-red-800 dark:text-red-300">
+            <p className="text-xs 2xl:text-sm font-semibold dark:font-normal text-red-800 dark:text-red-300">
               Your username or password is incorrect. Please enter valid
               credentials.
             </p>
@@ -174,7 +176,7 @@ const Login = () => {
           />
         </form>
 
-        <div className="flex gap-1 justify-center text-sm">
+        <div className="flex gap-1 justify-center text-sm 2xl:text-base">
           <p>New on our platform?</p>
           <Link
             to="/createAccount"

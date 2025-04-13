@@ -13,7 +13,6 @@ interface Tile {
 
 const UserLibrary: React.FC = () => {
   const [tiles, setTiles] = useState<Tile[]>([]); // state to hold the list of tiles
-  const [columnsPerRow, setColumnsPerRow] = useState(4);
 
   const { user } = useUser();
   console.log("User from context: ", user);
@@ -38,19 +37,30 @@ const UserLibrary: React.FC = () => {
     fetchData();
   }, [user]); //update when user catches up
 
+  const [columnsPerRow, setColumnsPerRow] = useState(() => {
+    const width = window.innerWidth;
+    if (width >= 1536) return 6; // 2xl
+    if (width >= 1280) return 5; // xl
+    if (width >= 1024) return 4; // lg
+    if (width >= 768) return 3; // md
+    return 1; // sm and below
+  });
+
   useEffect(() => {
-    const handleResize = () => {
+    const getColumnsPerRow = () => {
       const width = window.innerWidth;
-      if (width < 1024 && width >= 768) {
-        // md screen
-        setColumnsPerRow(3);
-      } else {
-        // sm or lg+
-        setColumnsPerRow(4);
-      }
+      if (width >= 1536) return 6; // 2xl
+      if (width >= 1280) return 5; // xl
+      if (width >= 1024) return 4; // lg
+      if (width >= 768) return 3; // md
+      return 1; // sm and below
     };
 
-    handleResize(); // Run once on mount
+    const handleResize = () => {
+      setColumnsPerRow(getColumnsPerRow());
+    };
+
+    handleResize(); // Set initial value
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -59,7 +69,7 @@ const UserLibrary: React.FC = () => {
   const bookTiles = tiles.filter((tile) => tile.isbn !== undefined);
 
   return (
-    <div className="pb-8">
+    <div className="pb-8 xl:mx-[8rem]">
       <h1 className="font-semibold text-2xl mx-[3rem] my-[2rem]">My Library</h1>
       <div className="relative px-[3rem] space-y-6">
         {movieTiles.length > 0 && (
@@ -68,7 +78,7 @@ const UserLibrary: React.FC = () => {
               length: Math.ceil(movieTiles.length / columnsPerRow),
             }).map((_, rowIndex) => (
               <div key={rowIndex}>
-                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-1">
+                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-1">
                   {movieTiles
                     .slice(
                       rowIndex * columnsPerRow,
@@ -111,7 +121,7 @@ const UserLibrary: React.FC = () => {
               length: Math.ceil(bookTiles.length / columnsPerRow),
             }).map((_, rowIndex) => (
               <div key={rowIndex}>
-                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-1">
+                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-1">
                   {bookTiles
                     .slice(
                       rowIndex * columnsPerRow,

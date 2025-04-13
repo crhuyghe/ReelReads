@@ -359,7 +359,7 @@ const Welcome = () => {
             </div>
           </div>
         )}
-        <div className="w-[70%] lg:w-[60%] 2xl:w-[40%] mt-8 lg:mt-4 lg:mb-4 mb-12">
+        <div className="w-[70%] lg:w-[60%] 2xl:w-[50%] mt-8 lg:mt-4 lg:mb-4 mb-4 flex justify-center">
           {/* QUIZ */}
           <QuizQuestion />
         </div>

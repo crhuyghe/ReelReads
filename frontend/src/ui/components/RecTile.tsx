@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Stars from "./Stars";
 
 interface Tile {
@@ -31,7 +31,25 @@ const RecTile: React.FC<TilesGridProps> = ({ tiles, onTileClick }) => {
   const movieTiles = tiles.filter((tile) => tile.type === "movie");
   const bookTiles = tiles.filter((tile) => tile.type === "book");
 
-  const itemsPerRow = window.innerWidth >= 1024 ? 4 : 3; // 4 for large, 3 for small screens
+  const getItemsPerRow = () => {
+    const width = window.innerWidth;
+    if (width >= 1536) return 8; // 2xl
+    if (width >= 1280) return 6; // xl
+    if (width >= 1024) return 4; // lg
+    if (width >= 768) return 3; // md
+    return 1; // sm and below
+  };
+
+  const [itemsPerRow, setItemsPerRow] = useState(getItemsPerRow());
+
+  useEffect(() => {
+    const handleResize = () => {
+      setItemsPerRow(getItemsPerRow());
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const [movieIndex, setMovieIndex] = useState(0);
   const [bookIndex, setBookIndex] = useState(0);
@@ -81,7 +99,7 @@ const RecTile: React.FC<TilesGridProps> = ({ tiles, onTileClick }) => {
             </button>
 
             {/* Movie Grid */}
-            <div className="grid grid-cols-3 lg:grid-cols-4 gap-3 overflow-hidden mx-1">
+            <div className="grid grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-8 gap-3 overflow-hidden mx-1">
               {movieTiles
                 .slice(movieIndex, movieIndex + itemsPerRow)
                 .map((tile) => (
@@ -141,7 +159,7 @@ const RecTile: React.FC<TilesGridProps> = ({ tiles, onTileClick }) => {
                 className="h-12 w-12 opacity-40 dark:opacity-90 dark:hover:opacity-full hover:opacity-50"
               />
             </button>
-            <div className="grid grid-cols-3 lg:grid-cols-4 gap-3 overflow-hidden">
+            <div className="grid grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-8 gap-3 overflow-hidden">
               {bookTiles
                 .slice(bookIndex, bookIndex + itemsPerRow)
                 .map((tile) => (

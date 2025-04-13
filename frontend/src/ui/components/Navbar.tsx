@@ -23,7 +23,7 @@ const Navbar = () => {
   return (
     <nav className="bg-white dark:bg-brand-dark shadow-soft-light dark:shadow-soft-dark p-4 flex justify-center">
       <div className="flex justify-between items-center w-full">
-        <Link to="/welcome" className="ml-8 focus:outline-none">
+        <Link to="/welcome" className="ml-8 xl:ml-16 focus:outline-none">
           {theme === "light" ? (
             <img src="/home.svg" />
           ) : (
@@ -31,7 +31,10 @@ const Navbar = () => {
           )}
         </Link>
         <h2>ReelReads</h2>
-        <button onClick={() => setDropdownOpen(!dropdownOpen)} className="mr-8">
+        <button
+          onClick={() => setDropdownOpen(!dropdownOpen)}
+          className="mr-8 xl:mr-16"
+        >
           {theme === "light" ? (
             <img src="/profile.svg" />
           ) : (
@@ -39,7 +42,7 @@ const Navbar = () => {
           )}
         </button>
         {dropdownOpen && (
-          <div className="text-black dark:text-white z-20 absolute right-0 mt-60 w-32 bg-white dark:bg-brand-dark shadow-soft-light dark:shadow-soft-dark rounded-md p-2 text-left">
+          <div className="text-black dark:text-white z-20 absolute right-0 xl:right-8 mt-60 w-32 bg-white dark:bg-brand-dark shadow-soft-light dark:shadow-soft-dark rounded-md p-2 text-left">
             <a
               href="/recommendation"
               className="block pl-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-900"

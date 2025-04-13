@@ -32,7 +32,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       {isMainOrCreateAccountPage && (
         <button
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          className="fixed top-4 right-4 px-2 py-2 rounded-full hover:bg-primary ring ring-1 ring-primary dark:ring-secondary_dark dark:hover:bg-secondary_dark focus:outline-none"
+          className="fixed top-4 lg:top-8 xl:top-12 2xl:top-16 right-4 lg:right-8 xl:right-12 2xl:right-16 px-2 py-2 rounded-full hover:bg-primary ring ring-1 ring-primary dark:ring-secondary_dark dark:hover:bg-secondary_dark focus:outline-none"
         >
           {theme === "dark" ? <img src="/sun.svg" /> : <img src="/moon.svg" />}
         </button>

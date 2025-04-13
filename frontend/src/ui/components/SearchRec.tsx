@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTheme } from "./ThemeContext";
 
 interface SearchInputProps {
   onSearch: (query: string) => void;
@@ -7,6 +8,7 @@ interface SearchInputProps {
 
 const SearchRec: React.FC<SearchInputProps> = ({ onSearch, onEnter }) => {
   const [query, setQuery] = useState<string>("");
+  const { theme, setTheme } = useTheme();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value);
@@ -15,11 +17,18 @@ const SearchRec: React.FC<SearchInputProps> = ({ onSearch, onEnter }) => {
 
   return (
     <>
-      <div className="relative px-2 py-1 mt-[2rem] mx-[4rem]">
-        <img
-          src="../../../src/ui/assets/magnifier.png"
-          className="w-5 absolute left-3 top-1/2 transform -translate-y-1/2"
-        />
+      <div className="relative px-2 py-1 mt-[2rem] mx-[4rem] lg:mx-[5rem] xl:mx-[8rem]">
+        {theme === "light" ? (
+          <img
+            src="../../../src/ui/assets/magnifier.png"
+            className="w-5 absolute left-3 top-1/2 transform -translate-y-1/2"
+          />
+        ) : (
+          <img
+            src="/search_white.svg"
+            className="w-5 absolute left-3 top-1/2 transform -translate-y-1/2"
+          />
+        )}
         <input
           type="text"
           placeholder="Search..."

@@ -175,7 +175,7 @@ const RecommendationPage: React.FC = () => {
           {/*TODO: this would call the code for the recommender*/}
           <button
             onClick={handleSearchRecommendClick}
-            className="w-[25%] ring ring-2 ring-secondary_hover_light bg-primary dark:bg-secondary_dark dark:ring-brand-dark rounded-xl py-2 px-8 text-lg font-semibold hover:bg-primary_light dark:hover:opacity-90"
+            className="w-[25%] xl:w-[15%] ring ring-2 ring-secondary_hover_light bg-primary dark:bg-secondary_dark dark:ring-brand-dark rounded-xl py-2 px-8 text-lg font-semibold hover:bg-primary_light dark:hover:opacity-90"
           >
             Search
           </button>
@@ -193,7 +193,7 @@ const RecommendationPage: React.FC = () => {
         */}
         {showPopup && selectedTile && selectedTile.type === "movie" && (
           <div className="fixed inset-0 bg-gray-500 bg-opacity-50 dark:bg-gray-800 dark:bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white dark:bg-brand-dark dark:border dark:border-black h-[80%] p-6 rounded-lg w-[60%] lg:w-[40%] relative lg:px-12">
+            <div className="bg-white dark:bg-brand-dark dark:border dark:border-black h-[80%] p-6 rounded-lg w-[60%] xl:w-[50%] 2xl:w-[40%] relative lg:px-12">
               <button
                 onClick={handleClosePopup}
                 className="absolute top-2 right-3 text-lg font-bold"
@@ -203,11 +203,22 @@ const RecommendationPage: React.FC = () => {
               <h2 className="text-lg lg:text-2xl font-semibold mb-4">
                 {selectedTile.title}
               </h2>
-              <img
-                src={selectedTile.image || "/movie_default.svg"}
-                alt={selectedTile.title}
-                className="w-full h-32 lg:h-64 bject-contain mb-2"
-              />
+              <div className="relative w-full h-32 lg:h-64 mb-2">
+                {/* Background blurred/low-opacity image */}
+                <img
+                  src={selectedTile.image || "/movie_default.svg"}
+                  alt=""
+                  className="absolute inset-0 w-full h-full object-cover opacity-40 blur-sm"
+                  aria-hidden="true"
+                />
+
+                {/* Foreground clean image */}
+                <img
+                  src={selectedTile.image || "/movie_default.svg"}
+                  alt={selectedTile.title}
+                  className="relative z-10 w-full h-full object-contain"
+                />
+              </div>
               <div className="flex gap-2 items-center">
                 <p className="text-sm lg:text-base font-medium mb-2">
                   <Stars rating={selectedTile.movie_rating} type="movie" />
@@ -232,7 +243,7 @@ const RecommendationPage: React.FC = () => {
                 {selectedTile.movie_rating_count}
               </p>
               <button
-                className="rounded-full w-8 h-8 flex justify-center font-bold text-xl ring-2 dark:ring-secondary_light dark:text-secondary_light dark:hover:ring-brand-light dark:hover:text-brand-light ring-secondary hover:ring-secondary_hover text-secondary hover:text-secondary_hover absolute bottom-4 right-4"
+                className="rounded-full w-8 h-8 flex justify-center font-bold text-xl ring-2 dark:ring-secondary_light dark:text-secondary_light dark:hover:ring-brand-light dark:hover:text-brand-light ring-secondary hover:ring-secondary_hover text-secondary hover:text-secondary_hover absolute bottom-4 lg:bottom-8 right-4 lg:right-8"
                 onClick={() => addTile(selectedTile)}
               >
                 +
@@ -285,7 +296,7 @@ const RecommendationPage: React.FC = () => {
         */}
         {showPopup && selectedTile && selectedTile.type === "book" && (
           <div className="fixed inset-0 bg-gray-500 bg-opacity-50 dark:bg-gray-800 dark:bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white dark:bg-brand-dark dark:border dark:border-black h-[80%] p-6 rounded-lg w-[60%] lg:w-[40%] relative lg:px-12">
+            <div className="bg-white dark:bg-brand-dark dark:border dark:border-black h-[80%] p-6 rounded-lg w-[60%] xl:w-[50%] 2xl:w-[40%] relative lg:px-12">
               <button
                 onClick={handleClosePopup}
                 className="absolute top-2 right-3 text-lg font-bold"
@@ -295,11 +306,22 @@ const RecommendationPage: React.FC = () => {
               <h2 className="text-xl lg:text-2xl font-semibold mb-2">
                 {selectedTile.book_name}
               </h2>
-              <img
-                src={selectedTile.image || "/book_default.svg"}
-                alt={selectedTile.book_name}
-                className="w-full h-32 lg:h-64 object-contain mb-2"
-              />
+              <div className="relative w-full h-32 lg:h-64 mb-2">
+                {/* Background blurred/low-opacity image */}
+                <img
+                  src={selectedTile.image || "/movie_default.svg"}
+                  alt=""
+                  className="absolute inset-0 w-full h-full object-cover opacity-40 blur-sm"
+                  aria-hidden="true"
+                />
+
+                {/* Foreground clean image */}
+                <img
+                  src={selectedTile.image || "/movie_default.svg"}
+                  alt={selectedTile.book_name}
+                  className="relative z-10 w-full h-full object-contain"
+                />
+              </div>
               <div className="flex gap-2 items-center -mb-1">
                 <p className="text-sm lg:text-base font-medium mb-2">
                   <Stars rating={selectedTile.book_rating} type="book" />
@@ -328,7 +350,7 @@ const RecommendationPage: React.FC = () => {
                 {selectedTile.isbn}
               </p>
               <button
-                className="rounded-full w-8 h-8 flex justify-center font-bold text-xl ring-2 dark:ring-secondary_light dark:text-secondary_light dark:hover:ring-brand-light dark:hover:text-brand-light ring-secondary hover:ring-secondary_hover text-secondary hover:text-secondary_hover absolute bottom-4 right-4"
+                className="rounded-full w-8 h-8 flex justify-center font-bold text-xl ring-2 dark:ring-secondary_light dark:text-secondary_light dark:hover:ring-brand-light dark:hover:text-brand-light ring-secondary hover:ring-secondary_hover text-secondary hover:text-secondary_hover absolute bottom-4 lg:bottom-8 right-4 lg:right-8"
                 onClick={() => addTile(selectedTile)}
               >
                 +
