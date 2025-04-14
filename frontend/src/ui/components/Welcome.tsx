@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Navbar from "./Navbar";
 import { useUser } from "./UserContext";
 import QuizQuestion from "./QuizQuestion";
 import ScrollingWrapper from "./ScrollingWrapper";

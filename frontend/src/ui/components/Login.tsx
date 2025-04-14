@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useUser } from "./UserContext";
-import CreateAccount from "./CreateAccount";
-import Welcome from "./Welcome";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 

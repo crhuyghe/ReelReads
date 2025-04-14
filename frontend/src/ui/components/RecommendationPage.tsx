@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import SearchRec from "./SearchRec";
 import RecTile from "./RecTile";
 import Stars from "./Stars";
-import Navbar from "./Navbar";
 import axios from "axios";
 import { useUser } from "./UserContext";
 import StarRating from "./StarRating";

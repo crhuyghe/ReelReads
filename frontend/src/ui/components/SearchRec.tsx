@@ -8,7 +8,7 @@ interface SearchInputProps {
 
 const SearchRec: React.FC<SearchInputProps> = ({ onSearch, onEnter }) => {
   const [query, setQuery] = useState<string>("");
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value);

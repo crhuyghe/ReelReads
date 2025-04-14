@@ -14,7 +14,6 @@ import { UserProvider } from "./components/UserContext";
 import UserLibrary from "./components/UserLibrary";
 import MyList from "./components/MyList";
 import Navbar from "./components/Navbar";
-import { useEffect, useState } from "react";
 import { ThemeProvider } from "./components/ThemeContext";
 import { useTheme } from "./components/ThemeContext";
 
