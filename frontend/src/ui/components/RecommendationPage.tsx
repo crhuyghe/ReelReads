@@ -37,7 +37,8 @@ const RecommendationPage: React.FC = () => {
 
   const [rating, setRating] = useState<number | null>(null);
   const [showRatingPopup, setShowRatingPopup] = useState(false);
-  // const [fetchedData, setFetchedData] = useState<Tile[]>([]);
+
+  const [loading, setLoading] = useState<boolean>(false);
 
   const { user } = useUser();
 
@@ -48,6 +49,7 @@ const RecommendationPage: React.FC = () => {
 
   const handleSearchRecommendClick = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const response = await axios.post("http://localhost:5000/search", {
@@ -67,7 +69,7 @@ const RecommendationPage: React.FC = () => {
         error
       );
     }
-
+    setLoading(false);
     setShowTiles(true);
   };
 
@@ -180,10 +182,25 @@ const RecommendationPage: React.FC = () => {
             Search
           </button>
         </div>
-        {showTiles && (
-          <div className="py-2 mx-[4rem] flex justify-center">
-            <RecTile tiles={tilesData} onTileClick={handleTileClick} />
+        {loading ? (
+          <div className="text-center mt-40 text-lg font-medium">
+            <span>Loading</span>
+            <span>
+              <span className="inline-block animate-blink text-xl ml-1">.</span>
+              <span className="inline-block animate-blink [animation-delay:0.2s] text-xl ml-1">
+                .
+              </span>
+              <span className="inline-block animate-blink [animation-delay:0.4s] text-xl ml-1">
+                .
+              </span>
+            </span>
           </div>
+        ) : (
+          showTiles && (
+            <div className="py-2 mx-[4rem] flex justify-center">
+              <RecTile tiles={tilesData} onTileClick={handleTileClick} />
+            </div>
+          )
         )}
 
         {/* POP UP CODE */}

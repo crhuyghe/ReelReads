@@ -36,8 +36,11 @@ const Welcome = () => {
   const [rating, setRating] = useState<number | null>(null);
   const [showRatingPopup, setShowRatingPopup] = useState(false);
   const { user } = useUser();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true); // prevent rendering while data is loading
+
     const fetchTilesData = async () => {
       if (!user?.user_id) return; // Ensure user_id exists before making the request
 
@@ -57,6 +60,8 @@ const Welcome = () => {
           "An error occurred while fetching recommendations",
           error
         );
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -159,6 +164,27 @@ const Welcome = () => {
   console.log("Tile Length: ", tilesData.length);
   const movieTiles = tilesData.filter((tile) => tile.type === "movie");
   const bookTiles = tilesData.filter((tile) => tile.type === "book");
+
+  // Defensive check for loading state
+  if (movieTiles.length === 0 || bookTiles.length === 0) {
+    return (
+      <div className="text-center mt-40 text-lg font-medium flex flex-col">
+        <div>Please be patient with us as we fetch your results</div>
+        <div className="">
+          <span className="inline-block animate-blink text-4xl">.</span>
+          <span className="inline-block animate-blink [animation-delay:0.2s] text-4xl">
+            .
+          </span>
+          <span className="inline-block animate-blink [animation-delay:0.4s] text-4xl">
+            .
+          </span>
+        </div>
+      </div>
+    );
+  }
+
+  if (isLoading)
+    return <div>Please be patient with us as we fetch your results...</div>;
 
   return (
     <>

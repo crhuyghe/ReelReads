@@ -25,6 +25,15 @@ export default {
         "soft-light": "0 4px 6px rgba(0, 0, 0, 0.1)",
         "soft-dark": "0 4px 6px rgba(0, 0, 0, 0.73)",
       },
+      keyframes: {
+        blink: {
+          "0%, 100%": { opacity: "0.2" },
+          "20%": { opacity: "1" },
+        },
+      },
+      animation: {
+        blink: "blink 1.4s infinite both",
+      },
     },
   },
   plugins: [],

@@ -115,6 +115,26 @@ const MyList: React.FC = () => {
   console.log("Movies:", movies);
   console.log("Books:", books);
 
+  // Defensive check for loading state
+  if (movies.length === 0 || books.length === 0) {
+    return (
+      <div className="text-center mt-40 text-lg font-medium">
+        <span>Loading</span>
+        <span>
+          <span className="inline-block animate-blink text-xl ml-1">.</span>
+          <span className="inline-block animate-blink [animation-delay:0.2s] text-xl ml-1">
+            .
+          </span>
+          <span className="inline-block animate-blink [animation-delay:0.4s] text-xl ml-1">
+            .
+          </span>
+        </span>
+      </div>
+    );
+  }
+
+  if (loading) return <div>Loading...</div>;
+
   return (
     <div className="xl:mx-[8rem]">
       <h1 className="font-semibold text-2xl mx-[3rem] mt-[2rem]">My List</h1>

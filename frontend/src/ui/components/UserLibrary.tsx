@@ -13,6 +13,7 @@ interface Tile {
 
 const UserLibrary: React.FC = () => {
   const [tiles, setTiles] = useState<Tile[]>([]); // state to hold the list of tiles
+  const [loading, setLoading] = useState<boolean>(false);
 
   const { user } = useUser();
   console.log("User from context: ", user);
@@ -20,6 +21,7 @@ const UserLibrary: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (!user?.user_id) return; // Wait until user_id is available
+      setLoading(true);
 
       try {
         const response = await axios.post("http://localhost:5000/grabLib", {
@@ -31,6 +33,8 @@ const UserLibrary: React.FC = () => {
         console.log("Response formatted: ", response.data.fetched_data);
       } catch (error) {
         console.error("Error fetching data: ", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -67,6 +71,26 @@ const UserLibrary: React.FC = () => {
 
   const movieTiles = tiles.filter((tile) => tile.movie_id !== undefined);
   const bookTiles = tiles.filter((tile) => tile.isbn !== undefined);
+
+  // Defensive check for loading state
+  if (movieTiles.length === 0 || bookTiles.length === 0) {
+    return (
+      <div className="text-center mt-40 text-lg font-medium">
+        <span>Loading</span>
+        <span>
+          <span className="inline-block animate-blink text-xl ml-1">.</span>
+          <span className="inline-block animate-blink [animation-delay:0.2s] text-xl ml-1">
+            .
+          </span>
+          <span className="inline-block animate-blink [animation-delay:0.4s] text-xl ml-1">
+            .
+          </span>
+        </span>
+      </div>
+    );
+  }
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <div className="pb-8 xl:mx-[8rem]">
