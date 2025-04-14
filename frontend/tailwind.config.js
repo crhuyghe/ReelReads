@@ -36,7 +36,7 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar")],
   variants: {
     extend: {
       boxShadow: ["dark"],

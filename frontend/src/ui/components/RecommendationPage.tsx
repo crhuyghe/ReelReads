@@ -244,7 +244,7 @@ const RecommendationPage: React.FC = () => {
                   {selectedTile.runtime} min
                 </p>
               </div>
-              <p className="text-sm lg:text-base italic mb-1 h-[27%] overflow-y-hidden">
+              <p className="text-sm lg:text-base italic mb-1 h-[27%] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
                 {selectedTile.description}
               </p>
               <p className="text-sm lg:text-base">
@@ -347,7 +347,7 @@ const RecommendationPage: React.FC = () => {
                   {selectedTile.author}
                 </p>
               </div>
-              <p className="text-sm lg:text-base italic mb-1 h-[27%] overflow-y-hidden">
+              <p className="text-sm lg:text-base italic mb-1 h-[27%] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
                 {selectedTile.description}
               </p>
               <p className="text-sm lg:text-base">
