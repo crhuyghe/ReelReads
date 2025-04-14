@@ -85,7 +85,7 @@ const QuizQuestion: React.FC = () => {
             <div className="font-semibold text-lg lg:text-xl text-center mb-4">
               {questions[currentQuestionIndex]}
             </div>
-            <div className="grid grid-rows-{2} grid-cols-2 gap-x-6 gap-y-2">
+            <div className="grid grid-rows-{2} grid-cols-2 gap-x-3 gap-y-2">
               {choices[currentQuestionIndex].map((choice, index) => (
                 <div key={index} className="flex justify-left">
                   <QuizChoices
