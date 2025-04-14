@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "./Navbar";
 import StarRating from "./StarRating";
 import { useUser } from "./UserContext";
 import axios from "axios";
@@ -136,11 +135,11 @@ const MyList: React.FC = () => {
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div className="xl:mx-[8rem]">
+    <div className="xl:mx-[8rem] 2xl:mx-[3rem]">
       <h1 className="font-semibold text-2xl mx-[3rem] mt-[2rem]">My List</h1>
       <div className="flex justify-between gap-6 mt-[1rem] pb-[2rem] mx-[3rem]">
         <div className="flex flex-col w-full">
-          <div className="grid grid-cols-1 gap-2 w-full">
+          <div className="grid grid-cols-1 2xl:grid-cols-2 gap-2 w-full">
             {movies.map((tile) => (
               <div
                 key={tile.movie_id}
@@ -182,7 +181,7 @@ const MyList: React.FC = () => {
           </div>
         </div>
         <div className="flex flex-col w-full">
-          <div className="grid grid-cols-1 gap-2 w-full">
+          <div className="grid grid-cols-1 2xl:grid-cols-2 gap-2 w-full">
             {books.map((tile) => (
               <div
                 key={tile.isbn}
