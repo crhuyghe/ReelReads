@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "./Navbar";
 import StarRating from "./StarRating";
 import { useUser } from "./UserContext";
 import axios from "axios";
@@ -115,42 +114,63 @@ const MyList: React.FC = () => {
   console.log("Movies:", movies);
   console.log("Books:", books);
 
+  // Defensive check for loading state
+  if (movies.length === 0 || books.length === 0) {
+    return (
+      <div className="text-center mt-40 text-lg font-medium">
+        <span>Loading</span>
+        <span>
+          <span className="inline-block animate-blink text-xl ml-1">.</span>
+          <span className="inline-block animate-blink [animation-delay:0.2s] text-xl ml-1">
+            .
+          </span>
+          <span className="inline-block animate-blink [animation-delay:0.4s] text-xl ml-1">
+            .
+          </span>
+        </span>
+      </div>
+    );
+  }
+
+  if (loading) return <div>Loading...</div>;
+
   return (
-    <div>
-      <Navbar />
+    <div className="xl:mx-[8rem] 2xl:mx-[3rem]">
       <h1 className="font-semibold text-2xl mx-[3rem] mt-[2rem]">My List</h1>
-      <div className="flex justify-between gap-6 my-[2rem] mx-[3rem]">
+      <div className="flex justify-between gap-6 mt-[1rem] pb-[2rem] mx-[3rem]">
         <div className="flex flex-col w-full">
-          <div className="grid grid-cols-1 gap-2 w-full">
+          <div className="grid grid-cols-1 2xl:grid-cols-2 gap-2 w-full">
             {movies.map((tile) => (
-              /* TODO: CHECK THAT THE PARAMS MATCH UP WITH WHAT YOU GET FROM BACKEND */
               <div
                 key={tile.movie_id}
-                className="relative bg-white border rounded-lg shadow-md overflow-hidden flex"
+                className="relative h-32 bg-white dark:bg-brand-dark border dark:border-black rounded-lg shadow-md overflow-hidden flex"
               >
                 <button
                   onClick={() => handleRemove(tile)}
-                  className="absolute bottom-2 right-2"
+                  className="absolute top-2 right-2"
                 >
-                  <img src="/trash.svg" className="w-5" />
+                  <img
+                    src="/trash.svg"
+                    className="w-5 opacity-70 hover:opacity-100"
+                  />
                 </button>
-                <div>
+                <div className="w-[40%]">
                   <img
                     src={tile.image || "/movie_default.svg"}
                     alt={tile.title}
-                    className="w-full h-40 object-contain bg-blue-400"
+                    className="w-full h-32 object-cover"
                   />
                 </div>
-                <div className="px-2 py-6 bg-blue-200 flex flex-col w-full gap-2">
-                  <h3 className="text-xl text-center font-semibold">
+                <div className="px-2 py-2 bg-primary dark:bg-secondary flex flex-col justify-center w-full gap-2">
+                  <h3 className="text-xl xl:text-2xl text-center font-semibold">
                     {tile.title}
                   </h3>
-                  <div className="flex flex-col items-center gap-1">
+                  <div className="flex justify-center gap-1">
                     {/*TODO: THE RATING HAS TO BE STARS*/}
                     <StarRating onRate={handleRate} />
                     <button
                       onClick={() => handleSubmit(tile)}
-                      className="ring ring-2 ring-blue-400 rounded-md hover:bg-blue-100 px-2 py-1 text-base text-center font-semibold flex justify-center"
+                      className="rounded-md hover:text-accent dark:hover:text-red-300 px-2 pt-[6px] xl:text-lg text-base text-center font-semibold flex justify-center"
                     >
                       Watched It!
                     </button>
@@ -161,36 +181,37 @@ const MyList: React.FC = () => {
           </div>
         </div>
         <div className="flex flex-col w-full">
-          <div className="grid grid-cols-1 gap-2 w-full">
+          <div className="grid grid-cols-1 2xl:grid-cols-2 gap-2 w-full">
             {books.map((tile) => (
-              /* TODO: CHECK THAT THE PARAMS MATCH UP WITH WHAT YOU GET FROM BACKEND */
               <div
                 key={tile.isbn}
-                className="relative h-40 bg-white border rounded-lg shadow-md overflow-hidden flex"
+                className="relative h-32 bg-white dark:bg-brand-dark border dark:border-black rounded-lg shadow-md overflow-hidden flex"
               >
                 <button
                   onClick={() => handleRemove(tile)}
-                  className="absolute bottom-2 right-2"
+                  className="absolute top-2 right-2"
                 >
-                  <img src="/trash.svg" className="w-5" />
-                </button>
-                <div>
                   <img
-                    src={tile.image || "/book_default.svg"}
-                    alt={tile.book_name}
-                    className="w-full h-40 object-contain bg-blue-400"
+                    src="/trash.svg"
+                    className="w-5 opacity-70 hover:opacity-100"
+                  />
+                </button>
+                <div className="w-[40%]">
+                  <img
+                    src={tile.image || "/movie_default.svg"}
+                    alt={tile.title}
+                    className="w-full h-32 object-cover"
                   />
                 </div>
-                <div className="px-2 py-6 bg-blue-200 flex flex-col w-full gap-2">
-                  <h3 className="text-xl font-semibold text-center leading-tight flex-grow overflow-hidden">
+                <div className="px-2 py-2 bg-primary dark:bg-secondary flex flex-col justify-center w-full gap-2 w-[60%]">
+                  <h3 className="text-xl xl:text-2xl text-center font-semibold">
                     {tile.book_name}
                   </h3>
-                  <div className="flex flex-col items-center gap-1">
-                    {/*TODO: THE RATING HAS TO BE STARS*/}
+                  <div className="flex justify-center gap-1">
                     <StarRating onRate={handleRate} />
                     <button
                       onClick={() => handleSubmit(tile)}
-                      className="ring ring-2 ring-blue-400 rounded-md hover:bg-blue-100 px-2 py-1 text-base text-center font-semibold flex justify-center"
+                      className="rounded-md hover:text-accent dark:hover:text-red-300 px-2 pt-[6px] text-base xl:text-lg text-center font-semibold flex justify-center"
                     >
                       Read It!
                     </button>

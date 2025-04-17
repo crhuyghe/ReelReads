@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 interface answerProps {
   answerStr: string;
@@ -9,13 +9,13 @@ interface answerProps {
 const QuizChoices: React.FC<answerProps> = ({ answerStr, label, onClick }) => {
   return (
     <button
-      className="w-full flex gap-2 rounded-md
-        hover:ring hover:ring-1 hover:ring-blue-300 hover:rounded-md focus:ring-2
-         focus:ring-blue-300 focus:ring-opacity-50 px-2"
+      className="w-full flex gap-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-900 hover:rounded-md px-2 py-1"
       onClick={onClick}
     >
-      <span className="text-lg font-semibold">{label})</span>
-      <h2 className="text-lg font-semibold text-left">{answerStr}</h2>
+      <span className="text-lg lg:text-xl font-semibold">{label})</span>
+      <h2 className="text-lg lg:text-xl font-semibold text-left">
+        {answerStr}
+      </h2>
     </button>
   );
 };

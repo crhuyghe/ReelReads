@@ -1,5 +1,6 @@
 import requests
 import os
+import asyncio
 
 def fetch_movie_image(imdb_id):
     api_key = os.getenv('TMDB_API_KEY')
@@ -20,9 +21,9 @@ def fetch_movie_image(imdb_id):
     print("No image found for the given IMDb ID.")
     return None
 
-def handle_movie_search(imdb_id):
+async def handle_movie_search(imdb_id):
     try:
-        image_url = fetch_movie_image(imdb_id)
+        image_url = await asyncio.to_thread(fetch_movie_image, imdb_id)
         if not image_url:
             print("Image not found")
             return
@@ -47,9 +48,9 @@ def fetch_book_details(isbn):
     print("No items found in the response.")
     return None
 
-def handle_book_search(isbn):
+async def handle_book_search(isbn):
     try:
-        fetched_book = fetch_book_details(isbn)
+        fetched_book = await asyncio.to_thread(fetch_book_details, isbn)
         if not fetched_book:
             print("Book not found")
             return

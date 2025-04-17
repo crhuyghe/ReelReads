@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useUser } from "./UserContext";
-import CreateAccount from "./CreateAccount";
-import Welcome from "./Welcome";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -58,24 +56,16 @@ const Login = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen w-full">
-      {/* NAVIGATION FOR NOW, DELETE LATER */}
-      <div className="flex flex-col items-center font-semibold mb-3">
-        <h1>NAVIGATION FOR TESTING NOW, DELETE LATER</h1>
-        <Link
-          to="/recommendation"
-          className="text-blue-600 hover:underline underline-offset-2"
-        >
-          Recommendation
-        </Link>
-      </div>
-      <div className="w-[60%] bg-blue-200 rounded-lg py-[2rem] px-[2rem] flex flex-col text-left">
-        <div className="flex items-center gap-2 mb-6">
-          <img src="../../../desktopIcon.png" className="w-8 object-cover" />
-          <h2 className="font-bold text-lg">ReelReads</h2>
+      <div className="w-[60%] lg:w-[50%] xl:w-[40%] bg-primary dark:bg-secondary_dark rounded-lg py-[2rem] px-[2rem] flex flex-col text-left">
+        <div className="flex items-center gap-2 mb-4">
+          <img src="/reelreads.svg" className="w-12 object-cover" />
+          <h2 className="font-bold text-xl 2xl:text-2xl">ReelReads</h2>
         </div>
         <div className="flex flex-col mb-3">
-          <h3 className="text-lg font-semibold">Welcome to ReelReads! 👋</h3>
-          <p className="text-sm">
+          <h3 className="text-lg 2xl:text-xl font-semibold">
+            Welcome to ReelReads! 👋
+          </h3>
+          <p className="text-sm 2xl:text-base">
             Please sign-in to your account to grab your entertainment
             recommendations
           </p>
@@ -84,19 +74,19 @@ const Login = () => {
         {/* Login Form */}
         <form onSubmit={handleLoginSubmit}>
           <div className="flex flex-col mb-3 gap-1">
-            <label className="text-sm">USERNAME</label>
+            <label className="text-sm 2xl:text-base">USERNAME</label>
             <input
               type="text"
               id="username"
               name="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="ring ring-1 ring-grey-200 rounded-sm py-1 px-2 text-sm"
+              className="ring ring-1 dark:bg-brand-dark ring-secondary rounded-sm py-1 px-2 text-sm focus:outline-secondary dark:focus:outline-secondary_light"
               placeholder="Enter your username"
             />
           </div>
           <div className="flex flex-col mb-3 gap-1">
-            <label className="text-sm">PASSWORD</label>
+            <label className="text-sm 2xl:text-base">PASSWORD</label>
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
@@ -104,7 +94,7 @@ const Login = () => {
                 name="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="ring ring-1 ring-grey-200 rounded-sm py-1 px-2 text-sm w-full"
+                className="ring ring-1 dark:bg-brand-dark ring-secondary focus:outline-secondary dark:focus:outline-secondary_light rounded-sm py-1 px-2 text-sm w-full"
                 placeholder="********"
               />
 
@@ -163,7 +153,7 @@ const Login = () => {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="size-4 text-red-600"
+                className="size-4 text-red-800"
               >
                 <path
                   strokeLinecap="round"
@@ -172,7 +162,7 @@ const Login = () => {
                 />
               </svg>
             </div>
-            <p className="text-xs text-red-600">
+            <p className="text-xs 2xl:text-sm font-semibold dark:font-normal text-red-800 dark:text-red-300">
               Your username or password is incorrect. Please enter valid
               credentials.
             </p>
@@ -180,15 +170,15 @@ const Login = () => {
           <input
             type="submit"
             value="Sign In"
-            className="rounded-sm bg-blue-600 w-full py-1 text-white mb-3 hover:cursor-pointer hover:bg-blue-500"
+            className="rounded-sm bg-secondary dark:bg-secondary_hover_light w-full py-1 text-white dark:text-black mb-3 hover:cursor-pointer hover:bg-secondary_hover dark:hover:bg-secondary_hover_light2"
           />
         </form>
 
-        <div className="flex gap-1 justify-center text-sm">
+        <div className="flex gap-1 justify-center text-sm 2xl:text-base">
           <p>New on our platform?</p>
           <Link
             to="/createAccount"
-            className="text-blue-600 hover:underline underline-offset-2"
+            className="font-semibold hover:underline underline-offset-2"
           >
             Create an account
           </Link>

@@ -12,16 +12,16 @@ const StarRating: React.FC<StarRatingProps> = ({ onRate }) => {
     onRate(star);
   };
   return (
-    <div>
+    <div className="flex items-center justify-center">
       {[1, 2, 3, 4, 5].map((star) => (
         <span
           key={star}
           onClick={() => handleStarClick(star)}
-          style={{
-            cursor: "pointer",
-            color: star <= rating ? "gold" : "gray",
-            fontSize: "24px",
-          }}
+          className={`cursor-pointer text-2xl ${
+            star <= rating
+              ? "text-secondary dark:text-secondary_light"
+              : "text-gray-300 dark:text-gray-600"
+          }`}
         >
           ★
         </span>

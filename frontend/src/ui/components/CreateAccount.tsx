@@ -69,14 +69,16 @@ const CreateAccount = () => {
   };
   return (
     <div className="flex items-center justify-center h-screen w-full">
-      <div className="w-[60%] bg-blue-200 rounded-lg py-[2rem] px-[2rem] flex flex-col text-left">
-        <div className="flex items-center gap-2 mb-6">
-          <img src="../../../desktopIcon.png" className="w-8 object-cover" />
-          <h2 className="font-bold text-lg">ReelReads</h2>
+      <div className="w-[60%] lg:w-[50%] xl:w-[40%] bg-primary dark:bg-secondary_dark rounded-lg py-[2rem] px-[2rem] flex flex-col text-left">
+        <div className="flex items-center gap-2 mb-4">
+          <img src="/reelreads.svg" className="w-12 object-cover" />
+          <h2 className="font-bold text-xl 2xl:text-2xl">ReelReads</h2>
         </div>
         <div className="flex flex-col mb-3">
-          <h3 className="text-lg font-semibold">Welcome to ReelReads! 👋</h3>
-          <p className="text-sm">
+          <h3 className="text-lg 2xl:text-xl font-semibold">
+            Welcome to ReelReads! 👋
+          </h3>
+          <p className="text-sm 2xl:text-base">
             Let's get you started! Please create an account to start using
             ReelReads
           </p>
@@ -84,48 +86,45 @@ const CreateAccount = () => {
 
         <form onSubmit={handleRegsiterSubmit}>
           <div className="flex flex-col mb-3 gap-1 min-h-100vh">
-            <label className="text-sm">USERNAME</label>
+            <label className="text-sm 2xl:text-base">USERNAME</label>
             <input
               type="text"
               id="username"
               name="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="ring ring-1 ring-grey-200 rounded-sm py-1 px-2 text-sm"
+              className="ring ring-1 dark:bg-brand-dark ring-secondary rounded-sm py-1 px-2 text-sm focus:outline-secondary dark:focus:outline-secondary_light"
               placeholder="Enter your username"
             />
           </div>
           {/* Username error message div */}
           {usernameError && (
-            <div className="text-red-600 text-xs mb-2">
+            <div className="text-red-600 text-xs 2xl:text-sm mb-2">
               <p>{usernameError}</p>
             </div>
           )}
 
           <div className="flex flex-col mb-3 gap-1">
             <div className="flex items-center gap-1">
-              <label className="text-sm">PASSWORD</label>
+              <label className="text-sm 2xl:text-base">PASSWORD</label>
               <button type="button" onClick={togglePasswordRequirements}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="size-5 text-red-600"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"
-                  />
-                </svg>
+                {/* Light theme image */}
+                <img
+                  src="/password_info_light_theme.svg"
+                  className="w-4 block dark:hidden"
+                />
+
+                {/* Dark theme image */}
+                <img
+                  src="/password_info_theme_dark2.svg"
+                  className="w-4 hidden dark:block"
+                />
               </button>
             </div>
 
             {/* Tooltip with password requirements */}
             {showPasswordRequirements && (
-              <div className="-mt-1 mb-1 text-xs text-gray-500">
+              <div className="-mt-1 mb-1 text-xs 2xl:text-sm text-red-800 dark:text-red-300">
                 <ul>
                   {" "}
                   Password must:
@@ -145,7 +144,7 @@ const CreateAccount = () => {
                 name="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="ring ring-1 ring-grey-200 rounded-sm py-1 px-2 text-sm w-full"
+                className="ring ring-1 dark:bg-brand-dark ring-secondary focus:outline-secondary dark:focus:outline-secondary_light rounded-sm py-1 px-2 text-sm w-full"
                 placeholder="********"
               />
 
@@ -195,7 +194,7 @@ const CreateAccount = () => {
           </div>
           {/* Error message div */}
           {showError && (
-            <div className="text-red-600 text-xs mb-2">
+            <div className="text-red-800 dark:text-red-300 text-xs 2xl:text-sm mb-2">
               {errorMessages.map((msg, index) => (
                 <p key={index}>{msg}</p> // Render each error message
               ))}
@@ -205,14 +204,14 @@ const CreateAccount = () => {
           <input
             type="submit"
             value="Sign Up"
-            className="rounded-sm bg-blue-600 w-full py-1 text-white mb-3"
+            className="rounded-sm bg-secondary dark:bg-secondary_hover_light w-full py-1 text-white dark:text-black mb-3 hover:cursor-pointer hover:bg-secondary_hover dark:hover:bg-secondary_hover_light2"
           />
         </form>
-        <div className="flex gap-1 justify-center text-sm">
+        <div className="flex gap-1 justify-center text-sm 2xl:text-base">
           <p>Already have an account? </p>
           <Link
             to="/"
-            className="text-blue-600 hover:underline underline-offset-2"
+            className="font-semibold hover:underline underline-offset-2"
           >
             Login
           </Link>
