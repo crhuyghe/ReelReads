@@ -1,3 +1,4 @@
+import asyncio
 from flask import Flask, request, jsonify
 from flask_cors import CORS  # cross-origin requests
 
@@ -50,19 +51,7 @@ def search():
     fetched_movie_data = get_movies_by_id(rec_ids[0]["id"].values.tolist())
     fetched_book_data = get_books_by_isbn(rec_ids[1]["ISBN"].values.tolist())
 
-    for movie in fetched_movie_data:
-        movie["type"] = "movie"
-        movie["image"] = handle_movie_search(movie["imdb_id"])
-
-    for book in fetched_book_data:
-        book["type"] = "book"
-        book_info = handle_book_search(book["isbn"])
-        if book_info:
-            book["image"] = book_info["thumbnail"]
-            book["genre"] = book_info["genre"]
-        else:
-            book["image"] = None
-            book["genre"] = None
+    get_additional_info(fetched_movie_data, fetched_book_data)
 
     fetched_data = fetched_book_data + fetched_movie_data
     if fetched_movie_data or fetched_book_data:
@@ -82,19 +71,7 @@ def recommend():
     fetched_movie_data = get_movies_by_id(rec_ids[0]["id"].values.tolist())
     fetched_book_data = get_books_by_isbn(rec_ids[1]["ISBN"].values.tolist())
 
-    for movie in fetched_movie_data:
-        movie["type"] = "movie"
-        movie["image"] = handle_movie_search(movie["imdb_id"])
-
-    for book in fetched_book_data:
-        book["type"] = "book"
-        book_info = handle_book_search(book["isbn"])
-        if book_info:
-            book["image"] = book_info["thumbnail"]
-            book["genre"] = book_info["genre"]
-        else:
-            book["image"] = None
-            book["genre"] = None
+    get_additional_info(fetched_movie_data, fetched_book_data)
 
     fetched_data = fetched_book_data + fetched_movie_data
     if fetched_movie_data or fetched_book_data:
@@ -122,37 +99,13 @@ def grabList():
     fetched_movie_data = get_movies_by_id(movie_ids) if movie_ids else []
     fetched_book_data = get_books_by_isbn(isbns) if isbns else []
 
-    for movie in fetched_movie_data:
-        movie["type"] = "movie"
-        movie["image"] = handle_movie_search(movie["imdb_id"])
-
-    for book in fetched_book_data:
-        book["type"] = "book"
-        book_info = handle_book_search(book["isbn"])
-        if book_info:
-            book["image"] = book_info["thumbnail"]
-            book["genre"] = book_info["genre"]
-        else:
-            book["image"] = None
-            book["genre"] = None
+    get_additional_info(fetched_movie_data, fetched_book_data)
 
     fetched_data = fetched_book_data + fetched_movie_data
     if fetched_movie_data or fetched_book_data:
         return jsonify({"message": "Fetch Successful", "fetched_data": fetched_data}), 200
     else:
         return jsonify({"message": "No recommendations found"}), 400
-
-# def process_identifiers(identifiers):
-#     movie_ids = []
-#     isbns = []
-#
-#     for isbn, movie_id in identifiers:
-#         if isbn is None:
-#             movie_ids.append(movie_id)  # Collect movie IDs
-#         elif movie_id is None:
-#             isbns.append(isbn)  # Collect ISBNs
-#
-#     return movie_ids, isbns
 
 @app.route('/removeList', methods=['POST'])
 def removeList():
@@ -219,19 +172,7 @@ def grabLib():
     fetched_movie_data = get_movies_by_id(movie_ids) if movie_ids else []
     fetched_book_data = get_books_by_isbn(isbns) if isbns else []
 
-    for movie in fetched_movie_data:
-        movie["type"] = "movie"
-        movie["image"] = handle_movie_search(movie["imdb_id"])
-
-    for book in fetched_book_data:
-        book["type"] = "book"
-        book_info = handle_book_search(book["isbn"])
-        if book_info:
-            book["image"] = book_info["thumbnail"]
-            book["genre"] = book_info["genre"]
-        else:
-            book["image"] = None
-            book["genre"] = None
+    get_additional_info(fetched_movie_data, fetched_book_data)
 
     fetched_data = fetched_book_data + fetched_movie_data
     if fetched_movie_data or fetched_book_data:
@@ -255,6 +196,28 @@ def process_identifiers(identifiers):
             isbns.append(isbn)  # Collect ISBNs
 
     return movie_ids, isbns
+
+def get_additional_info(movie_data, book_data):
+    async def format_data(fetched_movie_data, fetched_book_data):
+        movie_tasks = [handle_movie_search(movie["imdb_id"]) for movie in fetched_movie_data]
+        book_tasks = [handle_book_search(book["isbn"]) for book in fetched_book_data]
+
+        images = await asyncio.gather(*movie_tasks, *book_tasks)
+
+        for i, movie in enumerate(fetched_movie_data):
+            movie["type"] = "movie"
+            movie["image"] = images[i]
+
+        for i, book in enumerate(fetched_book_data):
+            book["type"] = "book"
+            book_info = images[i + len(movie_tasks)]
+            if book_info:
+                book["image"] = book_info["thumbnail"]
+                book["genre"] = book_info["genre"]
+            else:
+                book["image"] = None
+                book["genre"] = None
+    asyncio.new_event_loop().run_until_complete(format_data(movie_data, book_data))
 
 
 # Run Flask app
