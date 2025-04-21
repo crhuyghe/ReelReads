@@ -209,17 +209,17 @@ const RecommendationPage: React.FC = () => {
         */}
         {showPopup && selectedTile && selectedTile.type === "movie" && (
           <div className="fixed inset-0 bg-gray-500 bg-opacity-50 dark:bg-gray-800 dark:bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white dark:bg-brand-dark dark:border dark:border-black h-[80%] p-6 rounded-lg w-[60%] xl:w-[50%] 2xl:w-[40%] relative lg:px-12">
+            <div className="bg-white dark:bg-brand-dark dark:border dark:border-black h-[80%] 2xl:h-[65%] p-6 rounded-lg w-[60%] xl:w-[50%] 2xl:w-[40%] relative lg:px-12">
               <button
                 onClick={handleClosePopup}
                 className="absolute top-2 right-3 text-lg font-bold"
               >
                 X
               </button>
-              <h2 className="text-lg lg:text-2xl font-semibold mb-4">
+              <h2 className="text-lg lg:text-2xl font-semibold mb-4 truncate">
                 {selectedTile.title}
               </h2>
-              <div className="relative w-full h-32 lg:h-64 mb-2">
+              <div className="relative w-full h-32 lg:h-60 mb-2">
                 {/* Background blurred/low-opacity image */}
                 <img
                   src={selectedTile.image || "/movie_default.svg"}
@@ -243,7 +243,7 @@ const RecommendationPage: React.FC = () => {
                   {selectedTile.runtime} min
                 </p>
               </div>
-              <p className="text-sm lg:text-base italic mb-2 h-[27%] lg:h-[35%] 2xl:h-[40%] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
+              <p className="text-sm lg:text-base italic mb-2 h-[27%] 2xl:h-[30%] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
                 {selectedTile.description}
               </p>
               <p className="text-sm lg:text-base">
@@ -259,7 +259,7 @@ const RecommendationPage: React.FC = () => {
                 {selectedTile.movie_rating_count}
               </p>
               <button
-                className="rounded-full w-8 h-8 flex justify-center font-bold text-xl ring-2 dark:ring-secondary_light dark:text-secondary_light dark:hover:ring-brand-light dark:hover:text-brand-light ring-secondary hover:ring-secondary_hover text-secondary hover:text-secondary_hover absolute bottom-4 lg:bottom-8 right-4 lg:right-8"
+                className="rounded-full w-8 2xl:w-9 2xl:h-9 2xl:text-2xl h-8 flex justify-center font-bold text-xl ring-2 dark:ring-secondary_light dark:text-secondary_light dark:hover:ring-brand-light dark:hover:text-brand-light ring-secondary hover:ring-secondary_hover text-secondary hover:text-secondary_hover absolute bottom-4 lg:bottom-8 right-4 lg:right-8"
                 onClick={() => addTile(selectedTile)}
               >
                 +
@@ -280,7 +280,7 @@ const RecommendationPage: React.FC = () => {
                   </button>
                   {showRatingPopup && (
                     <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
-                      <div className="bg-white dark:bg-brand-dark p-6 rounded-lg w-[40%] relative text-center">
+                      <div className="bg-white dark:bg-brand-dark p-6 rounded-lg w-[40%] 2xl:w-[30%] relative text-center">
                         <button
                           onClick={() => setShowRatingPopup(false)} // Close the popup
                           className="absolute top-2 right-3 text-lg font-bold"
@@ -312,17 +312,17 @@ const RecommendationPage: React.FC = () => {
         */}
         {showPopup && selectedTile && selectedTile.type === "book" && (
           <div className="fixed inset-0 bg-gray-500 bg-opacity-50 dark:bg-gray-800 dark:bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white dark:bg-brand-dark dark:border dark:border-black h-[80%] p-6 rounded-lg w-[60%] xl:w-[50%] 2xl:w-[40%] relative lg:px-12">
+            <div className="bg-white dark:bg-brand-dark dark:border dark:border-black h-[80%] 2xl:h-[65%] p-6 rounded-lg w-[60%] xl:w-[50%] 2xl:w-[40%] relative lg:px-12">
               <button
                 onClick={handleClosePopup}
                 className="absolute top-2 right-3 text-lg font-bold"
               >
                 X
               </button>
-              <h2 className="text-xl lg:text-2xl font-semibold mb-2">
+              <h2 className="text-xl lg:text-2xl font-semibold mb-2 truncate">
                 {selectedTile.book_name}
               </h2>
-              <div className="relative w-full h-32 lg:h-64 mb-2">
+              <div className="relative w-full h-32 lg:h-56 mb-2">
                 {/* Background blurred/low-opacity image */}
                 <img
                   src={selectedTile.image || "/movie_default.svg"}
@@ -346,7 +346,7 @@ const RecommendationPage: React.FC = () => {
                   {selectedTile.author}
                 </p>
               </div>
-              <p className="text-sm lg:text-base italic mb-2 h-[27%] lg:h-[35%] 2xl:h-[40%] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
+              <p className="text-sm lg:text-base italic mb-2 h-[27%] 2xl:h-[30%] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
                 {selectedTile.description}
               </p>
               <p className="text-sm lg:text-base">
@@ -387,7 +387,7 @@ const RecommendationPage: React.FC = () => {
                   </button>
                   {showRatingPopup && (
                     <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
-                      <div className="bg-white dark:bg-brand-dark p-6 rounded-lg w-[40%] relative text-center">
+                      <div className="bg-white dark:bg-brand-dark p-6 rounded-lg w-[40%] 2xl:w-[30%] relative text-center">
                         <button
                           onClick={() => setShowRatingPopup(false)} // Close the popup
                           className="absolute top-2 right-3 text-lg font-bold"

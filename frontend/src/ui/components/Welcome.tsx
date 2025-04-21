@@ -204,14 +204,14 @@ const Welcome = () => {
         )}
         {showPopup && selectedTile && selectedTile.type === "movie" && (
           <div className="fixed inset-0 bg-gray-500 bg-opacity-50 dark:bg-gray-800 dark:bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white dark:bg-brand-dark dark:border dark:border-black h-[80%] p-6 rounded-lg w-[60%] lg:w-[40%] relative lg:px-12">
+            <div className="bg-white dark:bg-brand-dark dark:border dark:border-black h-[80%] 2xl:h-[65%] p-6 rounded-lg w-[60%] lg:w-[40%] relative lg:px-12">
               <button
                 onClick={handleClosePopup}
                 className="absolute top-2 right-3 text-lg font-bold"
               >
                 X
               </button>
-              <h2 className="text-lg lg:text-2xl font-semibold mb-4">
+              <h2 className="text-lg lg:text-2xl font-semibold mb-4 truncate">
                 {selectedTile.title}
               </h2>
               <img
@@ -227,7 +227,7 @@ const Welcome = () => {
                   {selectedTile.runtime} min
                 </p>
               </div>
-              <p className="text-xs lg:text-base italic mb-1 h-[28%] overflow-y-hidden">
+              <p className="text-xs lg:text-base italic mb-1 h-[28%] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
                 {selectedTile.description}
               </p>
               <p className="text-sm lg:text-base">
@@ -243,7 +243,7 @@ const Welcome = () => {
                 {selectedTile.movie_rating_count}
               </p>
               <button
-                className="rounded-full w-8 h-8 flex justify-center font-bold text-xl ring-2 dark:ring-secondary_light dark:text-secondary_light dark:hover:ring-brand-light dark:hover:text-brand-light ring-secondary hover:ring-secondary_hover text-secondary hover:text-secondary_hover absolute bottom-4 right-4"
+                className="rounded-full w-8 2xl:w-9 h-8 2xl:h-9 flex justify-center font-bold text-xl 2xl:text-2xl ring-2 dark:ring-secondary_light dark:text-secondary_light dark:hover:ring-brand-light dark:hover:text-brand-light ring-secondary hover:ring-secondary_hover text-secondary hover:text-secondary_hover absolute bottom-4 2xl:bottom-6 right-4 2xl:right-6"
                 onClick={() => addTile(selectedTile)}
               >
                 +
@@ -264,7 +264,7 @@ const Welcome = () => {
                   </button>
                   {showRatingPopup && (
                     <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
-                      <div className="bg-white dark:bg-brand-dark p-6 rounded-lg w-[40%] relative text-center">
+                      <div className="bg-white dark:bg-brand-dark p-6 rounded-lg w-[40%] 2xl:w-[30%] relative text-center">
                         <button
                           onClick={() => setShowRatingPopup(false)} // Close the popup
                           className="absolute top-2 right-3 text-lg font-bold"
@@ -296,48 +296,50 @@ const Welcome = () => {
         */}
         {showPopup && selectedTile && selectedTile.type === "book" && (
           <div className="fixed inset-0 bg-gray-500 bg-opacity-50 dark:bg-gray-800 dark:bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white dark:bg-brand-dark dark:border dark:border-black h-[80%] p-6 rounded-lg w-[60%] relative">
+            <div className="bg-white dark:bg-brand-dark dark:border dark:border-black h-[80%] 2xl:h-[65%] p-6 rounded-lg w-[60%] lg:w-[40%] relative lg:px-12">
               <button
                 onClick={handleClosePopup}
                 className="absolute top-2 right-3 text-lg font-bold"
               >
                 X
               </button>
-              <h2 className="text-xl font-semibold mb-4">
+              <h2 className="text-lg lg:text-2xl font-semibold mb-4 truncate">
                 {selectedTile.book_name}
               </h2>
               <img
                 src={selectedTile.image || "/book_default.svg"}
                 alt={selectedTile.book_name}
-                className="w-full h-32 object-contain mb-2"
+                className="w-full h-32 lg:h-60 object-contain mb-2"
               />
               <div className="flex gap-2 items-center -mb-1">
-                <p className="text-sm font-medium mb-2">
+                <p className="text-sm lg:text-md font-medium mb-2">
                   <Stars rating={selectedTile.book_rating} type="book" />
                 </p>
-                <p className="text-sm font-semibold">{selectedTile.author}</p>
+                <p className="text-sm lg:text-base font-semibold">
+                  {selectedTile.author}
+                </p>
               </div>
-              <p className="text-xs italic mb-2 h-[29%] overflow-y-hidden">
+              <p className="text-xs lg:text-base italic mb-2 h-[27%] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
                 {selectedTile.description}
               </p>
-              <p className="text-xs">
+              <p className="text-xs lg:text-base">
                 <span className="font-semibold">Publisher: </span>
                 {selectedTile.publisher}
               </p>
-              <p className="text-xs">
+              <p className="text-xs lg:text-base">
                 <span className="font-semibold">Published: </span>
                 {selectedTile.publication_date}
               </p>
-              <p className="text-xs">
+              <p className="text-xs lg:text-base">
                 <span className="font-semibold">Ratings: </span>
                 {selectedTile.book_rating_count}
               </p>
-              <p className="text-xs">
+              <p className="text-xs lg:text-base">
                 <span className="font-semibold">ISBN: </span>
                 {selectedTile.isbn}
               </p>
               <button
-                className="rounded-full w-8 h-8 flex justify-center font-bold text-xl ring-2 dark:ring-secondary_light dark:text-secondary_light dark:hover:ring-brand-light dark:hover:text-brand-light ring-secondary hover:ring-secondary_hover text-secondary hover:text-secondary_hover absolute bottom-4 right-4"
+                className="rounded-full w-8 2xl:w-9 h-8 2xl:h-9 flex justify-center font-bold text-xl 2xl:text-2xl ring-2 dark:ring-secondary_light dark:text-secondary_light dark:hover:ring-brand-light dark:hover:text-brand-light ring-secondary hover:ring-secondary_hover text-secondary hover:text-secondary_hover absolute bottom-4 2xl:bottom-6 right-4 2xl:right-6"
                 onClick={() => addTile(selectedTile)}
               >
                 +
@@ -358,7 +360,7 @@ const Welcome = () => {
                   </button>
                   {showRatingPopup && (
                     <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
-                      <div className="bg-white dark:bg-brand-dark p-6 rounded-lg w-[40%] relative text-center">
+                      <div className="bg-white dark:bg-brand-dark p-6 rounded-lg w-[40%] 2xl:w-[30%] relative text-center">
                         <button
                           onClick={() => setShowRatingPopup(false)} // Close the popup
                           className="absolute top-2 right-3 text-lg font-bold"
